@@ -1,0 +1,54 @@
+﻿@model POS.Models.DB.Bank
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<h4>Bank</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Details">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label > رقم البنك</label>
+            <input asp-for="BankId" class="form-control" readonly />
+            <div class="form-group">
+                <label > اسم البنك</label>
+                <input asp-for="BankName" class="form-control" readonly />
+                <span asp-validation-for="BankName" class="text-danger"></span>
+            </div>
+           
+             
+                <input type="hidden" asp-for="BankStatus" class="form-control" readonly />
+               
+            
+            <div class="form-group">
+                <label asp-for="SubAccountingManual" class="control-label">حساب البنك</label>
+                <select asp-for="SubAccountingManual" class="form-control" readonly asp-items="ViewBag.AccHeadeerlist"></select>
+                <span asp-validation-for="SubAccountingManual" class="text-danger"></span>
+            </div>
+         
+            <div class="form-group">
+             
+                     
+               
+                 <a class="btn btn-primary btn-block"  asp-action="Edit" asp-route-id="@Model.BankId">Edit</a>
+            </div>
+             
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+ @section Scripts 
+    {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+     <script type="text/javascript">
+       
+     </script>
+}

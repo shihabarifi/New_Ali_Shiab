@@ -1,0 +1,160 @@
+﻿@model POS.Models.DB.AccountingManual
+
+
+
+<h4>AccountingManual</h4>
+<hr />
+<div class="card">
+        <form asp-action="Details">
+             <div class="row col-12">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             <div class="form-group col-2">
+                <label asp-for="AccNumber" class="control-label"></label>
+             </div>
+              <div class="form-group col-3">
+                <input asp-for="AccNumber" name="AccNumber" id="AccNumber" class="form-control Acc" />
+                <span asp-validation-for="AccNumber" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group col-2">
+                <label asp-for="ParentAccNumber" class="control-label"></label>
+
+                </div>
+                <div class="form-group col-3">
+                <select asp-for="ParentAccNumber" class ="form-control Accp" asp-items="ViewBag.AccHeadeerlist"></select>
+            </div>
+
+            <div class="form-group col-2">
+             </div>
+
+
+           <div class="form-group col-2">
+                <label asp-for="AccStatus" class="control-label"></label>
+             </div>
+              <div class="form-group col-3">
+                <input asp-for="AccStatus" class="form-control" />
+                <span asp-validation-for="AccStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-2">
+                <label asp-for="AccLevel" class="control-label"></label>
+                 </div>
+                 <div class="form-group col-3">
+                <input asp-for="AccLevel" class="form-control" />
+                <span asp-validation-for="AccLevel" class="text-danger"></span>
+            </div>
+              <div class="form-group col-2">
+             </div>
+
+             <div class="form-group col-2">
+                    <label asp-for="ArabicAccName" class="control-label"></label>
+             </div>
+
+                 <div class="form-group col-3">
+                <input asp-for="ArabicAccName" class="form-control" />
+                <span asp-validation-for="ArabicAccName" class="text-danger"></span>
+            </div>
+
+
+                 <div class="form-group col-2">
+                <label asp-for="EnglishAccName" class="control-label"></label>
+                </div>
+                  <div class="form-group col-3">
+                <input asp-for="EnglishAccName" class="form-control" />
+                <span asp-validation-for="EnglishAccName" class="text-danger"></span>
+            </div>
+               <div class="form-group col-2">
+             </div>
+
+                <div class="form-group col-2">
+                <label asp-for="AccType" class="control-label"></label>
+
+             </div>
+          
+                <div class="form-group col-3">
+                <input asp-for="AccType" class="form-control" />
+                <span asp-validation-for="AccType" class="text-danger"></span>
+            </div>
+             <div class="form-group col-2">
+                <label asp-for="AccMaxBalane" class="control-label"></label>
+                </div>
+                 <div class="form-group col-3">
+                <input asp-for="AccMaxBalane" class="form-control" />
+                <span asp-validation-for="AccMaxBalane" class="text-danger"></span>
+            </div>
+              <div class="form-group col-2">
+             </div>
+
+             <div class="form-group col-2">
+                <label asp-for="AccKind" class="control-label"></label>
+                </div>
+                 <div class="form-group col-3">
+                <input asp-for="AccKind" class="form-control" />
+                <span asp-validation-for="AccKind" class="text-danger"></span>
+            </div>
+           
+          
+             <div class="form-group col-2">
+             </div>
+         
+             </div>
+
+
+            @*///////////////////////////التفصيلي////////////////////////////////////*@
+
+        <div class=" " style="padding-right:18% " >
+            <table id="CodesTable" class ="table table-borderless table-sm  border CodesTable" style="color:#fff;width:25%;background-color:#7595b7 ">
+                <thead>
+                    <tr>
+                   
+                    <th>
+                        العملات
+                    </th> 
+                   
+                    
+                    </tr>
+                </thead>
+                <tbody id="CsDiv">
+                     @for (int i = 0; i < Model.AccountsCurrencies.Count;i++)
+
+                        {
+                       <tr>
+
+                        <td>
+                          
+                             <select asp-for="AccountsCurrencies[i].Currencies" asp-items="ViewBag.AccCurrlist" class="form-control" ></select>
+                        </td>
+                     
+                       
+
+                       </tr>
+                        }
+                   
+                </tbody>
+            </table>
+
+           
+            </div>
+@*/////////////////////////////////////////////////////////////////*@
+
+   <div class="form-group btn-group col-12">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <input type="submit" value="Create" id="submitbtn" class="btn btn-primary btn-block" />
+            </div>
+
+             <div class="col-5">
+                 <a class="btn btn-secondary btn-block" asp-action="index"
+                   asp-route-pg="@TempData.Peek("CurrentPage")">Back</a>
+            </div>
+             <div class="col-1"></div>
+         </div>
+
+
+        </form>
+    </div>
+
+
+

@@ -1,0 +1,147 @@
+﻿@model POS.Models.DB.MainJournalEntery
+
+@{
+    ViewData["Title"] = "Details";
+    var JournalEnteryStatus=new List<string>()
+            {
+               "غير مرحل","مرحل "
+            };
+    var ModelStatusValue =Model.MainournalEnteriesStatus; 
+     Layout = null;
+}
+
+<h1>تفاصيل</h1>
+
+<div>
+    <h4>القيد اليومي</h4>
+    <hr />
+    <dl class="row">
+        
+        <dt class = "col-sm-2">
+            رقم القيد
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MainJouralEntNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            مستخدم النظام
+        </dt>
+        <dd class = "col-sm-10">
+           @* @Html.DisplayFor(model => model.SystemUsersNavigation.UserName)*@
+        </dd>
+        <dt class = "col-sm-2">
+            نوع القيد
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.JournalEnterieTypesNavigation.JournalEnteryName)
+        </dd>
+        <dt class = "col-sm-2">
+            السنة المالية
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FiscalYearNavigation.FiscalYearName)
+        </dd>
+        <dt class = "col-sm-2">
+            المبلغ الاجمالي
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MainJournalEnteriesAmount)
+        </dd>
+        <dt class = "col-sm-2">
+            حالة القيد
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => @JournalEnteryStatus[@ModelStatusValue])
+        </dd>
+        <dt class = "col-sm-2">
+            رقم المرجع
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MainJournalReferenceNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            التاريخ
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MainJournalDateTime)
+        </dd>
+        <dt class = "col-sm-2">
+           ملاحظة عامة
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MainPaycheckGlobalNote)
+        </dd>
+    </dl>
+    <div>
+       <table class="table">
+        <thead>
+            <tr>
+            
+                <th>
+                    رقم الحساب
+                </th>
+                <th>
+                     اسم الحساب
+                </th>
+                <th>
+                    نوع العملة
+                </th>
+                <th>
+                    البيان
+                </th>
+                <th>
+                    مدين محلي
+                </th>
+                <th>
+                    دائن محلي
+                </th>
+                <th>
+                    مدين أجنبي
+                </th>
+                <th>
+                    دائن أجنبي
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(int i=0; i< Model.DetailedJournalEnteries.Count;i++) {
+                    <tr>
+           
+                        <td>
+                            @Html.DisplayFor(item => item.DetailedJournalEnteries[i].CreditChildAccountNavigation.AccNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => item.DetailedJournalEnteries[i].CreditChildAccountNavigation.ArabicAccName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => item.DetailedJournalEnteries[i].CurrenciesNavigation.CurrenName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => item.DetailedJournalEnteries[i].DetailedournalDescription)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => item.DetailedJournalEnteries[i].DebittAmountRly)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => item.DetailedJournalEnteries[i].CreditAmountRly)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => item.DetailedJournalEnteries[i].DebittAmountUdo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => item.DetailedJournalEnteries[i].CreditAmountUdo)
+                        </td>
+            
+                    </tr>
+            }
+        </tbody>
+       </table>
+    </div>
+</div>
+
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">الرجوع الى القائمة</a>
+</div>

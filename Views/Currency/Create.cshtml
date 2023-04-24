@@ -1,0 +1,167 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model POS.Models.DB.Currency
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Create";
+     
+}
+  <!-- Navbar -->
+
+        <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+          <div class="container-fluid">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- nav-->
+              <div class="navbar-nav align-items-center">
+                <h3 class="nav-item pt-3">إضافةالعملات</h3>
+
+              </div>
+       
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Notifications -->
+                <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-expanded="false">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge rounded-pill badge-notifications bg-danger">
+                      <!-- رقم الإشعارات -->
+                      1
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end py-0" data-bs-popper="none">
+                    <li class="dropdown-menu-header border-bottom">
+                      <div class="dropdown-header d-flex align-items-center py-3">
+                        <h5 class="text-body me-auto mb-0">الإشعارات</h5>
+                        <a href="javascript:void(0)" class="dropdown-notifications-all text-body"
+                          data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                          data-bs-original-title="Mark all as read" aria-label="Mark all as read"><i
+                            class="bx fs-4 bx-envelope-open"></i></a>
+                      </div>
+                    </li>
+                    <li class="dropdown-notifications-list scrollable-container ps ps--active-y">
+                      <ul class="list-group list-group-flush">
+                        <!-- قائمة الإشعارات -->
+                        <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                          <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">
+                              <div class="avatar">
+                                <!-- صورة الإشعار -->
+                                <img src="../~/accounts/assets/img/avatars/1.png"  class="w-px-40 h-auto rounded-circle" />
+                              </div>
+                            </div>
+                            <div class="flex-grow-1">
+                              <h6 class="mb-1">اسم الإشعار </h6>
+                              <p class="mb-0">جسم الإشعار</p>
+                              <small class="text-muted">قبل ساعة (الوقت)</small>
+                            </div>
+                            <div class="dropdown-notifications-actions flex-shrink-0">
+                              <a href="javascript:void(0)" class="dropdown-notifications-read"><span
+                                  class="badge badge-dot"></span></a>
+                              <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
+                                  class="bx bx-x"></span></a>
+                            </div>
+                          </div>
+                        </li>
+                        <!-- / نهاية قائمة الإشعارات -->
+                      </ul>
+                      <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                      </div>
+                      <div class="ps__rail-y" style="top: 0px; right: 0px; height: 440px;">
+                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 200px;"></div>
+                      </div>
+                    </li>
+                    <li class="dropdown-menu-footer border-top">
+                      <a href="javascript:void(0);" class="dropdown-item d-flex justify-content-center p-3">
+                        فتح قائمة الإشعارات
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- Notifications -->
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="~/accounts/assets/img/avatars/1.png"  class="rounded-circle" />
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <img src="~/accounts/assets/img/avatars/1.png"  class="rounded-circle" />
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block lh-1">Shihab Al-Arifi</span>
+                            <small>Designer</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <hr class="mt-0">
+        <!-- / Navbar -->
+<hr />
+<div  style="margin-right:500px;margin-left:250px;margin-top:100px;margin-bottom:100px;padding-right:200px;padding-top:100px;padding-bottom:100px;" class="card">
+
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label>اسم العملة</label>
+                <input asp-for="CurrenName" class="form-control" />
+                <span asp-validation-for="CurrenName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>نوع العملة</label>
+                <input asp-for="CurreType" class="form-control" />
+                <span asp-validation-for="CurreType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label> رمز العملة</label>
+                <input asp-for="CurreSymbol" class="form-control" />
+                <span asp-validation-for="CurreSymbol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label > اسم الفكة</label>
+                <input asp-for="CrreChangeName" class="form-control" />
+                <span asp-validation-for="CrreChangeName" class="text-danger"></span>
+            </div>
+                 
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <div>
+    <a asp-action="Index">Back to List</a>
+</div>
+        </form>
+    </div>
+</div>
+
+
+

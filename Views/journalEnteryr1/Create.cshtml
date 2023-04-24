@@ -1,0 +1,1405 @@
+﻿
+@model POS.Models.DB.MainJournalEntery
+
+@{
+    ViewData["Title"] = "Create";
+    var currRateList = ViewBag.CurrenciesExchangeRateList;
+     Layout = null;
+}
+
+
+  @inject UserManager<ApplicationUser> userManager
+@inject SignInManager<ApplicationUser> signInManager
+    <!DOCTYPE html>
+
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="rtl" data-theme="theme-default"
+  data-assets-path="assets/" data-template="vertical-menu-template-no-customizer-starter">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>الرئيسية</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="~/assets/vendor/fonts/boxicons.css" />
+  <link rel="stylesheet" href="~/assets/vendor/fonts/fontawesome.css" />
+  <link rel="stylesheet" href="~/assets/vendor/fonts/flag-icons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="~/assets/vendor/css/rtl/core.css" />
+  <link rel="stylesheet" href="~/assets/vendor/css/rtl/theme-default.css" />
+  <link rel="stylesheet" href="~/assets/css/demo.css" />
+  <link rel="stylesheet" href="~/css/main.css" />
+                               
+  <!-- Vendors CSS -->         
+  <link rel="stylesheet" href="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+                               
+  <link rel="stylesheet" href="~/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+  <link rel="stylesheet" href="~/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+  <link rel="stylesheet" href="~/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
+                               
+  <link rel="stylesheet" href="~/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+  <!-- Page CSS -->
+
+  <!-- Helpers -->
+  <script src="~/assets/vendor/js/helpers.js"></script>
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config: Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file. -->
+  <script src="~/assets/js/config.js"></script>
+</head>
+
+<body>
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <div class="app-brand demo">
+          <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+            <div class="avatar avatar-online">
+              <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
+            </div>
+          </a>
+          <h6 style="font-family: 'Tagawal', sans-serif;" class="app-brand-logo my-2 fw-semibold">اسم المؤسسة
+          </h6>
+        </div>
+        <div class="app-brand demo">
+          <h2 style="font-family: 'Tagawal', sans-serif;" class="app-brand-logo my-1 fw-semibold py-1">النظام المالي
+          </h2>
+
+        </div>
+
+        <div class="menu-divider mt-0"></div>
+
+        <div class="menu-inner-shadow"></div>
+
+        <ul class="menu-inner py-1">
+          <!-- Page -->
+          <li class="menu-item">
+            <a  asp-controller="Home" asp-action="Index" class="menu-link">
+              <i class="menu-icon icon-house me-2"></i>
+              <div>الرئيسية</div>
+            </a>
+          </li>
+          <!-- page list -->
+          <li class="menu-item ">
+            <a href="" class="menu-link menu-toggle">
+              <i class="menu-icon icon-calendar-check me-2"></i>
+              <div>تهيئة النظام </div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="FiscalYear" asp-action="Index" class="menu-link">
+                  <div>الفترةالمالية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item ">
+                <a asp-controller="Currency" asp-action="Index" class="menu-link">
+                  <div>العملات</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="CurrenciesExchangeRate" asp-action="Index" class="menu-link">
+                  <div>سعر صرف العملات</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- page list -->
+          <li class="menu-item open">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-file-invoice-dollar me-1"></i>
+              <div> المدخلات الاساسية</div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys4.html" class="menu-link">
+                  <div>الحسابات الختامية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="AccountingManual" asp-action="Index" class="menu-link">
+                  <div>الدليل المحاسبي</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item ">
+                <a asp-controller="Fund" asp-action="Index"  class="menu-link">
+                  <div>الصناديق</div>
+                </a>
+              </li>
+              <li class="menu-item active">
+                <a asp-controller="Bank" asp-action="Index" class="menu-link">
+                  <div>البنك</div>
+                </a>
+              </li>
+            </ul>
+          <li class="menu-item ">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-calculator me-1"></i>
+              <dev>العمليات</dev>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item ">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <div>قيد يومي</div>
+                </a>
+                <ul class="menu-sub">
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a asp-controller="journalEnteryr1" asp-action="Create" class="menu-link">
+                      <div>أضافة قيد يومي</div>
+                    </a>
+                  </li>
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a asp-controller="journalEnteryr1" asp-action="Index" class="menu-link">
+                      <div>استعراض القيود </div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- Page -->
+                <li class="menu-item ">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div>سند صرف </div>
+                  </a>
+                  <ul class="menu-sub">
+                    <!-- Page -->
+                    <li class="menu-item">
+                      <a asp-controller="ExpensVoucher" asp-action="Create" class="menu-link">
+                        <div>أضافة صرف نقداً</div>
+                      </a>
+                    </li>
+                     <li class="menu-item">
+                      <a asp-controller="CheckExpens" asp-action="Create" class="menu-link">
+                        <div>أضافة صرف شيك</div>
+                      </a>
+                    </li>
+                    <!-- Page -->
+                    <li class="menu-item ">
+                      <a asp-controller="ExpensVoucher" asp-action="Index" class="menu-link">
+                        <div>استعراض صرف نقداً </div>
+                      </a>
+                    </li>
+                      <li class="menu-item ">
+                      <a asp-controller="CheckExpens" asp-action="Index" class="menu-link">
+                        <div>استعراض صرف شيك </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- Page -->
+                <li class="menu-item  ">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div>سند قبض</div>
+                  </a>
+                  <ul class="menu-sub">
+                    <!-- Page -->
+                    <li class="menu-item ">
+                      <a asp-controller="PayCheckVoucher" asp-action="Create" class="menu-link">
+                        <div>اضافة قبض نقداً</div>
+                      </a>
+                    </li> 
+                    <li class="menu-item ">
+                      <a asp-controller="CheckPaycheck" asp-action="Create" class="menu-link">
+                        <div>اضافة قبض شيك</div>
+                      </a>
+                    </li>
+                    
+                    <!-- Page -->
+                    <li class="menu-item ">
+                      <a asp-controller="PayCheckVoucher" asp-action="Index" class="menu-link">
+                        <div>استعراض قبض نقداً</div>
+                      </a>
+                    </li>
+                     <li class="menu-item ">
+                      <a asp-controller="CheckPaycheck" asp-action="Index" class="menu-link">
+                        <div>استعراض  قبض شيك</div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- Page -->
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="CheckPaycheck" asp-action="Chequelist" class="menu-link">
+                  <div>استحقاق شيك</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- page list -->
+          <li class="menu-item">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-suitcase-rolling me-1"></i>
+              <div>التراحيل</div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="journalEnteryr1" asp-action="JournalStage" class="menu-link">
+                  <div>ترحيل القيود اليومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a  asp-controller="PayCheckVoucher" asp-action="Stagelist" class="menu-link">
+                  <div>ترحيل السندات النقدية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="CheckPaycheck" asp-action="Stagelist" class="menu-link">
+                  <div>ترحيل السندات البنكية</div>
+                </a>
+              </li>
+            </ul>
+            <!-- page list -->
+          <li class="menu-item">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-file-lines me-1"></i>
+              <div>التقارير</div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys18.html" class="menu-link">
+                  <div>دليل الحسابات</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys19.html" class="menu-link">
+                  <div>الأرصدةالافتتاحية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys20.html" class="menu-link">
+                  <div>حركة الصناديق</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys21.html" class="menu-link">
+                  <div>حركة البنوك</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys22.html" class="menu-link">
+                  <div>الميزانية العمومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys23.html" class="menu-link">
+                  <div>قائمة الارباح والخسائر</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys24.html" class="menu-link">
+                  <div>سندات الصرف</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys25.html" class="menu-link">
+                  <div>سندات القبض</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys26.html" class="menu-link">
+                  <div>القيوداليومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys27.html" class="menu-link">
+                  <div>دفتر اليومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <div>كشوفات الحسابات</div>
+                </a>
+                <ul class="menu-sub">
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a href="sys28.html" class="menu-link">
+                      <div>الحسابات الرئيسية</div>
+                    </a>
+                  </li>
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a href="sys29.html" class="menu-link">
+                      <div>الحسابات الفرعية</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <!-- page list -->
+          <li class="menu-item">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-user-gear me-2"></i>
+              <div>تهيئة المستخدمين </div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys30.html" class="menu-link">
+                  <div>الملف الشخصي</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                 <a href="/Accounts/Roles" class="menu-link">
+                  <div>إدارة المستخدمين</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="/Accounts/Registers" class="menu-link">
+                  <div> المستخدمين</div>
+                </a>
+              </li>
+
+            </ul>
+            <!-- Page -->
+          <li class="menu-item">
+            <a href="sys33.html" class="menu-link">
+              <i class="menu-icon icon-arrows-rotate me-1"></i>
+              <div>النسخة الاحتياطية</div>
+            </a>
+          </li>
+        </ul>
+
+      </aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+          <!-- Navbar -->
+
+        <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+          <div class="container-fluid">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- nav-->
+              <div class="navbar-nav align-items-center">
+                <h3 class="nav-item pt-3">البنوك</h3>
+
+              </div>
+              <!-- nav-->
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Notifications -->
+                <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-expanded="false">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge rounded-pill badge-notifications bg-danger">
+                      <!-- رقم الإشعارات -->
+                      1
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end py-0" data-bs-popper="none">
+                    <li class="dropdown-menu-header border-bottom">
+                      <div class="dropdown-header d-flex align-items-center py-3">
+                        <h5 class="text-body me-auto mb-0">الإشعارات</h5>
+                        <a href="javascript:void(0)" class="dropdown-notifications-all text-body"
+                          data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                          data-bs-original-title="Mark all as read" aria-label="Mark all as read"><i
+                            class="bx fs-4 bx-envelope-open"></i></a>
+                      </div>
+                    </li>
+                    <li class="dropdown-notifications-list scrollable-container ps ps--active-y">
+                      <ul class="list-group list-group-flush">
+                        <!-- قائمة الإشعارات -->
+                        <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                          <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">
+                              <div class="avatar">
+                                <!-- صورة الإشعار -->
+                                <img src="../~/assets/img/avatars/1.png"  class="w-px-40 h-auto rounded-circle" />
+                              </div>
+                            </div>
+                            <div class="flex-grow-1">
+                              <h6 class="mb-1">اسم الإشعار </h6>
+                              <p class="mb-0">جسم الإشعار</p>
+                              <small class="text-muted">قبل ساعة (الوقت)</small>
+                            </div>
+                            <div class="dropdown-notifications-actions flex-shrink-0">
+                              <a href="javascript:void(0)" class="dropdown-notifications-read"><span
+                                  class="badge badge-dot"></span></a>
+                              <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
+                                  class="bx bx-x"></span></a>
+                            </div>
+                          </div>
+                        </li>
+                        <!-- / نهاية قائمة الإشعارات -->
+                      </ul>
+                      <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                      </div>
+                      <div class="ps__rail-y" style="top: 0px; right: 0px; height: 440px;">
+                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 200px;"></div>
+                      </div>
+                    </li>
+                    <li class="dropdown-menu-footer border-top">
+                      <a href="javascript:void(0);" class="dropdown-item d-flex justify-content-center p-3">
+                        فتح قائمة الإشعارات
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- Notifications -->
+              
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
+                    </div>
+                  </a>
+             <ul class="dropdown-menu dropdown-menu-end">
+                  @if (signInManager.IsSignedIn(User))
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 me-3">
+                                                                <div class="avatar avatar-online">
+                                                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <span class="fw-semibold d-block lh-1">@((await userManager.GetUserAsync(User)).Name)</span>
+                                                                <small>Designer</small>
+                                                            </div>
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <div class="dropdown-divider"></div>
+                                                </li>
+                                                <li>
+
+
+                                  <form asp-action="Logout" asp-controller="Account" method="post">
+                                      
+                                       <a class="dropdown-item" href="/Account/Login">
+                                       <i class="bx bx-power-off me-2"></i>
+
+                                      <span class="align-middle">Log Out</span> </a>
+                                  </form>
+                                  
+                              </li>}
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <hr class="mt-0">
+        <!-- / Navbar -->
+            <!-- Content wrapper -->
+        <div style="padding-right: 69px;padding-left: 67px;padding-top: 68px;width: 1149px;margin-right: 58px;/* padding-bottom: 1000px; */margin-bottom: 2%;" class="card">
+
+   <div  class="card-header bg-primary text-Uppercase text-white" style="background-color:#41b38de6 !important " > 
+            <h4 style="color:#fff;">انشاء قيد يومي</h4>
+        </div>
+        <hr />
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="card">
+              <div class="table-responsive card-datatable">
+
+
+        <!-- Content wrapper -->
+      
+    
+
+        <form   form-light style="margin:1% ;text-align:left" asp-action="Create" enctype="multipart/form-data" dir="rtl">
+            
+           <div class="row">
+             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             <div class="col-md-6">
+                <div class="form-group">
+                <label asp-for="MainJouralEntNumber" class="control-label">رقم القيد اليومي</label>
+                <input asp-for="MainJouralEntNumber" readonly class="form-control" />
+                <span asp-validation-for="MainJouralEntNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                <label asp-for="JournalEnterieTypes" class="control-label">نوع القيد</label>
+                <select asp-for="JournalEnterieTypes" class="form-control"
+                 asp-items="@(new SelectList(ViewBag.JournalEnterieTypesList,"JournalEnterieTypesId","JournalEnteryName"))"></select>                
+                <span asp-validation-for="JournalEnterieTypes" class="text-danger"></span>
+                </div>
+
+            </div>
+                <div class="col-md-6">
+                <div class="form-group">
+                <label asp-for="MainJournalEnteriesAmount" class="control-label">إجمالي المبلغ</label>
+                <input asp-for="MainJournalEnteriesAmount" type="number" id="MainAmount" class="form-control" />
+                <span asp-validation-for="MainJournalEnteriesAmount" class="text-danger"></span>
+                </div>
+           </div>
+           <div class="col-md-6">
+                <div class="form-group">
+                <label asp-for="MainJournalReferenceNumber" class="control-label">رقم المرجع</label>
+                <input asp-for="MainJournalReferenceNumber" type="number" class="form-control" />
+                <span asp-validation-for="MainJournalReferenceNumber" class="text-danger"></span>
+                </div>
+           </div>
+            @*<div class="form-group">
+                <label asp-for="MainJournalDateTime" class="control-label">التاريخ &الوقت</label>
+                <input asp-for="MainJournalDateTime" class="form-control" />
+                <span asp-validation-for="MainJournalDateTime" class="text-danger"></span>
+            </div>*@
+            <div class="col-md-6">
+                <div class="form-group">
+                <label asp-for="MainPaycheckGlobalNote" class="control-label">ملاجظة عامة</label>
+                <input asp-for="MainPaycheckGlobalNote" class="form-control" />
+                <span asp-validation-for="MainPaycheckGlobalNote" class="text-danger"></span>
+                </div>
+            </div>
+            <div   class="form-group" >
+                <table id="ExpTable" class="table table-striped table-sm">
+                  <thead>
+                       <tr>
+                             <th>
+                                 رقم الحساب
+                            </th>
+                             <th>
+                                 أسم الحساب
+                              </th>
+                              <th>
+                                 نوع العملة
+                              </th>
+                               <th>
+                                 سعر التحويل
+                              </th>
+                              <th>
+                                 البيان
+                               </th>
+                               <th>
+                                  مدين محلي
+                               </th>
+                               <th>
+                                   دائن محلي
+                                </th>
+                                <th>
+                                     مدين أجنبي
+                                </th>
+                                <th>
+                                   دائن أجنبي
+                                </th>
+                                <th  style="left:90%;position:-webkit-sticky;">
+                                     الاجراء
+                                </th>
+            
+                                <th></th>
+                           </tr>
+                  </thead>
+                  <tbody>
+                       
+                         @for (int i=0;i< Model.DetailedJournalEnteries.Count;i++)
+                              {
+                                 
+         
+                                    <tr>
+                                       
+                                        <td>
+                                          <input readonly  id="NumbersAcccount-@i" class="form-control CreditChildAccount" />
+
+                                        </td>
+                                        <td>
+                                       @* <div class="modal fade" id="AccountsModal" role="dialog" data-url='@Url.Action("ManualAccountsPartialView","journalEnteryr1")'>
+
+                                        </div>*@
+                                             <input asp-for="DetailedJournalEnteries[i].CreditChildAccount"  hidden class="form-control" id="CreditAccountID-@i" />
+
+                                             <select onkeyup="AccountListKeyPress(event,this.id);" onchange="creditChildAccount(this.id);"  id="Acccount-@i"  class="form-control"
+                                                        asp-items="@(new SelectList(ViewBag.CreditChildAccountList,"AccNumber","ArabicAccName"))"></select> 
+
+                                              <span asp-validation-for="DetailedJournalEnteries[i].CreditChildAccount" class="text-danger"></span>
+                                        </td>
+                                        <td>
+                                    
+                                      
+                                                <select onchange="currChangeRate(this.id);"  id="currList-@i" asp-for="DetailedJournalEnteries[i].Currencies" class="form-control"   ></select> 
+                                              @*<select onchange="currChangeRate(this.id);"  id="currList-@i" asp-for="DetailedJournalEnteries[i].Currencies" class="form-control"
+                                                        asp-items="@(new SelectList(ViewBag.CurrenciesList,"CurrenciesId","CurrenName"))"></select> *@
+                                                        
+               
+                                        </td>
+                                        <td>
+                                            <input   type="number" readonly class="form-control" id="currRatecurrList-@i" />
+                                            <input asp-for="DetailedJournalEnteries[i].CurrenciesExchangeRate" hidden  type="text" readonly class="form-control" id="currRateRealcurrList-@i" />
+     
+
+                                        </td>
+                                        <td>
+
+                                            @Html.EditorFor(x=> x.DetailedJournalEnteries[i].DetailedournalDescription,new{htmlAttributes=new{@class="form-control"}})
+                                            <span asp-validation-for="DetailedJournalEnteries[i].DetailedournalDescription" class="text-danger"></span>
+                
+
+
+
+                                        </td>
+                                        <td>
+                                            <input asp-for="DetailedJournalEnteries[i].DebittAmountRly" type="number"   onblur="OnInputAmount(this.id);"  type="text"  class="form-control" id="DebitAmountRly-@i" />
+                                            <input     hidden  type="text"  class="form-control" id="hnDebitAmountRly-@i" />
+
+
+                 
+                                        </td>
+                                        <td>
+                                             <input asp-for="DetailedJournalEnteries[i].CreditAmountRly" type="number"   onblur="OnInputAmount(this.id);"  type="text"  class="form-control" id="CreditAmountRly-@i" />
+                                              <input     hidden  type="text"  class="form-control" id="hnCreditAmountRly-@i" />
+
+
+               
+                                        </td>
+                                        <td>
+                                            <input asp-for="DetailedJournalEnteries[i].DebittAmountUdo" readonly type="number"   onblur="OnInputAmountUdo(this.id);" type="text"  class="form-control" id="DebitAmountUdo-@i" />
+                                            <input     hidden  type="text"  class="form-control" id="hnDebitAmountUdo-@i" />
+
+              
+                                        </td>
+                                        <td>
+                                            <input asp-for="DetailedJournalEnteries[i].CreditAmountUdo" readonly type="number"  onblur="OnInputAmountUdo(this.id);" type="text"  class="form-control" id="CreditAmountUdo-@i" />
+                                            <input     hidden  type="text"  class="form-control" id="hnCreditAmountUdo-@i" />
+
+               
+                                        </td>
+                                        <td>
+                                            <button id="btndummy-@i" type="button" class="btn btn-outline-info invisible" style="left:95%;position:absolute;"> Dummy</button>
+                                            <button id="btnadd-@i" type="button" class="btn btn-outline-info visible" onclick="AddItem(this)" style="right:95%;position:absolute;"> اضافة</button>
+                                            <button id="btnremove-@i" type="button" class=" btn btn-danger invisible"  onclick="DeleteItem(this)" style="right:95%;position:absolute;"> حذف</button>
+
+                                        </td>
+                                       
+                                    </tr>
+                                    
+                               }
+                  </tbody> 
+                 </table>
+            </div>  
+             
+                <div class="modal fade modal" id="accountsList" >
+                    <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h4 class="modal-title" id="AddAccountLabel"> أختر حساب</h4>
+                                <button style="right:95%;position:absolute;" type="button" class="close" data-dismiss="modal">
+                                    <span>X</span>
+                                </button>
+
+                                </div>
+                                <div class="modal-body">
+                                <div >
+                                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                        <div>
+                                            <label class="control-label">ابحث بالاسم</label>
+
+                                            <input    type="text" placeholder="ابحث بالاسم"  class="form-control" id="searchIdName" />
+                                        </div>
+                                        <div>
+                                            <label class="control-label">ابحث بالرقم</label>
+
+                                            <input    type="text" placeholder="ابحث بالرقم"  class="form-control" id="searchIdNo" />
+                                        </div>
+                                    </div>
+                
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+           
+                                                    <th>
+                                                        رقم الحساب
+                                                    </th>
+                                                    <th>
+                                                        حالة الحساب
+                                                    </th>
+            
+                                                    <th>
+                                                        اسم الحساب
+                                                    </th>
+            
+                                                    <th>
+                                                        نوع الحساب
+                                                    </th>
+                                                    <th>
+                                                           @* <button onclick="CloseAccountListView();" type="button" class="close" data-dismiss="modal">
+                                                            <span>X</span>
+                                                            </button>*@
+                                                    </th>
+            
+           
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="AccBody">
+                                                @for (var item=0;item< ViewBag.CreditChildAccountList.Count;item++) {
+                                                <tr onclick="AccountSelect(@ViewBag.CreditChildAccountList[item].AccNumber);">
+            
+                                                    <td >
+                                                        <h8> @ViewBag.CreditChildAccountList[item].AccNumber</h8>
+                                                                          
+                                                    </td>
+            
+                                                    <td  id="idName">
+                                                        <h8> @ViewBag.CreditChildAccountList[item].ArabicAccName</h8>
+                                                                           
+                                                    </td>
+           
+                                                    <td>
+                                                        <h8> @ViewBag.CreditChildAccountList[item].AccStatus</h8>
+                                                                           
+                                                    </td>
+           
+                                                    <td>
+                                                        <h8> @ViewBag.CreditChildAccountList[item].AccType</h8>
+                                                                          
+                                                    </td>
+           
+                                               
+                                                    </tr>
+                                                    }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    </div>
+                                <div class="modal-footer">
+                                   @* <button type="button" class="btn btn-primary" data-dismiss="modal"> الغا </button>
+                                    <button type="button" class="btn btn-primary" data-save="modal"> حفظ </button>
+*@
+                                </div>
+    
+
+                                </div>
+    
+
+                    </div>
+    
+
+                </div>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> 
+                <tr>
+                    <td>
+                     <label  class="control-label">اجمالي الدائن </label>
+                     <input   value="0" readonly type="text"  class="form-control" id="TotalCreditAmount" />
+                   </td>
+                   <td>
+                     <label  class="control-label">اجمالي المدين </label>
+                     <input value="0" readonly type="text"  class="form-control" id="TotalDebitAmount" />
+                   </td>
+                   
+                    <td>
+                     <label  class="control-label">الفرق </label>
+                     <input value="0"  readonly  type="text"  class="form-control" id="TotalDifference" />
+                    </td>
+                     <td>
+                     <label  class="control-label">الوقت </label>
+                     <input readonly asp-for="MainJournalDateTime"    class="form-control"  />
+                   </td>
+                    <td>
+                     <label  class="control-label">المستخدم </label>
+                     <input asp-for="SystemUsers" readonly type="text"  class="form-control"  />
+                   </td>
+                </tr>
+                   
+
+
+
+            </div>
+            <input type="hidden"id="hdnLastIndex" value="0"  />
+             <input type="hidden"id="currentRow" value="0"  />
+            <input type="hidden"id="hdnLastRowIndex" value="0"  />
+            <div class="form-group">
+                <input id="submit" type="submit" disabled value="إضافة"  class="btn btn-primary" />
+                <a asp-action="Index">رجوع للقائمة</a>
+            </div>
+           </div>
+            
+        </form>
+    </div>
+    
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+
+    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+    <div class="drag-target"></div>
+
+  <!-- / Layout wrapper -->
+
+
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    
+        <script type="text/javascript">	
+		
+            /* هذه الفانكشن تقوم بحذف صف من صفوف الادخالات */
+        function DeleteItem(btn) {
+            const myArray=btn.id.split("");
+            var Lastindex=myArray[myArray.length-1];
+            console.log("this is the row index"+Lastindex);
+            OnInputAmountDelete(Lastindex);
+			$(btn).closest('tr').remove();
+        	var lastrowIdx = document.getElementById('hdnLastIndex').value;
+            document.getElementById('hdnLastIndex').value=eval(lastrowIdx)-1;
+            
+		        }
+
+             /* هذه تعمل على تغيير حالة من للقراءة فقط او السماح بالادخال في بعض الخانات التي يتم ادحال المبالغ فيها سواء كانت مجلية او أجنبية*/
+        function MakeInputReadOnly(state,Lastindex,isNewRow){
+             $("#DebitAmountRly-"+Lastindex).prop('readonly',state);       
+             $("#CreditAmountRly-"+Lastindex).prop('readonly',state);
+             if(isNewRow){
+                $("#DebitAmountUdo-"+Lastindex).prop('readonly',state); 
+            
+                 $("#CreditAmountUdo-"+Lastindex).prop('readonly',state);
+                 }
+             else{
+                 $("#DebitAmountUdo-"+Lastindex).prop('readonly',!state); 
+            
+                $("#CreditAmountUdo-"+Lastindex).prop('readonly',!state);
+                 }
+            
+
+                 console.log("add readOnly att");
+                 
+                 
+
+             }
+        ///نهيئة قائمة عملات الحسابات عند انشاء حساب جديد
+        function Re0moveAccountsCurrList(RowIndex){
+           // let row=document.getElementById("NumbersAcccount-"+RowIndex).value;
+            let items='';
+            $("#currList-"+RowIndex).html(items);
+        }
+              /* هذي الدالة تسمح بعمل حذف  كل بيانات الصف في حال تغيير العملة الاجنبية ايا كانت الى العملة المحلية */
+        function ResetAllRowFields(RowIndex){
+          OnInputAmountDelete(RowIndex);
+
+            document.getElementById('DebitAmountRly-'+RowIndex).value= '';
+            document.getElementById('CreditAmountRly-'+RowIndex).value= '';
+            document.getElementById('DebitAmountUdo-'+RowIndex).value= '';
+            document.getElementById('CreditAmountUdo-'+RowIndex).value= '';
+
+             }
+             
+              /* هذي الدالة تسمح بتغيير سعر الصرف حسب اخنيار العملة من القائمة الموضجة اعلاة */     
+       function currChangeRate(x){
+            const myArray=x.split("");
+            var Lastindex=myArray[myArray.length-1];
+           
+             var displayCurrRate=$("#"+x+"  " +"option:selected").val();
+             console.log(displayCurrRate);
+             if($("#"+x+"  " +"option:selected").text()=="يمني"){
+                 ResetAllRowFields(Lastindex);
+                 MakeInputReadOnly(false,Lastindex,false);
+
+             }else{
+                MakeInputReadOnly(true,Lastindex,false);
+                
+              
+             }
+              //var currChangeRateList=[];
+             $.ajax({
+                type: "GET",
+                dataType:"json",
+                url: "/journalEnteryr1/GeturrExchange",
+                 success: function (data) {
+            
+                  var currChangeRateList=data;
+                  console.log(currChangeRateList);
+                   for(var i=0;i<currChangeRateList.length; i++){
+                       
+
+                   if(currChangeRateList[i]["Currencies"]==displayCurrRate){
+                        console.log( "current currency id "+currChangeRateList[i]["Currencies"]);
+                       document.getElementById('currRate'+x).value=parseInt(currChangeRateList[i]["CurreExchangeRate"]);
+                      document.getElementById('currRateReal'+x).value=parseInt(currChangeRateList[i]["CurrenciesExchangeRateId"]);
+                         }
+                   
+               }
+                            },
+                error:function(data){
+                    console.error(data);
+                }
+                   
+                  
+                     })
+          
+           
+          }
+          
+         /* هنا يتم اسناد القيمة الفعلية التي تخص الحساب الدائن او المدين في كل صف وذلك يحدث عند اختيار اي مستخد من القائمة التي تظهر في كل صف */
+       function creditChildAccount(x){
+                const myArray=x.split("");
+                var rowIndex=myArray[myArray.length-1];
+                var AccNumber=$("#"+x+"  " +"option:selected").val();
+                $("#Numbers"+x).val(AccNumber);
+                 $("#CreditAccountID-"+rowIndex).val(AccNumber);
+                console.log("RowIndex is : "+rowIndex);
+
+                 // استدعاء عملات حساب من جدول عملات الحسابات 
+                      let AccounId =  document.getElementById('CreditAccountID-'+rowIndex).value;
+                      $.ajax({
+                            type: "GET",
+                            url: "/journalEnteryr1/FetchAccountCurrs",
+                             data: { AccountNo: AccNumber },
+                             success: function (data) {
+                              let items = '';
+                                $.each(data, function (i, AccountsCurr) {
+                                 items += '<option value="' + AccountsCurr.value + '">' + AccountsCurr.text + "</option>";
+                    
+                                });
+                                 $("#currList-"+rowIndex).html(items);
+                 
+                             },
+                              error:function(data){
+                              console.error(data);
+                                     }
+
+                      })
+                /* $.ajax({
+                  type: "GET",
+                     dataType:"json",
+                     url: "/journalEnteryr1/GetDibitAccount",
+                     success: function (data) {
+             
+            
+                        var AccountList=data;
+                        for(var i=0;i<AccountList.length; i++){
+                       
+
+                     if(AccountList[i]["AccNumber"]==AccNumber){
+                       document.getElementById('CreditAccountID-'+rowIndex).value=AccountList[i]["AccNumber"];
+                      console.log(document.getElementById('CreditAccountID-'+rowIndex).value);
+
+                       // استدعاء عملات حساب من جدول عملات الحسابات 
+                         let AccounId =  document.getElementById('CreditAccountID-'+rowIndex).value;
+                         $.ajax({
+                            type: "GET",
+                            url: "/journalEnteryr1/FetchAccountCurrs",
+                             data: { AccountNo: AccNumber },
+                             success: function (data) {
+                              let items = '';
+                                $.each(data, function (i, AccountsCurr) {
+                                 items += '<option value="' + AccountsCurr.value + '">' + AccountsCurr.text + "</option>";
+                    
+                                });
+                                 $("#currList-"+rowIndex).html(items);
+                 
+                             },
+                              error:function(data){
+                              console.error(data);
+                                     }
+
+                         })
+                         }
+                   
+                     }
+                
+
+                
+                     }
+
+                     })*/
+                  $('input[type="number"]').keyup();
+              
+                 }
+        
+          /* هذي الدالة تسمح باضافة صف جديد عند النقر على زر اضافة صف جديد */
+        function AddItem(btn) {
+             $("#submit").prop('disabled',true);
+			var table = document.getElementById('ExpTable');
+			var rows = table.getElementsByTagName('tr');
+
+			var rowOuterHtml = rows[rows.length - 1].outerHTML;
+
+			var lastrowIdx = document.getElementById('hdnLastRowIndex').value;
+
+			var nextrowIdx = eval(lastrowIdx) + 1;
+
+			document.getElementById('hdnLastRowIndex').value = nextrowIdx;
+            
+            var TotalRows=document.getElementById('hdnLastIndex').value;
+            document.getElementById('hdnLastIndex').value=eval(TotalRows)+1;
+
+			rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
+			rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
+			rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
+
+			var newRow = table.insertRow();
+			newRow.innerHTML = rowOuterHtml;
+            MakeInputReadOnly(false,nextrowIdx,false);
+             //call this function to reset the data of the accounts currinces list from the dropDown list
+            Re0moveAccountsCurrList(nextrowIdx);
+
+
+			var btnAddID = btn.id;
+			var btnDeleteid = btnAddID.replaceAll('btnadd', 'btnremove');
+
+			var delbtn = document.getElementById(btnDeleteid);
+			delbtn.classList.add("visible");
+			delbtn.classList.remove("invisible");
+
+
+			var adDbtn = document.getElementById(btnAddID);
+			adDbtn.classList.remove("visible");
+			adDbtn.classList.add("invisible");
+            console.log(btnAddID+"btnAddddddd");
+             $('input[type="number"]').keyup();
+
+		    }
+        
+            function OnInputAmountUdo(id){
+            const myArray=id.split("");
+            var Lastindex=myArray[myArray.length-1];
+            var Firstindex=myArray[0];
+
+            var currsListId=$("#currList-"+Lastindex+"  " +"option:selected").val();
+
+
+            if( $("#currList-"+Lastindex+"  " +"option:selected").text()=='يمني' || currsListId==-1 ){ 
+                //alert("الرجاء تحديد العملة الاجنبية من فضلك ....!");
+            }
+            else{
+            var currencyChangeRate= parseFloat(document.getElementById('currRatecurrList-'+Lastindex).value);
+            //console.log(currencyChangeRate+"this the currency rateing");
+            if(Firstindex=='C'){
+                var CreditAmountUdo=parseFloat(document.getElementById(id).value)?parseFloat(document.getElementById(id).value):0;
+                var tempNumber=currencyChangeRate*CreditAmountUdo;
+                document.getElementById('CreditAmountRly-'+Lastindex).value=tempNumber?tempNumber:0;
+                 console.log("this the Credit Amount Udo"+ document.getElementById('CreditAmountRly-'+Lastindex).value);
+
+                OnInputAmount('CreditAmountRly-'+Lastindex);
+            }else{
+                var DebitAmountUdo=parseFloat(document.getElementById(id).value)?parseFloat(document.getElementById(id).value):0;
+                 var tempNumber=currencyChangeRate * DebitAmountUdo;
+                document.getElementById('DebitAmountRly-'+Lastindex).value=tempNumber>0?tempNumber:0;
+             console.log("this the Credit Amount Udo"+ document.getElementById('CreditAmountRly-'+Lastindex).value);
+
+                OnInputAmount('DebitAmountRly-'+Lastindex);
+            }
+
+          
+            }
+
+            
+           
+            /* هذي الدالة التي تقوم بتحديث القيم التي يتم ادحالها في خانات المبالغ في كل صف من اجل تحديث القيم الخاصة باجمالي الدائن والمدين والفرق */                         }
+       
+            function OnInputAmount(inputId){
+           const myArray=inputId.split("");
+           var FirstindexLitter=myArray[0];
+           var Lastindex=myArray[myArray.length-1];
+           var TotalAmountsDiff =0;
+           var Total=0;
+            var checkIsNull=0;
+              
+              
+       
+            var heddinAmount=parseFloat(document.getElementById("hn"+inputId).value)?parseFloat(document.getElementById("hn"+inputId).value):0;
+         
+           if(FirstindexLitter=='C'){
+            var creditAmount=parseFloat(document.getElementById(inputId).value)?parseFloat(document.getElementById(inputId).value):0;
+
+                     if(heddinAmount!=creditAmount){
+                         if(parseFloat(document.getElementById('TotalCreditAmount').value)>0){
+                              var tempTotal= parseFloat(document.getElementById('TotalCreditAmount').value)-heddinAmount ;
+                                 document.getElementById('TotalCreditAmount').value =tempTotal>=0?tempTotal:0;
+                         }
+                
+                          Total=creditAmount +parseFloat(document.getElementById('TotalCreditAmount').value) ;
+                          document.getElementById("hn"+inputId).value=creditAmount;
+                             console.log("the HN"+inputId+creditAmount);
+
+                            document.getElementById('TotalCreditAmount').value =Total>=0?Total:0;
+
+                         }
+                     if(creditAmount==0 && heddinAmount!=0){
+                          Total= parseFloat(document.getElementById('TotalCreditAmount').value)-heddinAmount ;
+                          document.getElementById("hn"+inputId).value=creditAmount;
+                             console.log("the HN"+inputId+creditAmount);
+
+                          document.getElementById('TotalCreditAmount').value =Total>=0?Total:0;
+                   
+                             }
+
+                
+                         }
+                 else{
+            var DebitAmount=parseFloat(document.getElementById(inputId).value)?parseFloat(document.getElementById(inputId).value):0;
+
+                    if(heddinAmount!=DebitAmount){
+
+                         if(parseFloat(document.getElementById('TotalDebitAmount').value)>0){
+                              var tempTotal= parseFloat(document.getElementById('TotalDebitAmount').value)-heddinAmount ;
+                  document.getElementById('TotalDebitAmount').value =tempTotal>=0?tempTotal:0;
+                         }
+                   document.getElementById("hn"+inputId).value=DebitAmount;
+                   console.log("the HN"+inputId+DebitAmount);
+
+                         Total=DebitAmount +parseFloat(document.getElementById('TotalDebitAmount').value)  ;
+
+                  document.getElementById('TotalDebitAmount').value = Total>=0?Total:0;
+
+
+                    }
+                     if(DebitAmount==0 && heddinAmount!=0){
+                   console.log("the HN"+inputId+DebitAmount);
+
+                         Total= parseFloat(document.getElementById('TotalDebitAmount').value)- heddinAmount;
+                        document.getElementById("hn"+inputId).value=DebitAmount;
+
+
+                  document.getElementById('TotalDebitAmount').value = Total>=0?Total:0;
+
+
+
+                    }
+              
+                     }
+                  TotalAmountsDiff=Math.abs( document.getElementById('TotalCreditAmount').value-document.getElementById('TotalDebitAmount').value);
+                     document.getElementById('TotalDifference').value= TotalAmountsDiff;
+                 $('input[type="number"]').keyup();
+
+    
+                  }
+             $('MainAmount').keyup();
+            
+              /*هذه الدالة تقوم بتحديث الخانات عند حذف مبالغ من الخانات المخصصة لها او عند حذف صف او تحديث عملة وغيرها */
+        function OnInputAmountDelete(deletedItem){
+                var Total=0;
+                var TotalAmountsDiff=0;
+                 var creditAmount=parseFloat(document.getElementById("CreditAmountRly-"+deletedItem).value)?parseFloat(document.getElementById("CreditAmountRly-"+deletedItem).value):0;
+                  Total=parseFloat(document.getElementById('TotalCreditAmount').value) -  creditAmount;
+                  document.getElementById('TotalCreditAmount').value=Total>=0?Total:0;
+
+           
+                var debitAmount=parseFloat(document.getElementById("DebitAmountRly-"+deletedItem).value)?parseFloat(document.getElementById("DebitAmountRly-"+deletedItem).value):0;
+
+                    Total=parseFloat(document.getElementById('TotalDebitAmount').value) - debitAmount ;
+                  document.getElementById('TotalDebitAmount').value=Total>=0?Total:0;
+
+           
+                  TotalAmountsDiff=Math.abs( document.getElementById('TotalCreditAmount').value-document.getElementById('TotalDebitAmount').value);
+                  document.getElementById('TotalDifference').value= TotalAmountsDiff;
+                 $('input[type="number"]').keyup();
+
+                 }
+                //Disabling and enableing the submit key
+                    $('input[type="number"]').keyup(function(){//CreditChildAccount
+                        var ThereAccountNumbers=true;
+                     if(document.getElementById('TotalDifference').value==0 && document.getElementById('TotalDebitAmount').value==document.getElementById('MainAmount').value && document.getElementById('TotalDebitAmount').value >0 ){
+                            /* rows.forEach((singleRow) =>{
+                            var tempVar=singleRow.querySelector(".CreditChildAccount");
+                            var state= parseFloat(singleRow.getElementsByClassName('CreditChildAccount').value)?parseFloat(singleRow.getElementsByClassName('CreditChildAccount').value):0;
+                            console.log(tempVar.value+"Stste is : ");
+                            if(state >0){
+                               ThereAccountNumbers=true;
+                            }else
+                            {
+                               ThereAccountNumbers=false;
+                            }
+             
+
+                            });*/
+                            $('.CreditChildAccount').map(function(i,c){
+                            // $(c).prop('checked',true);
+                             console.log("Stste is :   - " +eval($(c).val()));
+                             var tempNo=eval($(c).val())?eval($(c).val()):0;
+                              if(tempNo==0  ){
+                               ThereAccountNumbers=false;
+                               console.log(ThereAccountNumbers+" ----");
+                            }
+                            
+                             });
+
+                        if(ThereAccountNumbers==true){
+                             // $("#submit").disabled=!$("#submit").disabled;
+                             var isDisAbled=$("#submit").is(":disabled");
+                             console.log("the submit button is  : "+isDisAbled);
+                             if(isDisAbled){
+                                  $("#submit").prop('disabled',true);
+                             }else{
+
+                             }
+                                  $("#submit").prop('disabled',false);
+                              
+                             
+                        }
+                        //alert("------ الجانب المدين يجب أن يكون متساويا مع الجانب الدائن");
+                      }
+                     else{
+                         $("#submit").prop('disabled',true);
+                    }
+                    })
+
+       
+    //هذه الفانكشن تتنفذ ضغد عللى زر أف 9 من اجل استعراض جميع الحسابات
+    function AccountListKeyPress(keyPress,btn){
+       
+        const myArray=btn.split("");
+        var rowIndex=myArray[myArray.length-1];
+        document.getElementById('currentRow').value=rowIndex;
+         console.log( document.getElementById('currentRow').value);
+        if(event.which==120){
+         $('#accountsList').modal('show');
+          var isDisplayed= document.getElementById('accountsList').style.display;
+          
+           
+            if(isDisplayed==="none"){
+                document.getElementById('accountsList').style.display="block"
+            }else{
+                document.getElementById('accountsList').style.display="none"
+            }
+            
+            }
+         
+        }
+      /*  هذي الدالة تقوم بعمل فلارة للحسابات التي يتم جلبها من الدليل المحاسبي ويعمل اختيار لاي حساب ويتم تحديث خانات الاسم الحساب ورقم الحساب في الصف المحدد*/
+    function AccountSelect(AccountNo){
+        var currentRow=document.getElementById('currentRow').value;
+        document.getElementById('Acccount-'+currentRow).value=AccountNo;
+        document.getElementById('currentRow').value=0;
+         $('#accountsList').modal('toggle');
+        creditChildAccount('Acccount-'+currentRow);
+         }
+   
+    const searchInputName= document.getElementById('searchIdName');
+    const searchInputNumber= document.getElementById('searchIdNo');
+    const rows= document.querySelectorAll('#AccBody tr');
+     /*  هذه الفانكشن تعمل على البحث باسم الحساب داحل الجدول الذي يظهر من اجل اخيار حساب من حسابات الدليل المحاسبي  */
+     searchInputName.addEventListener('keyup',function(event){
+         const q= event.target.value.toLowerCase();
+         rows.forEach((singleRow) =>{
+             
+            var state= singleRow.querySelector("#idName").textContent.toLowerCase().indexOf(q);
+            if(state>-1){
+                singleRow.style.display=""
+            }else
+            {
+                singleRow.style.display="none";
+            }
+             
+
+         });
+         });
+        /*  هذه الفانكشن تعمل على البحث برقم الحساب داحل الجدول الذي يظهر من اجل اخيار حساب من حسابات الدليل المحاسبي  */
+
+     searchInputNumber.addEventListener('keyup',function(event){
+         const q= event.target.value.toLowerCase();
+         rows.forEach((singleRow) =>{
+             
+            var state= singleRow.querySelector("td").textContent.toLowerCase().indexOf(q);
+             
+            if(state>-1){
+                singleRow.style.display=""
+            }else
+            {
+                singleRow.style.display="none";
+            }
+             
+
+         });
+         });
+     
+         function CloseAccountListView(){
+       document.getElementById('accountsList').style.display="none"
+         } 
+
+         
+     
+	</script>
+    
+
+
+  <!-- Core JS -->
+  <!-- build:js ~/assets/vendor/js/core.js -->
+  <script src="~/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="~/assets/vendor/libs/popper/popper.js"></script>
+  <script src="~/assets/vendor/js/bootstrap.js"></script>
+  <script src="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="~/assets/vendor/libs/hammer/hammer.js"></script>
+  <script src="~/assets/vendor/js/menu.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  <script src="~/assets/vendor/libs/datatables/jquery.dataTables.js"></script>
+  <script src="~/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+  <script src="~/assets/vendor/libs/datatables-responsive/datatables.responsive.js"></script>
+  <script src="~/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js"></script>
+  <script src="~/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js"></script>
+  <script src="~/assets/vendor/libs/datatables-buttons/buttons.html5.js"></script>
+  <script src="~/assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
+
+  <!-- Main JS -->
+  <script src="~/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="~/pages1/sys11.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+

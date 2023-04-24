@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="rtl" data-theme="theme-default"
+  data-assets-path="~/accounts/assets/" data-template="vertical-menu-template-no-customizer-starter">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>إدارةالمستخدمين</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="~/accounts/assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" /> -->
+
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="~/accounts/assets/vendor/fonts/boxicons.css" />
+  <!-- <link rel="stylesheet" href="~/accounts/assets/vendor/fonts/fontawesome.css" /> -->
+  <!-- <link rel="stylesheet" href="~/accounts/assets/vendor/fonts/flag-icons.css" /> -->
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="~/accounts/assets/vendor/css/rtl/core.css" />
+  <link rel="stylesheet" href="~/accounts/assets/vendor/css/rtl/theme-default.css" />
+  <link rel="stylesheet" href="~/accounts/assets/css/demo.css" />
+  <link rel="stylesheet" href="../css/main.css" />
+
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="~/accounts/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+  <link rel="stylesheet" href="~/accounts/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+  <link rel="stylesheet" href="~/accounts/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+  <link rel="stylesheet" href="~/accounts/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
+
+  <!-- Page CSS -->
+
+  <!-- Helpers -->
+  <script src="~/accounts/assets/vendor/js/helpers.js"></script>
+
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config: Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file. -->
+  <script src="~/accounts/assets/js/config.js"></script>
+</head>
+
+<body>
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <div class="app-brand demo">
+          <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+            <div class="avatar avatar-online">
+              <img src="~/accounts/assets/img/avatars/1.png" alt class="rounded-circle" />
+            </div>
+          </a>
+          <h6 style="font-family: 'Tagawal', sans-serif;" class="app-brand-logo my-2 fw-semibold">اسم المؤسسة
+          </h6>
+        </div>
+        <div class="app-brand demo">
+          <h2 style="font-family: 'Tagawal', sans-serif;" class="app-brand-logo my-1 fw-semibold py-1">النظام المالي
+          </h2>
+
+        </div>
+
+        <div class="menu-divider mt-0"></div>
+
+        <div class="menu-inner-shadow"></div>
+
+        <ul class="menu-inner py-1">
+          <!-- Page -->
+          <li class="menu-item">
+            <a href="../home.html" class="menu-link">
+              <i class="menu-icon icon-house me-2"></i>
+              <div>الرئيسية</div>
+            </a>
+          </li>
+          <!-- page list -->
+          <li class="menu-item ">
+            <a href="" class="menu-link menu-toggle">
+              <i class="menu-icon icon-calendar-check me-2"></i>
+              <div>تهيئة النظام </div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="FiscalYear" asp-action="Index" class="menu-link">
+                  <div>الفترةالمالية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys2.html" class="menu-link">
+                  <div>العملات</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item ">
+                <a asp-controller="CurrenciesExchangeRate" asp-action="Index" class="menu-link">
+                  <div>سعر صرف العملات</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- page list -->
+          <li class="menu-item">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-file-invoice-dollar me-1"></i>
+              <div> المدخلات الاساسية</div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys4.html" class="menu-link">
+                  <div>الحسابات الختامية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="AccountingManual" asp-action="Index" class="menu-link">
+                  <div>الدليل المحاسبي</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys6.html" class="menu-link">
+                  <div>الصناديق</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="sys7.html" class="menu-link">
+                  <div>البنك</div>
+                </a>
+              </li>
+            </ul>
+          <li class="menu-item">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-calculator me-1"></i>
+              <div>العمليات</div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item ">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <div>قيد يومي</div>
+                </a>
+                <ul class="menu-sub">
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a asp-controller="journalEnteryr1" asp-action="Create" class="menu-link">
+                      <div>أضافة قيد يومي</div>
+                    </a>
+                  </li>
+                  <!-- Page -->
+                  <li class="menu-item ">
+                    <a asp-controller="journalEnteryr1" asp-action="Index" class="menu-link">
+                      <div>استعراض القيود </div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- Page -->
+              <li class="menu-item ">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <div>سند صرف </div>
+                </a>
+                <ul class="menu-sub">
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a asp-controller="ExpensVoucher" asp-action="Create" class="menu-link">
+                      <div>أضافة سند صرف</div>
+                    </a>
+                  </li>
+                  <!-- Page -->
+                  <li class="menu-item ">
+                    <a asp-controller="ExpensVoucher" asp-action="Index" class="menu-link">
+                      <div>استعراض سند صرف </div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <div>سند قبض</div>
+                </a>
+                <ul class="menu-sub">
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a href="sys12.html" class="menu-link">
+                      <div>اضافة سند قبض</div>
+                    </a>
+                  </li>
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a href="sys13.html" class="menu-link">
+                      <div>استعراض سند قبض</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="CheckPaycheck" asp-action="Chequelist" class="menu-link">
+                  <div>استحقاق شيك</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- page list -->
+          <li class="menu-item">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-suitcase-rolling me-1"></i>
+              <div>التراحيل</div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="journalEnteryr1" asp-action="JournalStage" class="menu-link">
+                  <div>ترحيل القيود اليومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a  asp-controller="PayCheckVoucher" asp-action="Stagelist" class="menu-link">
+                  <div>ترحيل السندات النقدية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="CheckPaycheck" asp-action="Stagelist" class="menu-link">
+                  <div>ترحيل السندات البنكية</div>
+                </a>
+              </li>
+            </ul>
+            <!-- page list -->
+          <li class="menu-item ">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-file-lines me-1"></i>
+              <div>التقارير</div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys18.html" class="menu-link">
+                  <div>دليل الحسابات</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys19.html" class="menu-link">
+                  <div>الأرصدةالافتتاحية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys20.html" class="menu-link">
+                  <div>حركة الصناديق</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys21.html" class="menu-link">
+                  <div>حركة البنوك</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys22.html" class="menu-link">
+                  <div>الميزانية العمومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys23.html" class="menu-link">
+                  <div>قائمة الارباح والخسائر</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys24.html" class="menu-link">
+                  <div>سندات الصرف</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys25.html" class="menu-link">
+                  <div>سندات القبض</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys26.html" class="menu-link">
+                  <div>القيوداليومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys27.html" class="menu-link">
+                  <div>دفتر اليومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <div>كشوفات الحسابات</div>
+                </a>
+                <ul class="menu-sub">
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a href="sys28.html" class="menu-link">
+                      <div>الحسابات الرئيسية</div>
+                    </a>
+                  </li>
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a href="sys29.html" class="menu-link">
+                      <div>الحسابات الفرعية</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <!-- page list -->
+          <li class="menu-item open">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-user-gear me-2"></i>
+              <div>تهيئة المستخدمين </div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="sys30.html" class="menu-link">
+                  <div>الملف الشخصي</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item active">
+                <a href="sys31.html" class="menu-link">
+                  <div>إدارة المستخدمين</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a id="register" asp-area="Identity" asp-page="/Account/Register" class="menu-link">
+                  <div>اضافة حساب</div>
+                </a>
+              </li>
+
+            </ul>
+            <!-- Page -->
+          <li class="menu-item">
+            <a href="sys33.html" class="menu-link">
+              <i class="menu-icon icon-arrows-rotate me-1"></i>
+              <div>النسخة الاحتياطية</div>
+            </a>
+          </li>
+        </ul>
+
+
+      </aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+          <div class="container-fluid">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- nav-->
+              <div class="navbar-nav align-items-center">
+                <h3 class="nav-item pt-3">تهيئة مستخدمي النظام</h3>
+
+              </div>
+              <!-- nav-->
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Notifications -->
+                <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-expanded="false">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge rounded-pill badge-notifications bg-danger">
+                      <!-- رقم الإشعارات -->
+                      1
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end py-0" data-bs-popper="none">
+                    <li class="dropdown-menu-header border-bottom">
+                      <div class="dropdown-header d-flex align-items-center py-3">
+                        <h5 class="text-body me-auto mb-0">الإشعارات</h5>
+                        <a href="javascript:void(0)" class="dropdown-notifications-all text-body"
+                          data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                          data-bs-original-title="Mark all as read" aria-label="Mark all as read"><i
+                            class="bx fs-4 bx-envelope-open"></i></a>
+                      </div>
+                    </li>
+                    <li class="dropdown-notifications-list scrollable-container ps ps--active-y">
+                      <ul class="list-group list-group-flush">
+                        <!-- قائمة الإشعارات -->
+                        <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                          <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">
+                              <div class="avatar">
+                                <!-- صورة الإشعار -->
+                                <img src="../~/accounts/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              </div>
+                            </div>
+                            <div class="flex-grow-1">
+                              <h6 class="mb-1">اسم الإشعار </h6>
+                              <p class="mb-0">جسم الإشعار</p>
+                              <small class="text-muted">قبل ساعة (الوقت)</small>
+                            </div>
+                            <div class="dropdown-notifications-actions flex-shrink-0">
+                              <a href="javascript:void(0)" class="dropdown-notifications-read"><span
+                                  class="badge badge-dot"></span></a>
+                              <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
+                                  class="bx bx-x"></span></a>
+                            </div>
+                          </div>
+                        </li>
+                        <!-- / نهاية قائمة الإشعارات -->
+                      </ul>
+                      <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                      </div>
+                      <div class="ps__rail-y" style="top: 0px; right: 0px; height: 440px;">
+                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 200px;"></div>
+                      </div>
+                    </li>
+                    <li class="dropdown-menu-footer border-top">
+                      <a href="javascript:void(0);" class="dropdown-item d-flex justify-content-center p-3">
+                        فتح قائمة الإشعارات
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- Notifications -->
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="~/accounts/assets/img/avatars/1.png" alt class="rounded-circle" />
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <img src="~/accounts/assets/img/avatars/1.png" alt class="rounded-circle" />
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block lh-1">Shihab Al-Arifi</span>
+                            <small>Designer</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <hr class="mt-0">
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+          <!-- Content -->
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="card w-25 mx-auto mt-5">
+              <form class="browser-default-validation mt-0 formAuthentication">
+                <!-- body -->
+                <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+                  <div class="mb-3">
+
+                    <div class="col my-4">
+                      <div class="col-12 text-center">
+                        <input type="file" hidden class="form-control" id="file_pic" aria-describedby="file_pic" />
+                        <label for="file_pic"><i class="menu-icon icon-file-invoice-dollar me-1"></i>
+                        </label>
+                        <div class=" col-12 text-center my-2">
+
+                          <label for="file_pic">
+                            الملف الشخصي</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                      <span class="input-group-text" id="Username"><i
+                          class="menu-icon icon-file-invoice-dollar me-1"></i></span>
+                      <input type="text" class="form-control" placeholder="اسم المستخدم" aria-label="Username"
+                        aria-describedby="Username">
+                    </div>
+
+                    <div class="input-group mb-3">
+                      <span class="input-group-text" id="oldpassword"><i
+                          class="menu-icon icon-file-invoice-dollar me-1"></i></span>
+                      <input type="password" class="form-control" placeholder="كلمة المرور " aria-label="oldpassword"
+                        aria-describedby="oldpassword">
+                    </div>
+                  </div>
+
+                  <!-- / Content -->
+                  <button type="submit" class="btn btn-primary mb-2 d-grid w-100">دخول</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+  </div>
+  <!-- / Layout page -->
+  </div>
+
+  <!-- Overlay -->
+  <div class="layout-overlay layout-menu-toggle"></div>
+
+  <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+  <div class="drag-target"></div>
+  </div>
+  <!-- / Layout wrapper -->
+
+  <!-- Core JS -->
+  <!-- build:js ~/accounts/assets/vendor/js/core.js -->
+  <script src="~/accounts/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="~/accounts/assets/vendor/libs/popper/popper.js"></script>
+  <script src="~/accounts/assets/vendor/js/bootstrap.js"></script>
+  <script src="~/accounts/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="~/accounts/assets/vendor/libs/hammer/hammer.js"></script>
+  <script src="~/accounts/assets/vendor/js/menu.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  <script src="~/accounts/assets/vendor/libs/datatables/jquery.dataTables.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-responsive/datatables.responsive.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-buttons/buttons.html5.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
+
+  <!-- Main JS -->
+  <script src="~/accounts/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="sys28.js"></script>
+</body>
+
+</html>

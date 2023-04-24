@@ -1,0 +1,87 @@
+@font-face {
+  font-family: 'fa-icons';
+  src: url('../font/fa-icons.eot?19680381');
+  src: url('../font/fa-icons.eot?19680381#iefix') format('embedded-opentype'),
+       url('../font/fa-icons.woff2?19680381') format('woff2'),
+       url('../font/fa-icons.woff?19680381') format('woff'),
+       url('../font/fa-icons.ttf?19680381') format('truetype'),
+       url('../font/fa-icons.svg?19680381#fa-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fa-icons';
+    src: url('../font/fa-icons.svg?19680381#fa-icons') format('svg');
+  }
+}
+*/
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fa-icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: never;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-gear-solid:before { content: '\e800'; } /* '' */
+.icon-gift-solid:before { content: '\e801'; } /* '' */
+.icon-house-solid:before { content: '\e802'; } /* '' */
+.icon-location-dot-solid:before { content: '\e803'; } /* '' */
+.icon-magnifying-glass-solid:before { content: '\e804'; } /* '' */
+.icon-minus-solid:before { content: '\e805'; } /* '' */
+.icon-pen-to-square-solid:before { content: '\e806'; } /* '' */
+.icon-plus-solid:before { content: '\e807'; } /* '' */
+.icon-print-solid:before { content: '\e808'; } /* '' */
+.icon-screwdriver-wrench-solid:before { content: '\e809'; } /* '' */
+.icon-shapes-solid:before { content: '\e80a'; } /* '' */
+.icon-star-half-stroke-solid:before { content: '\e80b'; } /* '' */
+.icon-star-regular:before { content: '\e80c'; } /* '' */
+.icon-star-solid:before { content: '\e80d'; } /* '' */
+.icon-trash-can-solid:before { content: '\e80e'; } /* '' */
+.icon-user-gear-solid:before { content: '\e80f'; } /* '' */
+.icon-arrow-right-arrow-left-solid:before { content: '\e810'; } /* '' */
+.icon-bag-shopping-solid:before { content: '\e811'; } /* '' */
+.icon-bars-solid:before { content: '\e812'; } /* '' */
+.icon-bell-regular:before { content: '\e813'; } /* '' */
+.icon-bell-solid:before { content: '\e814'; } /* '' */
+.icon-box-solid:before { content: '\e815'; } /* '' */
+.icon-building-solid:before { content: '\e816'; } /* '' */
+.icon-calendar-days-solid:before { content: '\e817'; } /* '' */
+.icon-caret-down-solid:before { content: '\e818'; } /* '' */
+.icon-clipboard-check-solid:before { content: '\e819'; } /* '' */
+.icon-clipboard-solid:before { content: '\e81a'; } /* '' */
+.icon-clock-rotate-left-solid:before { content: '\e81b'; } /* '' */
+.icon-file-lines-solid:before { content: '\e81c'; } /* '' */
+.icon-dollar-sign-solid:before { content: '\e81d'; } /* '' */
+.icon-ellipsis-vertical-solid:before { content: '\e83c'; } /* '' */

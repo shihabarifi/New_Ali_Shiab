@@ -1,0 +1,36 @@
+/* @import url(fa-icons.css); */
+@import url(fa.css);
+
+@font-face {
+    font-family: Tagawal;
+    src: url(../fonts/tagawal/Tajawal-Black.ttf),
+        url(../fonts/tagawal/Tajawal-ExtraBold.ttf),
+        url(../fonts/tagawal/Tajawal-Bold.ttf),
+        url(../fonts/tagawal/Tajawal-Medium.ttf),
+        url(../fonts/tagawal/Tajawal-Regular.ttf),
+        url(../fonts/tagawal/Tajawal-Light.ttf),
+        url(../fonts/tagawal/Tajawal-ExtraLight.ttf);
+
+    font-weight: 100 900;
+}
+
+* {
+    font-family: Tagawal, sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Tagawal, sans-serif !important;
+}
+
+#pagination-div {
+    direction: ltr;
+}
+
+.rtl {
+    direction: rtl;
+}

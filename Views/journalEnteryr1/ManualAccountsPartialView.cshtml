@@ -1,0 +1,263 @@
+﻿@model IEnumerable<POS.Models.DB.AccountingManual>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+
+@*<div class="modal fade modal" id="accountsList">
+    <div class="modal-dialog">
+         <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="AddAccountLabel"> أختر حساب</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>X</span>
+                </button>
+
+                </div>
+             <div class="modal-body">
+                <table class="table">
+                                <thead>
+                                    <tr>
+           
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.AccNumber)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.AccStatus)
+                                        </th>
+            
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ArabicAccName)
+                                        </th>
+            
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.AccType)
+                                        </th>
+            
+           
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            @foreach (var item in Model) {
+                                    <tr>
+            
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AccNumber)
+                                        </td>
+            
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AccStatus)
+                                        </td>
+           
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ArabicAccName)
+                                        </td>
+           
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AccKind)
+                                        </td>
+           
+            
+            
+           
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                        </td>
+                                    </tr>
+                            }
+                                </tbody>
+                            </table>
+
+                </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-primary" data-dismiss="modal"> الغا </button>
+                 <button type="button" class="btn btn-primary" data-save="modal"> حفظ </button>
+
+                </div>
+    
+
+              </div>
+    
+
+   </div>
+    
+
+</div>
+*@
+<div class="modal fade modal" id="accountsList">
+    <div class="modal-dialog">
+         <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="AddAccountLabel"> أختر حساب</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>X</span>
+                </button>
+
+                </div>
+             <div class="modal-body">
+               <div  >
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <div>
+            <label class="control-label">ابحث بالاسم</label>
+
+            <input    type="text" placeholder="ابحث"  class="form-control" id="searchIdName" />
+        </div>
+        <div>
+            <label class="control-label">ابحث بالرقم</label>
+
+            <input    type="text" placeholder="ابحث"  class="form-control" id="searchIdNo" />
+        </div>
+            </div>
+                
+                    <table class="table">
+                        <thead>
+                            <tr>
+           
+                                <th>
+                                    رقم الحساب
+                                </th>
+                                <th>
+                                    حالة الحساب
+                                </th>
+            
+                                <th>
+                                    اسم الحساب
+                                </th>
+            
+                                <th>
+                                    نوع الحساب
+                                </th>
+                                <th>
+                                        <button onclick="CloseAccountListView();" type="button" class="close" data-dismiss="modal">
+                                        <span>X</span>
+                                        </button>
+                                </th>
+            
+           
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="AccBody">
+                            @for (var item=0;item< ViewBag.CreditChildAccountList.Count;item++) {
+                            <tr onclick="AccountSelect(@ViewBag.CreditChildAccountList[item].AccNumber);">
+            
+                                <td >
+                                    <h8> @ViewBag.CreditChildAccountList[item].AccNumber</h8>
+                                                                          
+                                </td>
+            
+                                <td  id="idName">
+                                    <h8> @ViewBag.CreditChildAccountList[item].ArabicAccName</h8>
+                                                                           
+                                </td>
+           
+                                <td>
+                                    <h8> @ViewBag.CreditChildAccountList[item].AccStatus</h8>
+                                                                           
+                                </td>
+           
+                                <td>
+                                    <h8> @ViewBag.CreditChildAccountList[item].AccType</h8>
+                                                                          
+                                </td>
+           
+                                               
+                                </tr>
+                                }
+                        </tbody>
+                    </table>
+     </div>
+
+                </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-primary" data-dismiss="modal"> الغا </button>
+                 <button type="button" class="btn btn-primary" data-save="modal"> حفظ </button>
+
+                </div>
+    
+
+              </div>
+    
+
+   </div>
+    
+
+</div>
+
+
+ <div  style="display:none"  id="accountsList">
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <div>
+            <label class="control-label">ابحث بالاسم</label>
+
+            <input    type="text" placeholder="ابحث"  class="form-control" id="searchIdName" />
+        </div>
+        <div>
+            <label class="control-label">ابحث بالرقم</label>
+
+            <input    type="text" placeholder="ابحث"  class="form-control" id="searchIdNo" />
+        </div>
+            </div>
+                
+                    <table class="table">
+                        <thead>
+                            <tr>
+           
+                                <th>
+                                    رقم الحساب
+                                </th>
+                                <th>
+                                    حالة الحساب
+                                </th>
+            
+                                <th>
+                                    اسم الحساب
+                                </th>
+            
+                                <th>
+                                    نوع الحساب
+                                </th>
+                                <th>
+                                        <button onclick="CloseAccountListView();" type="button" class="close" data-dismiss="modal">
+                                        <span>X</span>
+                                        </button>
+                                </th>
+            
+           
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="AccBody">
+                            @for (var item=0;item< ViewBag.CreditChildAccountList.Count;item++) {
+                            <tr onclick="AccountSelect(@ViewBag.CreditChildAccountList[item].AccNumber);">
+            
+                                <td >
+                                    <h8> @ViewBag.CreditChildAccountList[item].AccNumber</h8>
+                                                                          
+                                </td>
+            
+                                <td  id="idName">
+                                    <h8> @ViewBag.CreditChildAccountList[item].ArabicAccName</h8>
+                                                                           
+                                </td>
+           
+                                <td>
+                                    <h8> @ViewBag.CreditChildAccountList[item].AccStatus</h8>
+                                                                           
+                                </td>
+           
+                                <td>
+                                    <h8> @ViewBag.CreditChildAccountList[item].AccType</h8>
+                                                                          
+                                </td>
+           
+                                               
+                                </tr>
+                                }
+                        </tbody>
+                    </table>
+     </div>
