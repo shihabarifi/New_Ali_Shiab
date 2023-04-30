@@ -1,15 +1,16 @@
 ﻿@model POS.Models.DB.AccountingManual
 @inject UserManager<ApplicationUser> userManager
 @inject SignInManager<ApplicationUser> signInManager
- <!-- Page -->
-          <li class="menu-item active">
-            <a href="../home.html" class="menu-link">
+  <ul class="menu-inner py-1">
+          <!-- Page -->
+          <li class="menu-item">
+            <a  asp-controller="Home" asp-action="Index" class="menu-link">
               <i class="menu-icon icon-house me-2"></i>
               <div>الرئيسية</div>
             </a>
           </li>
           <!-- page list -->
-          <li class="menu-item">
+          <li class="menu-item ">
             <a href="" class="menu-link menu-toggle">
               <i class="menu-icon icon-calendar-check me-2"></i>
               <div>تهيئة النظام </div>
@@ -17,51 +18,51 @@
             <ul class="menu-sub">
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys1.html" class="menu-link">
+                <a asp-controller="FiscalYear" asp-action="Index" class="menu-link">
                   <div>الفترةالمالية</div>
                 </a>
               </li>
               <!-- Page -->
-              <li class="menu-item">
-                <a href="pages1/sys2.html" class="menu-link">
+              <li class="menu-item ">
+                <a asp-controller="Currency" asp-action="Index" class="menu-link">
                   <div>العملات</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys3.html" class="menu-link">
+                <a asp-controller="CurrenciesExchangeRate" asp-action="Index" class="menu-link">
                   <div>سعر صرف العملات</div>
                 </a>
               </li>
             </ul>
           </li>
           <!-- page list -->
-          <li class="menu-item">
+          <li class="menu-item open">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon icon-file-invoice-dollar me-1"></i>
               <div> المدخلات الاساسية</div>
             </a>
             <ul class="menu-sub">
               <!-- Page -->
-               <li class="menu-item">
+              <li class="menu-item">
                 <a asp-controller="FinalAccounts" asp-action="Index" class="menu-link">
                   <div>الحسابات الختامية</div>
                 </a>
               </li>
               <!-- Page -->
-              <li class="menu-item">
-                <a href="pages1/sys5.html" class="menu-link">
+              <li class="menu-item active">
+                <a asp-controller="AccountingManual" asp-action="Index" class="menu-link">
                   <div>الدليل المحاسبي</div>
                 </a>
               </li>
               <!-- Page -->
-              <li class="menu-item">
-                <a href="pages1/sys6.html" class="menu-link">
+              <li class="menu-item ">
+                <a asp-controller="Fund" asp-action="Index"  class="menu-link">
                   <div>الصناديق</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="pages1/sys7.html" class="menu-link">
+                <a asp-controller="Bank" asp-action="Index" class="menu-link">
                   <div>البنك</div>
                 </a>
               </li>
@@ -73,69 +74,90 @@
             </a>
             <ul class="menu-sub">
               <!-- Page -->
-              <li class="menu-item">
+              <li class="menu-item ">
                 <a href="javascript:void(0)" class="menu-link menu-toggle">
                   <div>قيد يومي</div>
                 </a>
                 <ul class="menu-sub">
                   <!-- Page -->
                   <li class="menu-item">
-                    <a href="pages1/sys8.html" class="menu-link">
+                    <a asp-controller="journalEnteryr1" asp-action="Create" class="menu-link">
                       <div>أضافة قيد يومي</div>
                     </a>
                   </li>
                   <!-- Page -->
                   <li class="menu-item">
-                    <a href="pages1/sys9.html" class="menu-link">
+                    <a asp-controller="journalEnteryr1" asp-action="Index" class="menu-link">
                       <div>استعراض القيود </div>
                     </a>
                   </li>
                 </ul>
               </li>
-              <!-- Page -->
+           <!-- Page -->
+                <li class="menu-item ">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div>سند صرف </div>
+                  </a>
+                  <ul class="menu-sub">
+                    <!-- Page -->
+                    <li class="menu-item">
+                      <a asp-controller="ExpensVoucher" asp-action="Create" class="menu-link">
+                        <div>أضافة صرف نقداً</div>
+                      </a>
+                    </li>
+                     <li class="menu-item">
+                      <a asp-controller="CheckExpens" asp-action="Create" class="menu-link">
+                        <div>أضافة صرف شيك</div>
+                      </a>
+                    </li>
+                    <!-- Page -->
+                    <li class="menu-item ">
+                      <a asp-controller="ExpensVoucher" asp-action="Index" class="menu-link">
+                        <div>استعراض صرف نقداً </div>
+                      </a>
+                    </li>
+                      <li class="menu-item ">
+                      <a asp-controller="CheckExpens" asp-action="Index" class="menu-link">
+                        <div>استعراض صرف شيك </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- Page -->
+                <li class="menu-item  ">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div>سند قبض</div>
+                  </a>
+                  <ul class="menu-sub">
+                    <!-- Page -->
+                    <li class="menu-item ">
+                      <a asp-controller="PayCheckVoucher" asp-action="Create" class="menu-link">
+                        <div>اضافة قبض نقداً</div>
+                      </a>
+                    </li> 
+                    <li class="menu-item ">
+                      <a asp-controller="CheckPaycheck" asp-action="Create" class="menu-link">
+                        <div>اضافة قبض شيك</div>
+                      </a>
+                    </li>
+                    
+                    <!-- Page -->
+                    <li class="menu-item ">
+                      <a asp-controller="PayCheckVoucher" asp-action="Index" class="menu-link">
+                        <div>استعراض قبض نقداً</div>
+                      </a>
+                    </li>
+                     <li class="menu-item ">
+                      <a asp-controller="CheckPaycheck" asp-action="Index" class="menu-link">
+                        <div>استعراض  قبض شيك</div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- Page -->
               <li class="menu-item">
-                <a href="javascript:void(0)" class="menu-link menu-toggle">
-                  <div>سند صرف </div>
-                </a>
-                <ul class="menu-sub">
-                  <!-- Page -->
-                  <li class="menu-item">
-                    <a href="pages1/sys10.html" class="menu-link">
-                      <div>أضافة سند صرف</div>
-                    </a>
-                  </li>
-                  <!-- Page -->
-                  <li class="menu-item">
-                    <a href="pages1/sys11.html" class="menu-link">
-                      <div>استعراض سند صرف </div>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <!-- Page -->
-              <li class="menu-item">
-                <a href="javascript:void(0)" class="menu-link menu-toggle">
-                  <div>سند قبض</div>
-                </a>
-                <ul class="menu-sub">
-                  <!-- Page -->
-                  <li class="menu-item">
-                    <a href="pages1/sys12.html" class="menu-link">
-                      <div>اضافة سند قبض</div>
-                    </a>
-                  </li>
-                  <!-- Page -->
-                  <li class="menu-item">
-                    <a href="pages1/sys13.html" class="menu-link">
-                      <div>استعراض سند قبض</div>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <!-- Page -->
-              <li class="menu-item">
-                <a href="pages1/sys14.html" class="menu-link">
-                  <div>استحقاف شيك</div>
+                <a asp-controller="CheckPaycheck" asp-action="Chequelist" class="menu-link">
+                  <div>استحقاق شيك</div>
                 </a>
               </li>
             </ul>
@@ -149,19 +171,19 @@
             <ul class="menu-sub">
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys15.html" class="menu-link">
+                <a asp-controller="journalEnteryr1" asp-action="JournalStage" class="menu-link">
                   <div>ترحيل القيود اليومية</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys16.html" class="menu-link">
+                <a  asp-controller="PayCheckVoucher" asp-action="Stagelist" class="menu-link">
                   <div>ترحيل السندات النقدية</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys17.html" class="menu-link">
+                <a asp-controller="CheckPaycheck" asp-action="Stagelist" class="menu-link">
                   <div>ترحيل السندات البنكية</div>
                 </a>
               </li>
@@ -175,61 +197,61 @@
             <ul class="menu-sub">
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys18.html" class="menu-link">
+                <a href="sys18.html" class="menu-link">
                   <div>دليل الحسابات</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys19.html" class="menu-link">
+                <a href="sys19.html" class="menu-link">
                   <div>الأرصدةالافتتاحية</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys20.html" class="menu-link">
+                <a href="sys20.html" class="menu-link">
                   <div>حركة الصناديق</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys21.html" class="menu-link">
+                <a href="sys21.html" class="menu-link">
                   <div>حركة البنوك</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys22.html" class="menu-link">
+                <a href="sys22.html" class="menu-link">
                   <div>الميزانية العمومية</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys23.html" class="menu-link">
+                <a href="sys23.html" class="menu-link">
                   <div>قائمة الارباح والخسائر</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys24.html" class="menu-link">
+                <a href="sys24.html" class="menu-link">
                   <div>سندات الصرف</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys25.html" class="menu-link">
+                <a href="sys25.html" class="menu-link">
                   <div>سندات القبض</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys26.html" class="menu-link">
+                <a href="sys26.html" class="menu-link">
                   <div>القيوداليومية</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys27.html" class="menu-link">
+                <a href="sys27.html" class="menu-link">
                   <div>دفتر اليومية</div>
                 </a>
               </li>
@@ -241,13 +263,13 @@
                 <ul class="menu-sub">
                   <!-- Page -->
                   <li class="menu-item">
-                    <a href="pages1/sys28.html" class="menu-link">
+                    <a href="sys28.html" class="menu-link">
                       <div>الحسابات الرئيسية</div>
                     </a>
                   </li>
                   <!-- Page -->
                   <li class="menu-item">
-                    <a href="pages1/sys29.html" class="menu-link">
+                    <a href="sys29.html" class="menu-link">
                       <div>الحسابات الفرعية</div>
                     </a>
                   </li>
@@ -263,32 +285,34 @@
             <ul class="menu-sub">
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys30.html" class="menu-link">
+                <a href="sys30.html" class="menu-link">
                   <div>الملف الشخصي</div>
                 </a>
               </li>
-              <!-- Page -->
+             
+               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys31.html" class="menu-link">
+                 <a href="/Accounts/Roles" class="menu-link">
                   <div>إدارة المستخدمين</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="pages1/sys32.html" class="menu-link">
-                  <div>اضافةالمؤسسة</div>
+                <a href="/Accounts/Registers" class="menu-link">
+                  <div> المستخدمين</div>
                 </a>
               </li>
 
             </ul>
             <!-- Page -->
           <li class="menu-item">
-            <a href="pages1/sys33.html" class="menu-link">
+            <a href="sys33.html" class="menu-link">
               <i class="menu-icon icon-arrows-rotate me-1"></i>
               <div>النسخة الاحتياطية</div>
             </a>
           </li>
         </ul>
+
 
 
       </aside>

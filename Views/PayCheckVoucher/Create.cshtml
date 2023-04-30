@@ -125,7 +125,7 @@
             </ul>
           </li>
           <!-- page list -->
-          <li class="menu-item open">
+          <li class="menu-item ">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon icon-file-invoice-dollar me-1"></i>
               <div> المدخلات الاساسية</div>
@@ -149,13 +149,13 @@
                   <div>الصناديق</div>
                 </a>
               </li>
-              <li class="menu-item active">
+              <li class="menu-item ">
                 <a asp-controller="Bank" asp-action="Index" class="menu-link">
                   <div>البنك</div>
                 </a>
               </li>
             </ul>
-          <li class="menu-item ">
+          <li class="menu-item open">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon icon-calculator me-1"></i>
               <dev>العمليات</dev>
@@ -212,13 +212,13 @@
                   </ul>
                 </li>
                 <!-- Page -->
-                <li class="menu-item  ">
+                <li class="menu-item  open">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div>سند قبض</div>
                   </a>
                   <ul class="menu-sub">
                     <!-- Page -->
-                    <li class="menu-item ">
+                    <li class="menu-item active">
                       <a asp-controller="PayCheckVoucher" asp-action="Create" class="menu-link">
                         <div>اضافة قبض نقداً</div>
                       </a>
@@ -380,13 +380,13 @@
               </li>
               <!-- Page -->
               <li class="menu-item">
-                 <a href="/Accounts/Roles" class="menu-link">
+                 <a href="/Account/Roles" class="menu-link">
                   <div>إدارة المستخدمين</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="/Accounts/Registers" class="menu-link">
+                <a href="/Account/Registers" class="menu-link">
                   <div> المستخدمين</div>
                 </a>
               </li>
@@ -536,6 +536,7 @@
         </nav>
         <hr class="mt-0">
         <!-- / Navbar -->
+     
 <style>
         td {
   text-align: center;

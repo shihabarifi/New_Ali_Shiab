@@ -3,10 +3,13 @@
 
 @{
     ViewData["Title"] = "Details";
- Layout = null;
 
+
+ Layout = null;
 }
-<!DOCTYPE html>
+  @inject UserManager<ApplicationUser> userManager
+@inject SignInManager<ApplicationUser> signInManager
+    <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="rtl" data-theme="theme-default"
   data-assets-path="~/accounts/assets/" data-template="vertical-menu-template-no-customizer-starter">
@@ -350,18 +353,18 @@
                     <div>الملف الشخصي</div>
                   </a>
                 </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="sys31.html" class="menu-link">
-                    <div>إدارة المستخدمين</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a id="register" asp-area="Identity" asp-page="/Account/Register" class="menu-link">
-                    <div>اضافة حساب</div>
-                  </a>
-                </li>
+             <!-- Page -->
+              <li class="menu-item">
+                 <a href="/Accounts/Roles" class="menu-link">
+                  <div>إدارة المستخدمين</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item ">
+                <a href="/Accounts/Registers" class="menu-link">
+                  <div> المستخدمين</div>
+                </a>
+              </li>
   
               </ul>
               <!-- Page -->
@@ -456,38 +459,47 @@
                   </ul>
                 </li>
                 <!-- Notifications -->
+                
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="~/accounts/assets/img/avatars/1.png" alt class="rounded-circle" />
+                      <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
                     </div>
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="~/accounts/assets/img/avatars/1.png" alt class="rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block lh-1">Shihab Al-Arifi</span>
-                            <small>Designer</small>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
-                    </li>
+             <ul class="dropdown-menu dropdown-menu-end">
+                  @if (signInManager.IsSignedIn(User))
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 me-3">
+                                                                <div class="avatar avatar-online">
+                                                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <span class="fw-semibold d-block lh-1">@((await userManager.GetUserAsync(User)).Name)</span>
+                                                                <small>Designer</small>
+                                                            </div>
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <div class="dropdown-divider"></div>
+                                                </li>
+                                                <li>
+
+
+                                  <form asp-action="Logout" asp-controller="Accounts" method="post">
+                                      
+                                       <a class="dropdown-item" href="/Accounts/">
+                                       <i class="bx bx-power-off me-2"></i>
+                                      <span class="align-middle">Log Out</span> </a>
+                                  </form>
+                                  
+                              </li>}
                   </ul>
                 </li>
                 <!--/ User -->

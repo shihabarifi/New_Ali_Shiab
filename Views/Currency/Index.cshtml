@@ -6,6 +6,8 @@
     
     Layout = null;
 }
+  @inject UserManager<ApplicationUser> userManager
+@inject SignInManager<ApplicationUser> signInManager
 
 <!DOCTYPE html>
 
@@ -68,8 +70,8 @@
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <div class="app-brand demo">
           <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-            <div style="height:50px;width:50px" class="avatar avatar-online">
-              <img src="~/assets/img/avatars/1.png"  class="rounded-circle" />
+            <div class="avatar avatar-online">
+              <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
             </div>
           </a>
           <h6 style="font-family: 'Tagawal', sans-serif;" class="app-brand-logo my-2 fw-semibold">اسم المؤسسة
@@ -121,7 +123,7 @@
             </ul>
           </li>
           <!-- page list -->
-          <li class="menu-item">
+          <li class="menu-item ">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon icon-file-invoice-dollar me-1"></i>
               <div> المدخلات الاساسية</div>
@@ -140,12 +142,12 @@
                 </a>
               </li>
               <!-- Page -->
-               <li class="menu-item">
+              <li class="menu-item ">
                 <a asp-controller="Fund" asp-action="Index"  class="menu-link">
                   <div>الصناديق</div>
                 </a>
               </li>
-              <li class="menu-item">
+              <li class="menu-item ">
                 <a asp-controller="Bank" asp-action="Index" class="menu-link">
                   <div>البنك</div>
                 </a>
@@ -177,7 +179,7 @@
                   </li>
                 </ul>
               </li>
-             <!-- Page -->
+              <!-- Page -->
                 <li class="menu-item ">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div>سند صرف </div>
@@ -239,6 +241,7 @@
                   </ul>
                 </li>
                 <!-- Page -->
+              <!-- Page -->
               <li class="menu-item">
                 <a asp-controller="CheckPaycheck" asp-action="Chequelist" class="menu-link">
                   <div>استحقاق شيك</div>
@@ -375,14 +378,14 @@
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="sys31.html" class="menu-link">
+                 <a href="/Accounts/Roles" class="menu-link">
                   <div>إدارة المستخدمين</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a id="register" asp-area="Identity" asp-page="/Account/Register" class="menu-link">
-                  <div>اضافة حساب</div>
+                <a href="/Accounts/Registers" class="menu-link">
+                  <div> المستخدمين</div>
                 </a>
               </li>
 
@@ -401,7 +404,7 @@
 
       <!-- Layout container -->
       <div class="layout-page">
-        <!-- Navbar -->
+          <!-- Navbar -->
 
         <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
           <div class="container-fluid">
@@ -415,7 +418,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">العملات</h3>
+                <h3 class="nav-item pt-3">البنوك</h3>
 
               </div>
               <!-- nav-->
@@ -448,7 +451,7 @@
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
                                 <!-- صورة الإشعار -->
-                                <img src="../~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                <img src="../~/assets/img/avatars/1.png"  class="w-px-40 h-auto rounded-circle" />
                               </div>
                             </div>
                             <div class="flex-grow-1">
@@ -481,38 +484,47 @@
                   </ul>
                 </li>
                 <!-- Notifications -->
+              
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="~/assets/img/avatars/1.png" alt class="rounded-circle" />
+                      <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
                     </div>
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="~/assets/img/avatars/1.png" alt class="rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block lh-1">Shihab Al-Arifi</span>
-                            <small>Designer</small>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
-                    </li>
+             <ul class="dropdown-menu dropdown-menu-end">
+                  @if (signInManager.IsSignedIn(User))
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 me-3">
+                                                                <div class="avatar avatar-online">
+                                                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <span class="fw-semibold d-block lh-1">@((await userManager.GetUserAsync(User)).Name)</span>
+                                                                <small>Designer</small>
+                                                            </div>
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <div class="dropdown-divider"></div>
+                                                </li>
+                                                <li>
+
+
+                                  <form asp-action="Logout" asp-controller="Accounts" method="post">
+                                      
+                                       <a class="dropdown-item" href="/Accounts/">
+                                       <i class="bx bx-power-off me-2"></i>
+                                      <span class="align-middle">Log Out</span> </a>
+                                  </form>
+                                  
+                              </li>}
                   </ul>
                 </li>
                 <!--/ User -->
@@ -522,6 +534,7 @@
         </nav>
         <hr class="mt-0">
         <!-- / Navbar -->
+     
 @*        <div class="dt-buttons"><a  asp-action="Create"  class="dt-button add-new btn btn-primary mb-3 mb-md-0" type="button">
             <span><i  class="icon-plus"></i>إضافة عملة</span></a> </div>
 *@        <!-- Content wrapper -->

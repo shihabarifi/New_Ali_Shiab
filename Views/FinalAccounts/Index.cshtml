@@ -97,14 +97,14 @@
             </a>
           </li>
           <!-- page list -->
-          <li class="menu-item open">
+          <li class="menu-item ">
             <a href="" class="menu-link menu-toggle">
               <i class="menu-icon icon-calendar-check me-2"></i>
               <div>تهيئة النظام </div>
             </a>
             <ul class="menu-sub">
               <!-- Page -->
-              <li class="menu-item active">
+              <li class="menu-item ">
                 <a asp-controller="FiscalYear" asp-action="Index" class="menu-link">
                   <div>الفترةالمالية</div>
                 </a>
@@ -124,14 +124,14 @@
             </ul>
           </li>
           <!-- page list -->
-          <li class="menu-item ">
+          <li class="menu-item open">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon icon-file-invoice-dollar me-1"></i>
               <div> المدخلات الاساسية</div>
             </a>
             <ul class="menu-sub">
               <!-- Page -->
-              <li class="menu-item">
+              <li class="menu-item active">
                 <a asp-controller="FinalAccounts" asp-action="Index" class="menu-link">
                   <div>الحسابات الختامية</div>
                 </a>
@@ -377,16 +377,16 @@
                   <div>الملف الشخصي</div>
                 </a>
               </li>
-              <!-- Page -->
+           <!-- Page -->
               <li class="menu-item">
-                <a href="sys31.html" class="menu-link">
+                 <a href="/Accounts/Roles" class="menu-link">
                   <div>إدارة المستخدمين</div>
                 </a>
               </li>
               <!-- Page -->
-              <li class="menu-item">
-                <a id="register" asp-area="Identity" asp-page="/Account/Register" class="menu-link">
-                  <div>اضافة حساب</div>
+              <li class="menu-item active">
+                <a href="/Accounts/Registers" class="menu-link">
+                  <div> المستخدمين</div>
                 </a>
               </li>
 
@@ -419,7 +419,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">الفترة المالية</h3>
+                <h3 class="nav-item pt-3"> الحساب الختامي</h3>
 
               </div>
               <!-- nav-->
@@ -485,38 +485,47 @@
                   </ul>
                 </li>
                 <!-- Notifications -->
+               
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="~/assets/img/avatars/1.png"  class="rounded-circle" />
+                      <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
                     </div>
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="~/assets/img/avatars/1.png"  class="rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block lh-1">Shihab Al-Arifi</span>
-                            <small>Designer</small>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
-                    </li>
+             <ul class="dropdown-menu dropdown-menu-end">
+                  @if (signInManager.IsSignedIn(User))
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 me-3">
+                                                                <div class="avatar avatar-online">
+                                                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <span class="fw-semibold d-block lh-1">@((await userManager.GetUserAsync(User)).Name)</span>
+                                                                <small>Designer</small>
+                                                            </div>
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <div class="dropdown-divider"></div>
+                                                </li>
+                                                <li>
+
+
+                                  <form asp-action="Logout" asp-controller="Accounts" method="post">
+                                      
+                                       <a class="dropdown-item" href="/Accounts/">
+                                       <i class="bx bx-power-off me-2"></i>
+                                      <span class="align-middle">Log Out</span> </a>
+                                  </form>
+                                  
+                              </li>}
                   </ul>
                 </li>
                 <!--/ User -->

@@ -1,7 +1,7 @@
 ﻿@inject UserManager<ApplicationUser> userManager
 @inject SignInManager<ApplicationUser> signInManager
   <!-- Page -->
-          <li class="menu-item">
+          <li class="menu-item active">
             <a asp-controller="Home" asp-action="Index" class="menu-link">
               <i class="menu-icon icon-house me-2"></i>
               <div>الرئيسية</div>
@@ -65,7 +65,7 @@
                 </a>
               </li>
             </ul>
-            <li class="menu-item open">
+            <li class="menu-item ">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon icon-calculator me-1"></i>
                 <dev>العمليات</dev>
@@ -122,13 +122,13 @@
                   </ul>
                 </li>
                 <!-- Page -->
-                <li class="menu-item open ">
+                <li class="menu-item  ">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div>سند قبض</div>
                   </a>
                   <ul class="menu-sub">
                     <!-- Page -->
-                    <li class="menu-item active ">
+                    <li class="menu-item  ">
                       <a asp-controller="PayCheckVoucher" asp-action="Create" class="menu-link">
                         <div>اضافة قبض نقداً</div>
                       </a>
