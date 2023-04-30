@@ -140,15 +140,45 @@ namespace POS.Controllers
 
         public IActionResult Delete(int id)
         {
+            FiscalYear fiscalYear= _Repo.GetItem(id);
             
-            return View();
+            return View(fiscalYear);
 
         }
 
         [HttpPost]
         public IActionResult Delete(FiscalYear fiscalYear)
         {
-            return RedirectToAction(nameof(Index));
+
+            bool bolret = false;
+            string errMessage = "";
+            try
+            {
+
+
+                fiscalYear.FiscalYearStatus = fiscalYear.FiscalYearStatus == 1 ? 0 : 1;
+                fiscalYear.SystemUsers = "6f94621c-3508-435c-98fe-c51cc63d076f";
+
+                bolret = _Repo.Edit(fiscalYear);
+
+
+            }
+            catch (Exception ex)
+            {
+                errMessage = errMessage + " " + ex.Message;
+            }
+            if (bolret == false)
+            {
+                errMessage = errMessage + "  " + _Repo.GetErrors();
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(fiscalYear);
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "" + fiscalYear.FiscalYearName + " تم التعديل بنجاح";
+                return RedirectToAction(nameof(Index));
+            }
 
 
         }
