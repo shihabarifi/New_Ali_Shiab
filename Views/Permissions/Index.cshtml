@@ -1,10 +1,13 @@
-﻿@inject UserManager<ApplicationUser> userManager
-@inject SignInManager<ApplicationUser> signInManager
+﻿@using static POS.Models.Helper
+@model PermissionViewModel
+@{
+    ViewData["Title"] = "Index";
+}
   <!-- Page -->
           <li class="menu-item active">
             <a asp-controller="Home" asp-action="Index" class="menu-link">
               <i class="menu-icon icon-house me-2"></i>
-              <div>الرئيسية</div>
+              <div>ادارة الصلاحيات</div>
             </a>
           </li>
           <!-- page list -->
@@ -361,7 +364,7 @@
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
                                 <!-- صورة الإشعار -->
-                                <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                <img src="../../assets/img/avatars/1.png"  class="w-px-40 h-auto rounded-circle" />
                               </div>
                             </div>
                             <div class="flex-grow-1">
@@ -399,7 +402,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)" alt class="rounded-circle" />
+                      <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
                     </div>
                   </a>
              <ul class="dropdown-menu dropdown-menu-end">
@@ -410,7 +413,7 @@
                                                         <div class="d-flex">
                                                             <div class="flex-shrink-0 me-3">
                                                                 <div class="avatar avatar-online">
-                                                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)" alt class="rounded-circle" />
+                                                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
                                                                 </div>
                                                             </div>
                                                             <div class="flex-grow-1">
@@ -445,67 +448,84 @@
         <hr class="mt-0">
         <!-- / Navbar -->
                    
-        <!-- Content wrapper -->
+
+                    <!-- Content wrapper -->
         <div class="content-wrapper">
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
+          <!-- Content -->
 
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+              <div class="table-responsive card-datatable">
+        <!--End Content-Header-->
+        <!-- Main content -->
+        
+<h1> @ResourceWeb.lbManagePermission (@Model.RoleName)</h1>
+<br />
+<div class="card">
+    <div id="viewAll" class="card-body table-responsive">
+        <form asp-controller="permissions" method="post" asp-action="Update" class="d-inline">
+            <input asp-for="@Model.RoleId" type="hidden" />
+            <table class="table table-striped" id="permissionTable">
+                <thead id="tablePermission">
+                    <tr>
 
-            <!-- Content -->
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <div class="row">
-                <!-- Revenue Growth Chart -->
-                <div class="col-md-6 col-lg-6 col-xl-6 col-xl-6 mb-4">
-                  <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
-                      <h5 class="card-title mb-0">تقرير الأرباح</h5>
-                      <span>$25,980</span>
-                    </div>
-                    <div class="card-body pb-0">
-                      <div id="barChartone"></div>
-                    </div>
-                  </div>
-                </div>
+                        <th>
+                            أسم الصلاحية
+                        </th>
+                        <th>
+                            العمليات
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Enum.GetValues(typeof(PermissionModuleName)))
+                    {
+                        <tr>
+                            
+                            @switch (@item.ToString())
+                            {
+                                case "Home":
+                                    <td>لوحة التحكم</td>
+                                    break;
+                                case "Accounts":
+                                    <td>حسابات المستخدمين</td>
+                                    break;
+                                case "Roles":
+                                    <td>محموعة المستخدمين</td>
+                                    break;
+                                case "Registers":
+                                    <td>المستخدمين</td>
+                                    break;
+                               
+                                default:
+                                    break;
+                            }
+                            @for (int i = 0; i < Model.RoleClaims.Count(); i++)
+                            {
+                                if (@Model.RoleClaims[i].Value.Split('.')[1] == item.ToString())
+                                {
+                                    <td>
+                                        <input asp-for="@Model.RoleClaims[i].Value" type="hidden" />
+                                        @Model.RoleClaims[i].Value.Split('.')[2]
+                                    </td>
+                                    <td>
+                                        <div class="form-check m-1">
+                                            <input asp-for="@Model.RoleClaims[i].Selected" class="form-check-input" />
+                                        </div>
+                                    </td>
+                                }
+                            }
+                        </tr>
 
-                <div class="col-md-6 col-lg-6 col-xl-6 col-xl-6 mb-4">
-                  <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
-                      <h5 class="card-title mb-0">اجمالي الإيرادات</h5>
-                      <span>$25,980</span>
-                    </div>
-                    <div class="card-body pb-0">
-                      <div id="barCharttwo"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6 col-lg-6 col-xl-6 col-xl-6 mb-4">
-                  <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
-                      <h5 class="card-title mb-0">اجمالي المقبوضات</h5>
-                      <span>$25,980</span>
-                    </div>
-                    <div class="card-body pb-0">
-                      <div id="barChartthree"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6 col-lg-6 col-xl-6 col-xl-6 mb-4">
-                  <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
-                      <h5 class="card-title mb-0">اجمالي القيود</h5>
-                      <span>$25,980</span>
-                    </div>
-                    <div class="card-body pb-0">
-                      <div id="barChartfour"></div>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Revenue Growth Chart -->
-              </div>
+                    }
+                </tbody>
+            </table>
+            <div class="col-sm-12" style="padding: 20px 20px 0px 0px">
+                <button type="submit" id="save" class="btn btn-success">
+                    <i class="fa fa-check"></i>
+                    Save
+                </button>
             </div>
-            <!-- / Content -->
-            <div class="content-backdrop fade"></div>
-            <!-- Content wrapper -->
-          </div>
+        </form>
+    </div>
+</div>

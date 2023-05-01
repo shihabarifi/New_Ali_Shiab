@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace POS.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class PayCheckVoucherController : Controller
     {
         private readonly IPayCheckVoucher _Repo;

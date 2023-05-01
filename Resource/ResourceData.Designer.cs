@@ -79,6 +79,15 @@ namespace POS.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to الصلاحيات.
+        /// </summary>
+        public static string lbbtnPermissions {
+            get {
+                return ResourceManager.GetString("lbbtnPermissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to يجب الا يزيد عدد حروف الكلمة عن عشرون حرف.
         /// </summary>
         public static string MaxLength {

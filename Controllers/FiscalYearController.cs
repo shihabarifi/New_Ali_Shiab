@@ -12,7 +12,7 @@ using POS.Data;
 
 namespace POS.Controllers
 {
-    
+    [AllowAnonymous]
     public class FiscalYearController : Controller
     {
         private readonly IFiscalYear _Repo;

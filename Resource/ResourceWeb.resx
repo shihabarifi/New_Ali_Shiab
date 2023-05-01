@@ -141,6 +141,9 @@
   <data name="lbbtnEdit" xml:space="preserve">
     <value>تعديل</value>
   </data>
+  <data name="lbbtnPermissions" xml:space="preserve">
+    <value>الصلاحيات</value>
+  </data>
   <data name="lbbtnSave" xml:space="preserve">
     <value>حفظ</value>
   </data>
@@ -191,6 +194,9 @@
   </data>
   <data name="lbManageBook" xml:space="preserve">
     <value>ادارة الكتب</value>
+  </data>
+  <data name="lbManagePermission" xml:space="preserve">
+    <value>ادارة الصلاحيات لل</value>
   </data>
   <data name="lbMsgDeletedOkCategory" xml:space="preserve">
     <value>تم حذف مجموع الفئات</value>

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace pos.Controllers
 {
-    [Authorize]
-    [Authorize(Roles = "Admin,SupperAdmin")]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
+        [AllowAnonymous]
         public IActionResult Denied()
         {
             return View();

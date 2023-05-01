@@ -1,4 +1,6 @@
-﻿@inject UserManager<ApplicationUser> userManager
+﻿@using POS.Resource
+@model RolesViewModel
+@inject UserManager<ApplicationUser> userManager
 @inject SignInManager<ApplicationUser> signInManager
   <!-- Page -->
           <li class="menu-item active">
@@ -361,7 +363,7 @@
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
                                 <!-- صورة الإشعار -->
-                                <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                <img src="../../assets/img/avatars/1.png"  class="w-px-40 h-auto rounded-circle" />
                               </div>
                             </div>
                             <div class="flex-grow-1">
@@ -399,7 +401,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)" alt class="rounded-circle" />
+                      <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
                     </div>
                   </a>
              <ul class="dropdown-menu dropdown-menu-end">
@@ -410,7 +412,7 @@
                                                         <div class="d-flex">
                                                             <div class="flex-shrink-0 me-3">
                                                                 <div class="avatar avatar-online">
-                                                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)" alt class="rounded-circle" />
+                                                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
                                                                 </div>
                                                             </div>
                                                             <div class="flex-grow-1">
@@ -445,67 +447,183 @@
         <hr class="mt-0">
         <!-- / Navbar -->
                    
-        <!-- Content wrapper -->
+
+                    <!-- Content wrapper -->
         <div class="content-wrapper">
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
+          <!-- Content -->
+
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+              <div class="table-responsive card-datatable">
+        <!--End Content-Header-->
+        <!-- Main content -->
+        <section class="content">
+           
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-start">
+                            <h3 class="card-title" style="margin-left:20px">@ResourceWeb.lbRoleUser</h3>
+                            <div class="card-tools ">
+                                <!-- Button trigger modal -->
+                                <button type="button" style="margin-top:-5px" 
+                                class="btn btn-outline-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="Rest()">
+                                    @ResourceWeb.lbbtnSaveNewRole
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="tableRole" class="table datatables-basic table-hover">
+                                <thead>
+                                    <tr>
+                                        <td>الرقم</td>
+                                        <td>@ResourceWeb.lbNameRole</td>
+                                        <td>@ResourceWeb.lbEvents</td>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Roles)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.NormalizedName
+                                            </td>
+                                            <td>
+                                                @switch (@item.Name)
+                                                {
+                                                    case "SupperAdmin":
+                                                        <span class="badge bg-danger" style="width:250px; height:25px">@item.Name</span>
+                                                         
+                                                        break;
+                                                    case "Admin":
+                                                        <span class="badge bg-success" style="width:250px; height:25px">@item.Name</span>
+                                                        break;
+                                                    default:
+                                                        <span class="badge bg-warning" style="width:250px; height:25px">@item.Name</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td>
+                                                <input type="button" class="btn btn-info btn-sm" onclick="Edit('@item.Id', '@item.Name')" value="@ResourceWeb.lbbtnEdit" data-bs-toggle="modal" data-bs-target="#exampleModal" />
+                                                <input type="button" class="btn btn-danger btn-sm" onclick="Delete('@item.Id')" value="@ResourceWeb.lbbtnDelete" />
+                                          <a class="btn btn-success btn-sm" asp-action="Index" asp-controller="Permissions" asp-route-RoleId="@item.Id">@ResourceWeb.lbbtnPermissions</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+           
+        </section>
+        <!-- /.content -->
+    </div>
+    </div>
+    </div>
+    </div>
 
 
-            <!-- Content -->
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <div class="row">
-                <!-- Revenue Growth Chart -->
-                <div class="col-md-6 col-lg-6 col-xl-6 col-xl-6 mb-4">
-                  <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
-                      <h5 class="card-title mb-0">تقرير الأرباح</h5>
-                      <span>$25,980</span>
-                    </div>
-                    <div class="card-body pb-0">
-                      <div id="barChartone"></div>
-                    </div>
-                  </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog card card-success card-outline">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title">@ResourceWeb.lbbtnSaveNewRole</h5>
+                    <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</a>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="Roles" asp-controller="Accounts" method="post">
+                        <div class="form-group">
+                            <input type="text" hidden class="form-control" asp-for="NewRole.RoleId" id="roleId" />
+                            <label asp-for="NewRole.RoleName" class="control-lable">@ResourceWeb.lbNameRole</label>
+                            <input type="text" class="form-control" asp-for="NewRole.RoleName" id="roleName" />
+                            <span asp-validation-for="NewRole.RoleName" class="text-danger"></span>
+                        </div>
+
+                        <div class="modal-footer-rtl" style="padding:0 15px 15px 0">
+                            <input type="submit" class="btn btn-success" value="@ResourceWeb.lbbtnSave" id="btnSave" />
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
                 </div>
 
-                <div class="col-md-6 col-lg-6 col-xl-6 col-xl-6 mb-4">
-                  <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
-                      <h5 class="card-title mb-0">اجمالي الإيرادات</h5>
-                      <span>$25,980</span>
-                    </div>
-                    <div class="card-body pb-0">
-                      <div id="barCharttwo"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6 col-lg-6 col-xl-6 col-xl-6 mb-4">
-                  <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
-                      <h5 class="card-title mb-0">اجمالي المقبوضات</h5>
-                      <span>$25,980</span>
-                    </div>
-                    <div class="card-body pb-0">
-                      <div id="barChartthree"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6 col-lg-6 col-xl-6 col-xl-6 mb-4">
-                  <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center pb-0">
-                      <h5 class="card-title mb-0">اجمالي القيود</h5>
-                      <span>$25,980</span>
-                    </div>
-                    <div class="card-body pb-0">
-                      <div id="barChartfour"></div>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Revenue Growth Chart -->
-              </div>
             </div>
-            <!-- / Content -->
-            <div class="content-backdrop fade"></div>
-            <!-- Content wrapper -->
-          </div>
+        </div>
+    </div>
+              <!-- / Layout page -->
+        
+  
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+
+    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+    <div class="drag-target"></div>
+ 
+  <!-- / Layout wrapper -->
+
+
+       
+   @section Scripts{
+        @if (!string.IsNullOrEmpty(Context.Session.GetString(Helper.MsgType)))
+        {
+        if (Context.Session.GetString(Helper.MsgType) == Helper.Success)
+            {
+                <script>
+
+            Swal.fire({
+                    title: '@Context.Session.GetString(Helper.Title)',
+                    text: '@Html.Raw(@Context.Session.GetString(Helper.Msg))',
+                    confirmButtonText: '@ResourceWeb.lbOk',
+                icon: 'success'
+            });
+                </script>
+
+            }
+            else
+            {
+                <script>
+
+             Swal.fire({
+                    title: '@Context.Session.GetString(Helper.Title)',
+                    text: '@Html.Raw(@Context.Session.GetString(Helper.Msg))',
+                    confirmButtonText: '@ResourceWeb.lbOk',
+                 icon: 'error'
+             });
+                </script>
+            }
+        Context.Session.SetString(Helper.MsgType, "");
+        }
+
+
+
+        
+        <script>
+
+        let lbTitleEdit = '@Html.Raw(ResourceWeb.lbTitleEdit)';
+        let lbEdit = '@Html.Raw(ResourceWeb.lbEdit)';
+        let lbAddNewRole = '@Html.Raw(ResourceWeb.lbAddNewRole)';
+        let lbbtnSave = '@Html.Raw(ResourceWeb.lbbtnSave)';
+
+        let lbTitleMsgDelete = '@Html.Raw(ResourceWeb.lbbtnSave)'; 
+        let lbTextMsgDelete = '@Html.Raw(ResourceWeb.lbTextMsgDelete)';
+        let lbconfirmButtonText = '@Html.Raw(ResourceWeb.lbconfirmButtonText)';
+        let lbcancelButtonText = '@Html.Raw(ResourceWeb.lbcancelButtonText)';
+
+        let lbTitleDeletedOk = '@Html.Raw(ResourceWeb.lbTitleDeletedOk)';
+        let lbMsgDeletedOkRole = '@Html.Raw(ResourceWeb.lbMsgDeletedOkRole)';
+        let lbSuccess = '@Html.Raw(Helper.Success)';
+        
+        </script>
+         <script src="~/Modules/Roles.js"></script>
+    }
+     
+

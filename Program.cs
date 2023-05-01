@@ -8,15 +8,21 @@ using Microsoft.EntityFrameworkCore;
 using POS.Interfaces;
 using POS.Repositories;
 using POS.Models.DB;
-
+using POS.Seeds;
+using Microsoft.AspNetCore.Authorization;
+using POS.Permission;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.Configure<SecurityStampValidatorOptions>(op =>
+op.ValidationInterval = TimeSpan.FromSeconds(0));
 
 builder.Services.AddSession();
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 builder.Services.AddScoped<ICurrency, CurrencyRepo>();
 builder.Services.AddScoped<IExchangeRate, ExchangeRateRepo>();
 builder.Services.AddScoped<IFund, FundRepo>();
@@ -61,6 +67,18 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 
 var app = builder.Build();
+using var Scope = app.Services.CreateScope();
+var services = Scope.ServiceProvider;
+try
+{
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await DefaultRole.SeedAsync(roleManager);
+    await DefaultUser.SeedSuperAdminAsync(userManager, roleManager);
+    await DefaultUser.SeedBasicUserAsync(userManager, roleManager);
+}
+catch (Exception) { throw; }
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -78,6 +96,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Accounts}/{action=Login}/{id?}");
 
 app.Run();

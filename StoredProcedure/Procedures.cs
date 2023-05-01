@@ -17,7 +17,7 @@ namespace POS.StoredProcedure
             var builder = new ConfigurationBuilder().SetBasePath
                 (Directory.GetCurrentDirectory()).
                 AddJsonFile("appsettings.json").Build();
-            cnn = builder.GetSection("ConnectionStrings:DbConn").Value;
+            cnn = builder.GetSection("ConnectionStrings:Connection").Value;
         }
 
         public List<Currency> GetAccCurrByAccNumber(int accNumber)

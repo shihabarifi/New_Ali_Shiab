@@ -25,7 +25,7 @@ using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 namespace POS.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class journalEnteryr1 : Controller
     {
         private readonly pay_recie_finRepository<MainJournalEntery> MainJourEnter_Repo;

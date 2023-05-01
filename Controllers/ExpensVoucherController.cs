@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace POS.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class ExpensVoucherController : Controller
     {
         private readonly IExpensVoucher _Repo;
@@ -60,7 +60,7 @@ namespace POS.Controllers
         }
 
 
-         [Authorize]
+       
         public IActionResult Stagelist(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
         {
             SortModel sortModel = new SortModel();

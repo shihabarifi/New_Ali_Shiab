@@ -12,7 +12,8 @@ using System.Linq;
 
 namespace POS.Controllers
 {
-    
+    [AllowAnonymous]
+
     public class CheckExpensController : Controller
     {
         private readonly ICheckExpens _Repo;

@@ -15,7 +15,7 @@ using POS.Resource;
 
 namespace POS.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class FundController : Controller
     {
 

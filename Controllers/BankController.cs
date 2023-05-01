@@ -12,7 +12,7 @@ using POS.Data;
 
 namespace POS.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class BankController : Controller
     {
 

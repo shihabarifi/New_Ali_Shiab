@@ -133,6 +133,15 @@ namespace POS.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to الصلاحيات.
+        /// </summary>
+        internal static string lbbtnPermissions {
+            get {
+                return ResourceManager.GetString("lbbtnPermissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to حفظ.
         /// </summary>
         internal static string lbbtnSave {
@@ -282,6 +291,15 @@ namespace POS.Resource {
         internal static string lbManageBook {
             get {
                 return ResourceManager.GetString("lbManageBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ادارة الصلاحيات لل.
+        /// </summary>
+        internal static string lbManagePermission {
+            get {
+                return ResourceManager.GetString("lbManagePermission", resourceCulture);
             }
         }
         

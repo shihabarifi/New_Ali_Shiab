@@ -3,9 +3,11 @@ using POS.Models;
 using POS.Models.DB;
 using POS.Tools;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace POS.Controllers
 {
+    [AllowAnonymous]
     public class CurrenciesExchangeRateController : Controller
     {
         private readonly ICurrenciesExchangeRate _Repo;

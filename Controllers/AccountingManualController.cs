@@ -13,7 +13,7 @@ using POS.Data;
 
 namespace POS.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class AccountingManualController : Controller
     {
 
