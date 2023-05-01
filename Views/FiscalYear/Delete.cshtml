@@ -543,6 +543,12 @@
         <hr />
         <dl class="row">
             <dt class = "col-sm-2">
+               الرقم 
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.FiscalYearId)
+            </dd>
+            <dt class = "col-sm-2">
                 اسم السنة 
             </dt>
             <dd class = "col-sm-10">
@@ -561,13 +567,13 @@
                 @Html.DisplayFor(model => model.EndDate)
             </dd>
         
-            @* <dt class = "col-sm-2">
+             <dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.FiscalYearStatus)
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.FiscalYearStatus)
             </dd>
-            *@
+            
         </dl>
     
         <form asp-action="Delete">
