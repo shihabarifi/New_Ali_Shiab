@@ -1,16 +1,15 @@
 using POS.Data;
 
-using POS.Models;
-     
+using POS.Models; 
 using POS.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using POS.Interfaces;
 using POS.Repositories;
 using POS.Models.DB;
-using POS.Seeds;
 using Microsoft.AspNetCore.Authorization;
-using POS.Permission;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
