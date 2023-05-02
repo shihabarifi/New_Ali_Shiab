@@ -8,8 +8,8 @@ using POS.Interfaces;
 using POS.Repositories;
 using POS.Models.DB;
 using Microsoft.AspNetCore.Authorization;
-
-
+using POS.Permission;
+using POS.Seeds;
 
 var builder = WebApplication.CreateBuilder(args);
 
