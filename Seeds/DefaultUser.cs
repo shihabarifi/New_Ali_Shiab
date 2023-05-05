@@ -25,11 +25,33 @@ namespace POS.Seeds
             if (user.Result == null)
             {
                 await userManager.CreateAsync(DefultUser, PasswordBasic);
-                await userManager.AddToRolesAsync(DefultUser, new List<string> { Roles.Basic.ToString() });
+                await userManager.AddToRolesAsync(DefultUser, new List<string> { Helper.Roles.Basic.ToString() });
             }
         }
 
         public static async Task SeedSuperAdminAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            var DefaultUser = new ApplicationUser
+            {
+                UserName = UserName,
+                Email = Email,
+                Name = Name,
+             
+                ImageUser = "69805409-b5a1-4154-ad10-762baf4532a2.png",
+                ActiveUser = true,
+                EmailConfirmed = true
+            };
+
+            var user = await userManager.FindByEmailAsync(DefaultUser.Email);
+            if (user == null)
+            {
+                await userManager.CreateAsync(DefaultUser, Passwordadmin);
+                await userManager.AddToRolesAsync(DefaultUser, new List<string> { Helper.Roles.SUPPERADMIN.ToString() });
+            }
+
+            await roleManager.SeedClaimsAsync();
+        }
+        public static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             var DefaultUser = new ApplicationUser
             {
@@ -44,29 +66,8 @@ namespace POS.Seeds
             var user = await userManager.FindByEmailAsync(DefaultUser.Email);
             if (user == null)
             {
-                await userManager.CreateAsync(DefaultUser, Passwordadmin);
-                await userManager.AddToRolesAsync(DefaultUser, new List<string> { Roles.Admin.ToString() });
-            }
-
-            await roleManager.SeedClaimsAsync();
-        }
-        public static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
-        {
-            var DefaultUser = new ApplicationUser
-            {
-                UserName = UserName,
-                Email = Email,
-                Name = Name,
-                ImageUser = "69805409-b5a1-4154-ad10-762baf4532a2.png",
-                ActiveUser = true,
-                EmailConfirmed = true
-            };
-
-            var user = await userManager.FindByEmailAsync(DefaultUser.Email);
-            if (user == null)
-            {
                 await userManager.CreateAsync(DefaultUser, Password);
-                await userManager.AddToRolesAsync(DefaultUser, new List<string> { Roles.SUPPERADMIN.ToString() });
+                await userManager.AddToRolesAsync(DefaultUser, new List<string> { Helper.Roles.Admin.ToString() });
             }
 
             await roleManager.SeedClaimsAsync();
