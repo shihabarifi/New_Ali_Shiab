@@ -33,6 +33,27 @@ namespace POS.Seeds
         {
             var DefaultUser = new ApplicationUser
             {
+                UserName = UserNameadmin,
+                Email = Emailadmin,
+                Name = Nameadmin,
+                ImageUser = "69805409-b5a1-4154-ad10-762baf4532a2.png",
+                ActiveUser = true,
+                EmailConfirmed = true
+            };
+
+            var user = await userManager.FindByEmailAsync(DefaultUser.Email);
+            if (user == null)
+            {
+                await userManager.CreateAsync(DefaultUser, Passwordadmin);
+                await userManager.AddToRolesAsync(DefaultUser, new List<string> { Roles.Admin.ToString() });
+            }
+
+            await roleManager.SeedClaimsAsync();
+        }
+        public static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            var DefaultUser = new ApplicationUser
+            {
                 UserName = UserName,
                 Email = Email,
                 Name = Name,

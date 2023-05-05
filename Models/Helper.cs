@@ -30,6 +30,11 @@ namespace POS.Models
         public const string Name = "SuperAdmin";
         public const string Password = "superadmin@P@$$w0rd123";
 
+        public const string Emailadmin = "admin@domin.com";
+        public const string UserNameadmin = "admin@domin.com";
+        public const string Nameadmin = "Admin";
+        public const string Passwordadmin = "admin@P@$$w0rd123";
+
         public const string EmailBasic = "basicuser@domin.com";
         public const string UserNameBasic = "basicuser@domin.com";
         public const string NameBasic = "BasicUser";

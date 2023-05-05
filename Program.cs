@@ -75,6 +75,7 @@ try
 
     await DefaultRole.SeedAsync(roleManager);
     await DefaultUser.SeedSuperAdminAsync(userManager, roleManager);
+    await DefaultUser.SeedAdminAsync(userManager, roleManager);
     await DefaultUser.SeedBasicUserAsync(userManager, roleManager);
 }
 catch (Exception) { throw; }
