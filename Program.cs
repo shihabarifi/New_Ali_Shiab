@@ -39,7 +39,7 @@ builder.Services.AddScoped<pay_recie_finRepository<JournalEnterieType>, JournaEn
 builder.Services.AddScoped<pay_recie_finRepository<DetailedJournalEntery>, DetailedJournalEnteryDb_Repository>();
 builder.Services.AddScoped<pay_recie_finRepository<GeneralLedger>, GeneralLedgerDb_Repoditory>();
 builder.Services.AddScoped<AccountingManualCurrens_Db_REpository>();
-//builder.Services.AddScoped<pay_recie_finRepository<FinalAccountType>, FinalAccountDB_Repo>();
+builder.Services.AddScoped<pay_recie_finRepository<FinalAccountType>, FinalAccountDB_Repo>();
 //builder.Services.AddScoped<pay_recie_finRepository<ActivityType>, ActivityTypeDb_Repository>();
 builder.Services.AddScoped<pay_recie_finRepository<CurrenciesExchangeRate>, CurrenciExchangeRateDb_Repository>();
 builder.Services.AddScoped<pay_recie_finRepository<MainJournalEntery>, MainJournalEnteryDb_Repository>();

@@ -887,7 +887,392 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     
-        <script type="text/javascript">	
+   @* <script type="text/javascript">	
+		
+            ///* هذه الفانكشن تقوم بحذف صف من صفوف الادخالات */
+            function DeleteItem(btn) {
+                const myArray=btn.id.split("");
+                var Lastindex=myArray[myArray.length-1];
+                console.log("this is the row index"+Lastindex);
+                OnInputAmountDelete(Lastindex);
+			    $(btn).closest('tr').remove();
+        	    var lastrowIdx = document.getElementById('hdnLastIndex').value;
+                document.getElementById('hdnLastIndex').value=eval(lastrowIdx)-1;
+		        }
+
+                 // /* هذه تعمل على تغيير حالة من للقراءة فقط او السماح بالادخال في بعض الخانات التي يتم ادحال المبالغ فيها سواء كانت مجلية او أجنبية*/
+            function MakeInputReadOnly(state,Lastindex,isNewRow){
+             $("#DebitAmountRly-"+Lastindex).prop('readonly',state);       
+             $("#CreditAmountRly-"+Lastindex).prop('readonly',state);
+             if(isNewRow){
+                $("#DebitAmountUdo-"+Lastindex).prop('readonly',state); 
+            
+                 $("#CreditAmountUdo-"+Lastindex).prop('readonly',state);
+                 }
+             else{
+                    $("#DebitAmountUdo-"+Lastindex).prop('readonly',!state); 
+            
+                    $("#CreditAmountUdo-"+Lastindex).prop('readonly',!state);
+                    }
+             console.log("add readOnly att");
+                 
+                 
+
+             }
+                    ///نهيئة قائمة عملات الحسابات عند انشاء حساب جديد
+            function Re0moveAccountsCurrList(RowIndex){
+               // let row=document.getElementById("NumbersAcccount-"+RowIndex).value;
+                let items='';
+                $("#currList-"+RowIndex).html(items);
+                }
+                /* هذي الدالة تسمح بعمل حذف  كل بيانات الصف في حال تغيير العملة الاجنبية ايا كانت الى العملة المحلية */
+            function ResetAllRowFields(RowIndex){
+                   OnInputAmountDelete(RowIndex);
+                    document.getElementById('DebitAmountRly-'+RowIndex).value= '';
+                    document.getElementById('CreditAmountRly-'+RowIndex).value= '';
+                    document.getElementById('DebitAmountUdo-'+RowIndex).value= '';
+                    document.getElementById('CreditAmountUdo-'+RowIndex).value= '';
+                   }
+            /* هذي الدالة تسمح بتغيير سعر الصرف حسب اخنيار العملة من القائمة الموضجة اعلاة */     
+            function currChangeRate(x){
+                    const myArray=x.split("");
+                    var Lastindex=myArray[myArray.length-1];
+           
+                    var displayCurrRate=$("#"+x+"  " +"option:selected").val();
+                    console.log(displayCurrRate);
+                    if($("#"+x+"  " +"option:selected").text()=="يمني"){
+                        ResetAllRowFields(Lastindex);
+                        MakeInputReadOnly(false,Lastindex,false);
+
+                        }
+                    else{
+                        MakeInputReadOnly(true,Lastindex,false);
+                        }
+                    //var currChangeRateList=[];
+                    $.ajax({
+                        type: "GET",
+                        dataType:"json",
+                        url: "/journalEnteryr1/GeturrExchange",
+                            success: function (data) {
+                            var currChangeRateList=data;
+                            console.log(currChangeRateList);
+                            for(var i=0;i<currChangeRateList.length; i++){
+                                if(currChangeRateList[i]["Currencies"]==displayCurrRate){
+                                    console.log( "current currency id "+currChangeRateList[i]["Currencies"]);
+                                    document.getElementById('currRate'+x).value=parseInt(currChangeRateList[i]["CurreExchangeRate"]);
+                                    document.getElementById('currRateReal'+x).value=parseInt(currChangeRateList[i]["CurrenciesExchangeRateId"]);
+                                    }
+                                },
+                        error:function(data){
+                            console.error(data);
+                            }
+                            })
+          
+                    }
+            /* هنا يتم اسناد القيمة الفعلية التي تخص الحساب الدائن او المدين في كل صف وذلك يحدث عند اختيار اي مستخد من القائمة التي تظهر في كل صف */
+            function creditChildAccount(x){
+                const myArray=x.split("");
+                var rowIndex=myArray[myArray.length-1];
+                var AccNumber=$("#"+x+"  " +"option:selected").val();
+                $("#Numbers"+x).val(AccNumber);
+                $("#CreditAccountID-"+rowIndex).val(AccNumber);
+                console.log("RowIndex is : "+rowIndex);
+
+                // استدعاء عملات حساب من جدول عملات الحسابات 
+                let AccounId =  document.getElementById('CreditAccountID-'+rowIndex).value;
+                $.ajax({
+                    type: "GET",
+                    url: "/journalEnteryr1/FetchAccountCurrs",
+                        data: { AccountNo: AccNumber },
+                        success: function (data) {
+                            let items = '';
+                            $.each(data, function (i, AccountsCurr) {
+                                items += '<option value="' + AccountsCurr.value + '">' + AccountsCurr.text + "</option>";
+                    
+                                });
+                                $("#currList-"+rowIndex).html(items);
+                 
+                            },
+                        error:function(data){
+                            console.error(data);
+                            }
+
+                    })
+                $('input[type="number"]').keyup();
+              
+                }
+            /* هذي الدالة تسمح باضافة صف جديد عند النقر على زر اضافة صف جديد */
+            function AddItem(btn) {
+                $("#submit").prop('disabled',true);
+			    var table = document.getElementById('ExpTable');
+			    var rows = table.getElementsByTagName('tr');
+
+			    var rowOuterHtml = rows[rows.length - 1].outerHTML;
+
+			    var lastrowIdx = document.getElementById('hdnLastRowIndex').value;
+
+			    var nextrowIdx = eval(lastrowIdx) + 1;
+
+			    document.getElementById('hdnLastRowIndex').value = nextrowIdx;
+            
+                var TotalRows=document.getElementById('hdnLastIndex').value;
+                document.getElementById('hdnLastIndex').value=eval(TotalRows)+1;
+
+			    rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
+			    rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
+			    rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
+
+			    var newRow = table.insertRow();
+			    newRow.innerHTML = rowOuterHtml;
+                MakeInputReadOnly(false,nextrowIdx,false);
+                //call this function to reset the data of the accounts currinces list from the dropDown list
+                Re0moveAccountsCurrList(nextrowIdx);
+			    var btnAddID = btn.id;
+			    var btnDeleteid = btnAddID.replaceAll('btnadd', 'btnremove');
+			    var delbtn = document.getElementById(btnDeleteid);
+			    delbtn.classList.add("visible");
+			    delbtn.classList.remove("invisible");
+			    var adDbtn = document.getElementById(btnAddID);
+			    adDbtn.classList.remove("visible");
+			    adDbtn.classList.add("invisible");
+                console.log(btnAddID+"btnAddddddd");
+                $('input[type="number"]').keyup();
+
+		        }
+            function OnInputAmountUdo(id){
+                const myArray=id.split("");
+                var Lastindex=myArray[myArray.length-1];
+                var Firstindex=myArray[0];
+
+                var currsListId=$("#currList-"+Lastindex+"  " +"option:selected").val();
+
+
+                if( $("#currList-"+Lastindex+"  " +"option:selected").text()=='يمني' || currsListId==-1 ){ 
+                    //alert("الرجاء تحديد العملة الاجنبية من فضلك ....!");
+                        }
+                else{
+                    var currencyChangeRate= parseFloat(document.getElementById('currRatecurrList-'+Lastindex).value);
+                    //console.log(currencyChangeRate+"this the currency rateing");
+                    if(Firstindex=='C'){
+                            var CreditAmountUdo=parseFloat(document.getElementById(id).value)?parseFloat(document.getElementById(id).value):0;
+                            var tempNumber=currencyChangeRate*CreditAmountUdo;
+                            document.getElementById('CreditAmountRly-'+Lastindex).value=tempNumber?tempNumber:0;
+                            console.log("this the Credit Amount Udo"+ document.getElementById('CreditAmountRly-'+Lastindex).value);
+
+                            OnInputAmount('CreditAmountRly-'+Lastindex);
+                            }
+                    else{
+                                var DebitAmountUdo=parseFloat(document.getElementById(id).value)?parseFloat(document.getElementById(id).value):0;
+                                var tempNumber=currencyChangeRate * DebitAmountUdo;
+                                document.getElementById('DebitAmountRly-'+Lastindex).value=tempNumber>0?tempNumber:0;
+                                console.log("this the Credit Amount Udo"+ document.getElementById('CreditAmountRly-'+Lastindex).value);
+
+                                OnInputAmount('DebitAmountRly-'+Lastindex);
+                                }
+                    }
+
+                }
+           
+                /* هذي الدالة التي تقوم بتحديث القيم التي يتم ادحالها في خانات المبالغ في كل صف من اجل تحديث القيم الخاصة باجمالي الدائن والمدين والفرق */                         }
+            function OnInputAmount(inputId){
+               const myArray=inputId.split("");
+               var FirstindexLitter=myArray[0];
+               var Lastindex=myArray[myArray.length-1];
+               var TotalAmountsDiff =0;
+               var Total=0;
+               var checkIsNull=0;
+               var heddinAmount=parseFloat(document.getElementById("hn"+inputId).value)?parseFloat(document.getElementById("hn"+inputId).value):0;
+         
+               if(FirstindexLitter=='C'){
+                    var creditAmount=parseFloat(document.getElementById(inputId).value)?parseFloat(document.getElementById(inputId).value):0;
+
+                    if(heddinAmount!=creditAmount){
+                        if(parseFloat(document.getElementById('TotalCreditAmount').value)>0){
+                            var tempTotal= parseFloat(document.getElementById('TotalCreditAmount').value)-heddinAmount ;
+                            document.getElementById('TotalCreditAmount').value =tempTotal>=0?tempTotal:0;
+                            }
+                
+                        Total=creditAmount +parseFloat(document.getElementById('TotalCreditAmount').value) ;
+                        document.getElementById("hn"+inputId).value=creditAmount;
+                        console.log("the HN"+inputId+creditAmount);
+
+                        document.getElementById('TotalCreditAmount').value =Total>=0?Total:0;
+
+                        }
+                    if(creditAmount==0 && heddinAmount!=0){
+                        Total= parseFloat(document.getElementById('TotalCreditAmount').value)-heddinAmount ;
+                        document.getElementById("hn"+inputId).value=creditAmount;
+                        console.log("the HN"+inputId+creditAmount);
+
+                        document.getElementById('TotalCreditAmount').value =Total>=0?Total:0;
+                   
+                        }
+                     
+                    else{
+                            var DebitAmount=parseFloat(document.getElementById(inputId).value)?parseFloat(document.getElementById(inputId).value):0;
+
+                            if(heddinAmount!=DebitAmount){
+
+                                if(parseFloat(document.getElementById('TotalDebitAmount').value)>0){
+                                    var tempTotal= parseFloat(document.getElementById('TotalDebitAmount').value)-heddinAmount ;
+                                    document.getElementById('TotalDebitAmount').value =tempTotal>=0?tempTotal:0;
+                                    }
+                                document.getElementById("hn"+inputId).value=DebitAmount;
+                                console.log("the HN"+inputId+DebitAmount);
+                                Total=DebitAmount +parseFloat(document.getElementById('TotalDebitAmount').value);
+                                document.getElementById('TotalDebitAmount').value = Total>=0?Total:0;
+                                }
+                            if(DebitAmount==0 && heddinAmount!=0){
+                                console.log("the HN"+inputId+DebitAmount);
+                                Total= parseFloat(document.getElementById('TotalDebitAmount').value)- heddinAmount;
+                                document.getElementById("hn"+inputId).value=DebitAmount;
+                                document.getElementById('TotalDebitAmount').value = Total>=0?Total:0;
+
+                                }
+              
+                            }
+                    TotalAmountsDiff=Math.abs( document.getElementById('TotalCreditAmount').value-document.getElementById('TotalDebitAmount').value);
+                    document.getElementById('TotalDifference').value= TotalAmountsDiff;
+                    $('input[type="number"]').keyup();
+                    $('#MainAmount').keyup();
+                    }
+               }
+              /*هذه الدالة تقوم بتحديث الخانات عند حذف مبالغ من الخانات المخصصة لها او عند حذف صف او تحديث عملة وغيرها */
+            function OnInputAmountDelete(deletedItem){
+                var Total=0;
+                var TotalAmountsDiff=0;
+                var creditAmount=parseFloat(document.getElementById("CreditAmountRly-"+deletedItem).value)?parseFloat(document.getElementById("CreditAmountRly-"+deletedItem).value):0;
+                Total=parseFloat(document.getElementById('TotalCreditAmount').value) -  creditAmount;
+                document.getElementById('TotalCreditAmount').value=Total>=0?Total:0;
+                var debitAmount=parseFloat(document.getElementById("DebitAmountRly-"+deletedItem).value)?parseFloat(document.getElementById("DebitAmountRly-"+deletedItem).value):0;
+                Total=parseFloat(document.getElementById('TotalDebitAmount').value) - debitAmount ;
+                document.getElementById('TotalDebitAmount').value=Total>=0?Total:0;
+                TotalAmountsDiff=Math.abs( document.getElementById('TotalCreditAmount').value-document.getElementById('TotalDebitAmount').value);
+                document.getElementById('TotalDifference').value= TotalAmountsDiff;
+                $('input[type="number"]').keyup();
+
+                }
+                //Disabling and enableing the submit key
+            $('input[type="number"]').keyup(function(){//CreditChildAccount
+                   var ThereAccountNumbers=true;
+                        if(document.getElementById('TotalDifference').value==0 && document.getElementById('TotalDebitAmount').value==document.getElementById('MainAmount').value && document.getElementById('TotalDebitAmount').value >0 ){
+                            /* rows.forEach((singleRow) =>{
+                            var tempVar=singleRow.querySelector(".CreditChildAccount");
+                            var state= parseFloat(singleRow.getElementsByClassName('CreditChildAccount').value)?parseFloat(singleRow.getElementsByClassName('CreditChildAccount').value):0;
+                            console.log(tempVar.value+"Stste is : ");
+                            if(state >0){
+                               ThereAccountNumbers=true;
+                            }else
+                            {
+                               ThereAccountNumbers=false;
+                            }
+             
+
+                            });*/
+                            $('.CreditChildAccount').map(function(i,c){
+                                // $(c).prop('checked',true);
+                                console.log("Stste is :   - " +eval($(c).val()));
+                                var tempNo=eval($(c).val())?eval($(c).val()):0;
+                                if(tempNo==0  ){
+                                    ThereAccountNumbers=false;
+                                    console.log(ThereAccountNumbers+" ----");
+                                    }
+                            
+                                });
+
+                            if(ThereAccountNumbers==true){
+                             // $("#submit").disabled=!$("#submit").disabled;
+                             var isDisAbled=$("#submit").is(":disabled");
+                             console.log("the submit button is  : "+isDisAbled);
+                                 if(isDisAbled){
+                                      $("#submit").prop('disabled',true);
+                                      }
+                                 else{
+
+                                    }
+                             $("#submit").prop('disabled',false);
+                              
+                             
+                             }
+                        //alert("------ الجانب المدين يجب أن يكون متساويا مع الجانب الدائن");
+                            }
+                     else{
+                         $("#submit").prop('disabled',true);
+                         }
+                    })
+            //هذه الفانكشن تتنفذ ضغد عللى زر أف 9 من اجل استعراض جميع الحسابات
+            function AccountListKeyPress(keyPress,btn){
+       
+                const myArray=btn.split("");
+                var rowIndex=myArray[myArray.length-1];
+                document.getElementById('currentRow').value=rowIndex;
+                 console.log( document.getElementById('currentRow').value);
+                if(event.which==120){
+                 $('#accountsList').modal('show');
+                  var isDisplayed= document.getElementById('accountsList').style.display;
+          
+           
+                    if(isDisplayed==="none"){
+                        document.getElementById('accountsList').style.display="block"
+                    }else{
+                        document.getElementById('accountsList').style.display="none"
+                    }
+            
+                    }
+         
+                }
+            /*  هذي الدالة تقوم بعمل فلارة للحسابات التي يتم جلبها من الدليل المحاسبي ويعمل اختيار لاي حساب ويتم تحديث خانات الاسم الحساب ورقم الحساب في الصف المحدد*/
+            function AccountSelect(AccountNo){
+                var currentRow=document.getElementById('currentRow').value;
+                document.getElementById('Acccount-'+currentRow).value=AccountNo;
+                document.getElementById('currentRow').value=0;
+                $('#accountsList').modal('toggle');
+                creditChildAccount('Acccount-'+currentRow);
+                }
+            const searchInputName= document.getElementById('searchIdName');
+            const searchInputNumber= document.getElementById('searchIdNo');
+            const rows= document.querySelectorAll('#AccBody tr');
+             /*  هذه الفانكشن تعمل على البحث باسم الحساب داحل الجدول الذي يظهر من اجل اخيار حساب من حسابات الدليل المحاسبي  */
+            searchInputName.addEventListener('keyup',function(event){
+                const q= event.target.value.toLowerCase();
+                rows.forEach((singleRow) =>{
+             
+                    var state= singleRow.querySelector("#idName").textContent.toLowerCase().indexOf(q);
+                    if(state>-1){
+                        singleRow.style.display=""
+                        }
+                    else {
+                            singleRow.style.display="none";
+                            }
+             
+
+                    });
+                });
+            /*  هذه الفانكشن تعمل على البحث برقم الحساب داحل الجدول الذي يظهر من اجل اخيار حساب من حسابات الدليل المحاسبي  */
+
+            searchInputNumber.addEventListener('keyup',function(event){
+                 const q= event.target.value.toLowerCase();
+                 rows.forEach((singleRow) =>{
+             
+                    var state= singleRow.querySelector("td").textContent.toLowerCase().indexOf(q);
+             
+                    if(state>-1){
+                        singleRow.style.display=""
+                    }else
+                    {
+                        singleRow.style.display="none";
+                    }
+             
+
+                    });
+                 });
+     
+            function CloseAccountListView(){
+                 document.getElementById('accountsList').style.display="none"
+                 } 
+
+        </script>*@
+      <script type="text/javascript">	
 		
             /* هذه الفانكشن تقوم بحذف صف من صفوف الادخالات */
         function DeleteItem(btn) {
@@ -1217,10 +1602,10 @@
                   TotalAmountsDiff=Math.abs( document.getElementById('TotalCreditAmount').value-document.getElementById('TotalDebitAmount').value);
                      document.getElementById('TotalDifference').value= TotalAmountsDiff;
                  $('input[type="number"]').keyup();
-
+                  $('MainAmount').keyup();
     
                   }
-             $('MainAmount').keyup();
+            
             
               /*هذه الدالة تقوم بتحديث الخانات عند حذف مبالغ من الخانات المخصصة لها او عند حذف صف او تحديث عملة وغيرها */
         function OnInputAmountDelete(deletedItem){
@@ -1366,7 +1751,6 @@
          
      
 	</script>
-    
 
 
   <!-- Core JS -->

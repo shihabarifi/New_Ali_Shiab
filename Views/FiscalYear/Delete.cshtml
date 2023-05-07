@@ -534,47 +534,47 @@
         <!-- / Navbar -->
      
 <hr />
-<div   style="margin-right:500px;margin-left:250px;margin-top:100px;margin-bottom:100px;padding-right:200px;padding-top:100px;padding-bottom:100px;width:600px" class="card">
-   <h1>إغلاق نهائي</h1>
+<div   style="margin-right:250px;margin-left:250px;margin-top:100px;margin-bottom:100px;padding-right:200px;padding-top:100px;padding-bottom:100px;width:600px" class="card">
+    <form asp-action="Delete">
+               <h1>إغلاق نهائي</h1>
 
    <h3>هل بالفعل تريد ايقاف السنة المالية ?</h3>
     <div>
         <h4>السنة المالية</h4>
         <hr />
         <dl class="row">
-            <dt class = "col-sm-2">
-                اسم السنة 
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.FiscalYearName)
-            </dd>
-            <dt class = "col-sm-2">
-                تاريخ بدايتها
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.StartDate)
-            </dd>
-            <dt class = "col-sm-2">
-                تاريخ نهايتها
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.EndDate)
-            </dd>
-        
-            @* <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.FiscalYearStatus)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.FiscalYearStatus)
-            </dd>
-            *@
+             <div class="form-group">
+                <label>معرف السنة</label>
+                <input asp-for="FiscalYearId" class="form-control"readonly />
+                <span asp-validation-for="FiscalYearId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>اسم السنة</label>
+                <input asp-for="FiscalYearName" class="form-control" />
+                <span asp-validation-for="FiscalYearName" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label> تاريخ بداية الفترة</label>
+                <input type="date" asp-for="StartDate" class="form-control" asp-items="ViewBag.AccHeadeerlist"/>
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+              
+            <div class="form-group">
+                <label> تاريخ نهاية الفترة</label>
+                <input type="date" asp-for="EndDate" class="form-control" asp-items="ViewBag.AccHeadeerlist"/>
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <br />
+           
         </dl>
     
-        <form asp-action="Delete">
-            <input type="submit" value="إغلاق" class="btn btn-danger" /> |
-            <a asp-action="Index">العودة للقائمة السابقة</a>
-        </form>
+        
     </div>
+            <input type="submit" value=" إغلاق السنة" class="btn btn-danger" /> |
+            <a asp-action="Index">العودة للقائمة السابقة</a>
+    </form>
+   
 </div>
 
 
