@@ -142,14 +142,24 @@ namespace POS.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
+                    
                     mainJournalEntery.FiscalYear = 7;
                     mainJournalEntery.SystemUsers = "6f94621c-3508-435c-98fe-c51cc63d076f";
                     mainJournalEntery.IsDeleted = 0;
                     mainJournalEntery.IsStage= 0;
                     //mainJournalEntery.SystemUsers = mainJournalEntery.SystemUsers != 0 ? mainJournalEntery.SystemUsers : 1;
                     mainJournalEntery.MainournalEnteriesStatus = 0;
-
+                    foreach(var i in mainJournalEntery.DetailedJournalEnteries)
+                    {
+                        if(i.CreditAmountRly>0|| i.CreditAmountUdo>0||i.DebittAmountRly > 0 || i.DebittAmountUdo > 0)
+                        {
+                          ///nothing to write  
+                        }
+                        else
+                        {
+                         mainJournalEntery.DetailedJournalEnteries.Remove(i);
+                        }
+                    }
                     MainJourEnter_Repo.Add(mainJournalEntery);
                     return RedirectToAction(nameof(Index));
                 }
@@ -163,18 +173,7 @@ namespace POS.Controllers
                 return View(e);
             }
         }
-        //GET: journalEnteryr1/ManualAccountsPartialView/
-        /* public ActionResult ManualAccountsPartialView()
-         {
-             var AccountList = AccountingManual_Repo.List("فرعي").ToList();
-             return PartialView(AccountList);
-         }
-         // POST: journalEnteryr1/ManualAccountsPartialView
-         [HttpPost]
-         public ActionResult ManualAccountsPartialView(AccountingManual accountingManual)
-         {
-             return View();
-         }*/
+        
         [HttpGet("journalstage")]
         //GET: journalEnteryr1/JournalStage/
         public ActionResult JournalStage()
