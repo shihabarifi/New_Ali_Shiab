@@ -63,6 +63,7 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config: Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file. -->
   <script src="~/assets/js/config.js"></script>
+ 
 </head>
 
 <body>
@@ -549,7 +550,7 @@
 
 
 
-<table class="table datatables-basic">
+<table id="jounaltable" class="table datatables-basic">
     <thead>
         <tr>
            
@@ -653,7 +654,121 @@
   <script src="~/assets/vendor/libs/hammer/hammer.js"></script>
   <script src="~/assets/vendor/js/menu.js"></script>
   <!-- endbuild -->
+  <script type="text/javascript">
+//      $(document).ready(function(){
+//          //$('#jounaltable').DataTable( {
+//          //  dom: 'Bfrtip',
+//          //  buttons: [
+//          //       'copy', 'excel', 'pdf'
+//          //          ]
+//          //  });
+//          //var table = $('#jounaltable').DataTable( {
+//          //    dom: 'Bfrtip',
+//          //       buttons: [
+//          //        'copy', 'excel', 'pdf'
+//          //          ]
+//          //          } );
+  
+//          //  table.buttons().container().appendTo( $('.col-sm-8:eq(0)', table.table().container() ) );
+//          var table = $('#jounaltable').DataTable({
+//  dom: 'Bfrtip',
+//  buttons: [{
+//    extend: 'pdfHtml5',
+//    text: 'Export as PDF',
+//    className: 'btn btn-primary',
+//    filename: 'journal_report',
+//    title: 'Journal Report',
+//    exportOptions: {
+//      columns: [0, 1, 2, 3, 4]
+//    },
+//    customize: function(doc) {
+//      doc.content.splice(0, 1, {
+//        text: [{
+//          text: 'Journal Report',
+//          fontSize: 18,
+//          alignment: 'center',
+//          color: '#1E90FF'
+//        }],
+//        margin: [0, 0, 0, 12]
+//      });
+//    }
+//  }],
+//});
 
+//table.buttons().container()
+//  .appendTo($('.col-sm-12:eq(0)', table.table().container()));
+
+//      });
+//        $(document).ready(function() {
+//    var table = $('#jounaltable').DataTable( {
+//        dom: 'Bfrtip',
+//        buttons: [
+            
+//            {
+//                extend: 'excelHtml5',
+//                text: 'Export to Excel',
+//                className: 'btn btn-success',
+//                filename: 'example'
+//            },
+//            {
+//                extend: 'pdfHtml5',
+//                text: 'Export to PDF',
+//                className: 'btn btn-danger',
+//                filename: 'example'
+//            },
+//            {
+//                extend: 'copyHtml5',
+//                text: 'Copy to Clipboard',
+//                className: 'btn btn-primary',
+//                filename: 'example'
+//            }
+//        ]
+//    });
+ 
+//table.buttons().container().appendTo($('.col-md-2:eq(0)', table.table().container()));
+//});
+
+ $(document).ready(function() {
+    var table = $('#jounaltable').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            
+            {
+                extend: 'pdfHtml5',
+                text: 'Export to PDF',
+                className: 'btn btn-danger',
+                filename: 'example'
+            },
+        ]
+    });
+ 
+table.buttons().container().appendTo($('.col-md-2:eq(0)', table.table().container()));
+});
+
+
+//        $(document).ready(function() {
+//    var table = $('#jounaltable').DataTable( {
+//        dom: 'Bfrtip',
+//        buttons: [
+//            {
+//                extend: 'collection',
+//                text: 'Export',
+//                buttons: [
+//                    'copy',
+//                    'excel',
+//                    'pdf'
+//                ],
+//                position: 'topLeft'
+//            }
+//        ]
+//    });
+ 
+//    table.buttons().container()
+//        .appendTo($('.dt-buttons:eq(0)', table.table().container() ));
+//});//
+
+
+  </script>
   <!-- Vendors JS -->
   <script src="~/assets/vendor/libs/datatables/jquery.dataTables.js"></script>
   <script src="~/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
