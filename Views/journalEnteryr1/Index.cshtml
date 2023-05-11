@@ -718,16 +718,8 @@
 
 //      });
         $(document).ready(function() {
-             //pdfMake.fonts({
-             //     Amiri: {
-             //           normal: '~/assets/vendor/fonts/Amiri-Regular.ttf',
-             //               bold: '~/assets/vendor/fonts/Amiri-Bold.ttf',
-             //               italics: '~/assets/vendor/fonts/Amiri-Italic.ttf',
-             //               bolditalics: '~/assets/vendor/fonts/Amiri-BoldItalic.ttf'
-             //     }
-             //   });
+             
                 function processDoc(doc) {
-                   // const path = require('path');
 
                 //
                 // https://pdfmake.github.io/docs/fonts/custom-fonts-client-side/
@@ -735,12 +727,12 @@
                 // Update pdfmake's global font list, using the fonts available in
                 // the customized vfs_fonts.js file (do NOT remove the Roboto default):
                 pdfMake.fonts = {
-                  Roboto: {
-                    normal: 'Roboto-Regular.ttf',
-                    bold: 'Roboto-Medium.ttf',
-                    italics: 'Roboto-Italic.ttf',
-                    bolditalics: 'Roboto-MediumItalic.ttf'
-                  },
+                  //Roboto: {
+                  //  normal: 'Roboto-Regular.ttf',
+                  //  bold: 'Roboto-Medium.ttf',
+                  //  italics: 'Roboto-Italic.ttf',
+                  //  bolditalics: 'Roboto-MediumItalic.ttf'
+                  //},
                 //  Amiri: {
                 //  normal: path.join(__dirname, 'assets', 'vendor', 'Amiri-Regular.ttf'),
                 //  bold: path.join(__dirname, 'assets', 'vendor', 'Amiri-Bold.ttf'),
@@ -748,13 +740,50 @@
                 //  bolditalics: path.join(__dirname, 'assets', 'vendor', 'Amiri-BoldItalic.ttf')
                 //}
                 Amiri: {
-                   normal: 'Amiri-Regular.ttf',
-                    bold: 'Amiri-Bold.ttf',
+                   normal: 'Amiri-Italic.ttf',
+                    bold: 'Amiri-Italic.ttf',
                     italics: 'Amiri-Italic.ttf',
-                    bolditalics: 'Amiri-BoldItalic.ttf'
+                   // bolditalics: 'Amiri-Italic.ttf'
                 }
 
                 };
+                doc.styles.arabic = {
+                        font: 'Amiri'
+                    };
+                  // set the direction to be right-to-left
+    ////doc.defaultStyle.direction = 'rtl';
+
+    // add the autoArabic and alignment options to the default style
+    //doc.defaultStyle.autoArabic = true;
+    //doc.defaultStyle.alignment = 'right';
+
+    // add a custom font if needed
+    //doc.defaultStyle.font = 'Amiri';
+    // reverse the text in all cells
+    doc.content.forEach(function(item) {
+        if (item.hasOwnProperty('table')) {
+            var table = item.table;
+            for (var i = 0; i < table.body.length; i++) {
+                var row = table.body[i];
+                for (var j = 0; j < row.length; j++) {
+                    var cell = row[j];
+                    //console.log(cell);
+                    if (typeof cell.text === 'string') {
+                        cell.text = cell.text.split(' ').reverse().join(' ');
+                    }
+                }
+            }
+        }
+    });
+
+  // loop through all the text objects in the document and set their alignment to right
+                  
+    // Apply the Arabic style to all paragraphs
+    //doc.content.forEach(function(item) {
+    //    if (item.text && typeof item.text === 'string' && item.text.match(/[\u0600-\u06FF]/)) {
+    //        item.style = 'arabic';
+    //    }
+    //});
                 // modify the PDF to use a different default font:
                 doc.defaultStyle.font = "Amiri";
                 var i = 1;
@@ -786,11 +815,15 @@
                 text: ' طباعة ملف PDF',
                 className: 'btn btn-danger',
                 filename: 'example',
-                font: 'Roboto', 
+                font: 'Amiri',
                  customize: function(doc) {
                 // add the autoArabic and alignment options to the default style
                 //doc.defaultStyle.font = 'Amiri';
-                processDoc(doc);
+                //var body = doc.content[1];
+                //    if (body && body.style) {
+                //        body.style.direction = 'rtl';
+                //    }             
+                    processDoc(doc);
 
             }
             },
@@ -800,11 +833,37 @@
                 className: 'btn btn-primary',
                 filename: 'example'
             }
-        ]
+        ],"columnDefs": [
+    {
+      "targets": "_all",
+      "createdCell": function (td, cellData, rowData, row, col) {
+        $(td).addClass('rtl-text'); // Add custom class to table cells
+      }
+    }
+  ],
+  //"language": {
+  //  "url": "{{app()->getLocale()=='ar'?asset('datatable/ar.json'):asset('datatable/en.json')}}"
+  //}
+        
     });
  
 table.buttons().container().appendTo($('.col-md-2:eq(0)', table.table().container()));
 });
+
+
+
+
+//var docDefinition = {
+//    content: [
+//        {
+//            text: 'This is a sample text',
+//            alignment: 'right'
+//        }
+//    ],
+//    pageOrientation: 'rtl'
+//};
+
+//pdfMake.createPdf(docDefinition).open();
 
 // $(document).ready(function() {
 //    var table = $('#jounaltable').DataTable( {
