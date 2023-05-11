@@ -549,8 +549,10 @@
               <div class="table-responsive card-datatable">
 
 
+    <button onclick="$('#report-view').printThis()">Print PDF</button>
 
 <table id="jounaltable" class="table datatables-basic">
+
     <thead>
         <tr>
            
@@ -664,7 +666,8 @@
   <script src="~/assets/vendor/libs/pdfmake/vfs_fonts.js"></script>
   <script src="~/assets/vendor/libs/datatables-buttons/buttons.html5.js"></script>
   <script src="~/assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.printThis/1.15.0/printThis.min.js"></script>
+
 
   <script type="text/javascript">
      
@@ -718,8 +721,105 @@
 
 //      });
         $(document).ready(function() {
+
+            function processDoc(doc) {
+
+                pdfMake.fonts = {
+                Amiri: {
+                   normal: 'Amiri-Italic.ttf',
+                    bold: 'Amiri-Italic.ttf',
+                    italics: 'Amiri-Italic.ttf',
+                }
+
+                };
+                //doc.styles.arabic = {
+                //        font: 'Amiri'
+                //    };
+                  // set the direction to be right-to-left
+   doc.defaultStyle.direction = 'rtl';
+
+    // add the autoArabic and alignment options to the default style
+    doc.defaultStyle.autoArabic = true;
+    doc.defaultStyle.alignment = 'right';
+    doc.defaultStyle.font = "Amiri";
+                //var i = 1;
+                  // Define the columns for the report
+                  var columns = [
+                    { title: 'تاريخ القيد', dataKey: 'entry_date' },
+                    { title: 'رقم القيد', dataKey: 'entry_number' },
+                    { title: 'الحساب المدين', dataKey: 'debit_account' },
+                    { title: 'الحساب الدائن', dataKey: 'credit_account' },
+                    { title: 'المبلغ', dataKey: 'amount' },
+                  ];
+
+                  // Define the data for the report
+                  var data = table.rows().data().toArray();
+                  console.log(data);
+                  // Create the PDF content
+                  var docDefinition = {
+                    content: [
+                      { text: 'تقرير القيود المحاسبية', style: 'header' },
+                      { text: ' ', style: 'subheader' },
+                      {
+                        style: 'tableExample',
+                        table: {
+                          headerRows: 1,
+                          widths: ['auto', 'auto', 'auto', 'auto', 'auto'],
+                          body: [
+                            columns.map((c) => ({ text: c.title, style: 'tableHeader' })),
+                            ...data.map((d) => [
+                              { text: d.entry_date, style: 'tableCell' },
+                              { text: d.entry_number, style: 'tableCell' },
+                              { text: d.debit_account, style: 'tableCell' },
+                              { text: d.credit_account, style: 'tableCell' },
+                              { text: d.amount, style: 'tableCell' },
+                            ]),
+                          ],
+                        },
+                      },
+                    ],
+                    styles: {
+                      header: {
+                        fontSize: 22,
+                        bold: false,
+                        alignment: 'center',
+                        margin: [0, 0, 0, 20],
+                        font: 'Amiri'
+                      },
+                      subheader: {
+                        fontSize: 16,
+                        bold: false,
+                        alignment: 'center',
+                        margin: [0, 0, 0, 20],
+                        font: 'Amiri'
+                      },
+                      tableHeader: {
+                        bold: false,
+                        fontSize: 13,
+                        color: 'black',
+                        alignment: 'center',
+                        font: 'Amiri'
+                      },
+                      tableCell: {
+                        fontSize: 13,
+                        color: 'black',
+                        alignment: 'center',
+                        font: 'Amiri'
+                      },
+                    },
+                    pageMargins: [40, 60, 40, 60],
+                    pageOrientation: 'landscape',
+                    alignment: 'right-to-left',
+                  };
+
+                  // Set the direction of the document to RTL
+                  doc.content[0].alignment = 'right-to-left';
+
+                  pdfMake.createPdf(docDefinition).open();
+                    }
+
              
-                function processDoc(doc) {
+                function processDoc1(doc) {
 
                 //
                 // https://pdfmake.github.io/docs/fonts/custom-fonts-client-side/
@@ -751,30 +851,31 @@
                         font: 'Amiri'
                     };
                   // set the direction to be right-to-left
-    ////doc.defaultStyle.direction = 'rtl';
+   doc.defaultStyle.direction = 'rtl';
 
     // add the autoArabic and alignment options to the default style
-    //doc.defaultStyle.autoArabic = true;
-    //doc.defaultStyle.alignment = 'right';
-
+    doc.defaultStyle.autoArabic = true;
+    doc.defaultStyle.alignment = 'right';
+    doc.defaultStyle.font = "Amiri";
+                var i = 1;
     // add a custom font if needed
     //doc.defaultStyle.font = 'Amiri';
     // reverse the text in all cells
-    doc.content.forEach(function(item) {
-        if (item.hasOwnProperty('table')) {
-            var table = item.table;
-            for (var i = 0; i < table.body.length; i++) {
-                var row = table.body[i];
-                for (var j = 0; j < row.length; j++) {
-                    var cell = row[j];
-                    //console.log(cell);
-                    if (typeof cell.text === 'string') {
-                        cell.text = cell.text.split(' ').reverse().join(' ');
-                    }
-                }
-            }
-        }
-    });
+    //doc.content.forEach(function(item) {
+    //    if (item.hasOwnProperty('table')) {
+    //        var table = item.table;
+    //        for (var i = 0; i < table.body.length; i++) {
+    //            var row = table.body[i];
+    //            for (var j = 0; j < row.length; j++) {
+    //                var cell = row[j];
+    //                //console.log(cell);
+    //                if (typeof cell.text === 'string') {
+    //                    cell.text = cell.text.split(' ').reverse().join(' ');
+    //                }
+    //            }
+    //        }
+    //    }
+    //});
 
   // loop through all the text objects in the document and set their alignment to right
                   
@@ -785,20 +886,10 @@
     //    }
     //});
                 // modify the PDF to use a different default font:
-                doc.defaultStyle.font = "Amiri";
-                var i = 1;
+                
               }
 
-             //if (typeof pdfMake !== 'undefined') {
-             //   pdfMake.fonts({
-             //       Amiri: {
-             //           normal: 'Amiri-Regular.ttf',
-             //           bold: 'Amiri-Bold.ttf',
-             //           italics: 'Amiri-Italic.ttf',
-             //           bolditalics: 'Amiri-BoldItalic.ttf'
-             //       }
-             //   });
-             //   }
+             
 
     var table = $('#jounaltable').DataTable( {
         dom: 'Bfrtip',
@@ -817,12 +908,7 @@
                 filename: 'example',
                 font: 'Amiri',
                  customize: function(doc) {
-                // add the autoArabic and alignment options to the default style
-                //doc.defaultStyle.font = 'Amiri';
-                //var body = doc.content[1];
-                //    if (body && body.style) {
-                //        body.style.direction = 'rtl';
-                //    }             
+                            
                     processDoc(doc);
 
             }
@@ -832,15 +918,15 @@
                 text: 'نسخ الى الحافظة',
                 className: 'btn btn-primary',
                 filename: 'example'
-            }
-        ],"columnDefs": [
-    {
-      "targets": "_all",
-      "createdCell": function (td, cellData, rowData, row, col) {
-        $(td).addClass('rtl-text'); // Add custom class to table cells
-      }
-    }
-  ],
+            }]
+  //      ],"columnDefs": [
+  //  {
+  //    "targets": "_all",
+  //    "createdCell": function (td, cellData, rowData, row, col) {
+  //      $(td).addClass('rtl-text'); // Add custom class to table cells
+  //    }
+  //  }
+  //],
   //"language": {
   //  "url": "{{app()->getLocale()=='ar'?asset('datatable/ar.json'):asset('datatable/en.json')}}"
   //}
@@ -853,56 +939,6 @@ table.buttons().container().appendTo($('.col-md-2:eq(0)', table.table().containe
 
 
 
-//var docDefinition = {
-//    content: [
-//        {
-//            text: 'This is a sample text',
-//            alignment: 'right'
-//        }
-//    ],
-//    pageOrientation: 'rtl'
-//};
-
-//pdfMake.createPdf(docDefinition).open();
-
-// $(document).ready(function() {
-//    var table = $('#jounaltable').DataTable( {
-//        dom: 'Bfrtip',
-//        buttons: [
-            
-//            {
-//                extend: 'pdfHtml5',
-//                text: 'Export to PDF',
-//                className: 'btn btn-danger',
-//                filename: 'example'
-//            },
-//        ]
-//    });
- 
-//table.buttons().container().appendTo($('.col-md-2:eq(0)', table.table().container()));
-//});
-
-
-//        $(document).ready(function() {
-//    var table = $('#jounaltable').DataTable( {
-//        dom: 'Bfrtip',
-//        buttons: [
-//            {
-//                extend: 'collection',
-//                text: 'Export',
-//                buttons: [
-//                    'copy',
-//                    'excel',
-//                    'pdf'
-//                ],
-//                position: 'topRight'
-//            }
-//        ]
-//    });
- 
-//    table.buttons().container()
-//        .appendTo($('.dt-buttons:eq(0)', table.table().container() ));
-//});//
 
 
   </script>
