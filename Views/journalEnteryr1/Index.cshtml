@@ -922,11 +922,23 @@
           className: 'CreateJu btn btn-primary mb-3 mb-md-0',
           
             },
-            {
+               {
                 extend: 'print',
-                text: '<i class="bx bx-printer me-2"></i>إصدار تقرير',
-                className: 'btn btn-label-secondary mx-3',
-                exportOptions: { columns: [5,4,3, 2, 1, 0] }
+                text: '<i class="bx bx-printer me-1"></i>طباعة ',
+                className: 'btn btn-label-danger mx-1',
+                 customize: function (win) {
+                    $(win.document.body)
+                        .css('font-size', '10pt')
+                        .prepend(
+                            '<div><img src="/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle"></div>'
+                        );
+
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                },
+                exportOptions: { columns: [3, 2, 1, 0] }
+           
             },
             {
                 extend: 'excelHtml5',
@@ -941,7 +953,8 @@
                 filename: 'example',
                 font: 'Amiri',
                  customize: function(doc) {
-                            
+                        
+    
                     processDoc(doc);
 
             }

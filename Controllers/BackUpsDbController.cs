@@ -22,7 +22,7 @@ namespace POS.Controllers
             backupin.Filename = "AliAbackUp";
             backupin.StampDate = DateTime.Now;
             var BackUpsList=backUpsDb_Repo.List().ToList();
-           // BackUpsList.Add(backupin);
+            BackUpsList.Add(backupin);
 
             return View(BackUpsList);
         }
