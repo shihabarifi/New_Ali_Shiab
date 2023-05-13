@@ -10,9 +10,9 @@ namespace POS.Controllers
     [AllowAnonymous]
     public class CurrenciesExchangeRateController : Controller
     {
-        private readonly ICurrenciesExchangeRate _Repo;
+        private readonly IExchangeRate _Repo;
 
-        public CurrenciesExchangeRateController(ICurrenciesExchangeRate repo)
+        public CurrenciesExchangeRateController(IExchangeRate repo)
         {
            _Repo = repo;
         }

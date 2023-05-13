@@ -22,6 +22,8 @@ namespace POS.Data
         public virtual DbSet<AccountsCurrency> AccountsCurrencies { get; set; } = null!;
         public virtual DbSet<ActivityType> ActivityTypes { get; set; } = null!;
         public virtual DbSet<Bank> Banks { get; set; } = null!;
+        public virtual DbSet<BackUpsDb> BackUpsDbs { get; set; } = null!;
+
         public virtual DbSet<CheckExpensVoucher> CheckExpensVouchers { get; set; } = null!;
         public virtual DbSet<CheckPaycheckVoucher> CheckPaycheckVouchers { get; set; } = null!;
         public virtual DbSet<CompanyProfile> CompanyProfiles { get; set; } = null!;

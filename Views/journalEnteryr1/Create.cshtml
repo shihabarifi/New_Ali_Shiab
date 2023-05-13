@@ -394,7 +394,7 @@
             </ul>
             <!-- Page -->
           <li class="menu-item">
-            <a href="sys33.html" class="menu-link">
+            <a asp-controller="BackUpsDb" asp-action="Index" class="menu-link">
               <i class="menu-icon icon-arrows-rotate me-1"></i>
               <div>النسخة الاحتياطية</div>
             </a>
@@ -420,7 +420,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">البنوك</h3>
+                <h3 class="nav-item pt-3">القيود اليومية</h3>
 
               </div>
               <!-- nav-->
@@ -886,8 +886,9 @@
 
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    
-        <script type="text/javascript">	
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+      <script type="text/javascript">	
 		
             /* هذه الفانكشن تقوم بحذف صف من صفوف الادخالات */
         function DeleteItem(btn) {
@@ -1143,7 +1144,7 @@
            
             /* هذي الدالة التي تقوم بتحديث القيم التي يتم ادحالها في خانات المبالغ في كل صف من اجل تحديث القيم الخاصة باجمالي الدائن والمدين والفرق */                         }
        
-            function OnInputAmount(inputId){
+          function OnInputAmount(inputId){
            const myArray=inputId.split("");
            var FirstindexLitter=myArray[0];
            var Lastindex=myArray[myArray.length-1];
@@ -1161,66 +1162,54 @@
                      if(heddinAmount!=creditAmount){
                          if(parseFloat(document.getElementById('TotalCreditAmount').value)>0){
                               var tempTotal= parseFloat(document.getElementById('TotalCreditAmount').value)-heddinAmount ;
-                                 document.getElementById('TotalCreditAmount').value =tempTotal>=0?tempTotal:0;
-                         }
+                              document.getElementById('TotalCreditAmount').value =tempTotal>=0?tempTotal:0;
+                              }
                 
                           Total=creditAmount +parseFloat(document.getElementById('TotalCreditAmount').value) ;
                           document.getElementById("hn"+inputId).value=creditAmount;
-                             console.log("the HN"+inputId+creditAmount);
+                          console.log("the HN"+inputId+creditAmount);
+                          document.getElementById('TotalCreditAmount').value =Total>=0?Total:0;
 
-                            document.getElementById('TotalCreditAmount').value =Total>=0?Total:0;
-
-                         }
+                          }
                      if(creditAmount==0 && heddinAmount!=0){
                           Total= parseFloat(document.getElementById('TotalCreditAmount').value)-heddinAmount ;
                           document.getElementById("hn"+inputId).value=creditAmount;
-                             console.log("the HN"+inputId+creditAmount);
-
+                          console.log("the HN"+inputId+creditAmount);
                           document.getElementById('TotalCreditAmount').value =Total>=0?Total:0;
                    
-                             }
+                          }
 
                 
-                         }
-                 else{
-            var DebitAmount=parseFloat(document.getElementById(inputId).value)?parseFloat(document.getElementById(inputId).value):0;
-
-                    if(heddinAmount!=DebitAmount){
+                     }
+           else{
+                     var DebitAmount=parseFloat(document.getElementById(inputId).value)?parseFloat(document.getElementById(inputId).value):0;
+                     if(heddinAmount!=DebitAmount){
 
                          if(parseFloat(document.getElementById('TotalDebitAmount').value)>0){
                               var tempTotal= parseFloat(document.getElementById('TotalDebitAmount').value)-heddinAmount ;
-                  document.getElementById('TotalDebitAmount').value =tempTotal>=0?tempTotal:0;
-                         }
-                   document.getElementById("hn"+inputId).value=DebitAmount;
-                   console.log("the HN"+inputId+DebitAmount);
-
-                         Total=DebitAmount +parseFloat(document.getElementById('TotalDebitAmount').value)  ;
-
-                  document.getElementById('TotalDebitAmount').value = Total>=0?Total:0;
-
-
-                    }
+                              document.getElementById('TotalDebitAmount').value =tempTotal>=0?tempTotal:0;
+                              }
+                            document.getElementById("hn"+inputId).value=DebitAmount;
+                            console.log("the HN"+inputId+DebitAmount);
+                            Total=DebitAmount +parseFloat(document.getElementById('TotalDebitAmount').value);
+                            document.getElementById('TotalDebitAmount').value = Total>=0?Total:0;
+                            }   
                      if(DebitAmount==0 && heddinAmount!=0){
-                   console.log("the HN"+inputId+DebitAmount);
+                             console.log("the HN"+inputId+DebitAmount);
+                             Total= parseFloat(document.getElementById('TotalDebitAmount').value)- heddinAmount;
+                             document.getElementById("hn"+inputId).value=DebitAmount;
+                             document.getElementById('TotalDebitAmount').value = Total>=0?Total:0;
 
-                         Total= parseFloat(document.getElementById('TotalDebitAmount').value)- heddinAmount;
-                        document.getElementById("hn"+inputId).value=DebitAmount;
-
-
-                  document.getElementById('TotalDebitAmount').value = Total>=0?Total:0;
-
-
-
-                    }
+                             }
               
-                     }
-                  TotalAmountsDiff=Math.abs( document.getElementById('TotalCreditAmount').value-document.getElementById('TotalDebitAmount').value);
-                     document.getElementById('TotalDifference').value= TotalAmountsDiff;
-                 $('input[type="number"]').keyup();
-
+                    }
+            TotalAmountsDiff=Math.abs( document.getElementById('TotalCreditAmount').value-document.getElementById('TotalDebitAmount').value);
+            document.getElementById('TotalDifference').value= TotalAmountsDiff;
+            $('input[type="number"]').keyup();
+            $('MainAmount').keyup();
     
-                  }
-             $('MainAmount').keyup();
+           }
+            
             
               /*هذه الدالة تقوم بتحديث الخانات عند حذف مبالغ من الخانات المخصصة لها او عند حذف صف او تحديث عملة وغيرها */
         function OnInputAmountDelete(deletedItem){
@@ -1243,22 +1232,12 @@
 
                  }
                 //Disabling and enableing the submit key
-                    $('input[type="number"]').keyup(function(){//CreditChildAccount
+                var $j = jQuery.noConflict();
+
+                    $j('input[type="text"]').keyup(function(){
                         var ThereAccountNumbers=true;
                      if(document.getElementById('TotalDifference').value==0 && document.getElementById('TotalDebitAmount').value==document.getElementById('MainAmount').value && document.getElementById('TotalDebitAmount').value >0 ){
-                            /* rows.forEach((singleRow) =>{
-                            var tempVar=singleRow.querySelector(".CreditChildAccount");
-                            var state= parseFloat(singleRow.getElementsByClassName('CreditChildAccount').value)?parseFloat(singleRow.getElementsByClassName('CreditChildAccount').value):0;
-                            console.log(tempVar.value+"Stste is : ");
-                            if(state >0){
-                               ThereAccountNumbers=true;
-                            }else
-                            {
-                               ThereAccountNumbers=false;
-                            }
-             
-
-                            });*/
+                            
                             $('.CreditChildAccount').map(function(i,c){
                             // $(c).prop('checked',true);
                              console.log("Stste is :   - " +eval($(c).val()));
@@ -1289,7 +1268,43 @@
                          $("#submit").prop('disabled',true);
                     }
                     })
+                    //Disabling and enableing the submit key
+                var $j = jQuery.noConflict();
 
+                    $j('input[type="number"]').keyup(function(){
+                        var ThereAccountNumbers=true;
+                     if(document.getElementById('TotalDifference').value==0 && document.getElementById('TotalDebitAmount').value==document.getElementById('MainAmount').value && document.getElementById('TotalDebitAmount').value >0 ){
+                            
+                            $('.CreditChildAccount').map(function(i,c){
+                            // $(c).prop('checked',true);
+                             console.log("Stste is :   - " +eval($(c).val()));
+                             var tempNo=eval($(c).val())?eval($(c).val()):0;
+                              if(tempNo==0  ){
+                               ThereAccountNumbers=false;
+                               console.log(ThereAccountNumbers+" ----");
+                            }
+                            
+                             });
+
+                        if(ThereAccountNumbers==true){
+                             // $("#submit").disabled=!$("#submit").disabled;
+                             var isDisAbled=$("#submit").is(":disabled");
+                             console.log("the submit button is  : "+isDisAbled);
+                             if(isDisAbled){
+                                  $("#submit").prop('disabled',true);
+                             }else{
+
+                             }
+                                  $("#submit").prop('disabled',false);
+                              
+                             
+                        }
+                        //alert("------ الجانب المدين يجب أن يكون متساويا مع الجانب الدائن");
+                      }
+                     else{
+                         $("#submit").prop('disabled',true);
+                    }
+                    })
        
     //هذه الفانكشن تتنفذ ضغد عللى زر أف 9 من اجل استعراض جميع الحسابات
     function AccountListKeyPress(keyPress,btn){
@@ -1366,7 +1381,6 @@
          
      
 	</script>
-    
 
 
   <!-- Core JS -->

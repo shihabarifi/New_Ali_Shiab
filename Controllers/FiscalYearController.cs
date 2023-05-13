@@ -112,7 +112,7 @@ namespace POS.Controllers
             {
 
 
-                fiscalYear.FiscalYearStatus = 1;
+                fiscalYear.FiscalYearStatus = 0;
                 fiscalYear.SystemUsers = "6f94621c-3508-435c-98fe-c51cc63d076f";
 
                 bolret = _Repo.Edit(fiscalYear);
@@ -155,8 +155,15 @@ namespace POS.Controllers
             try
             {
 
-
-                fiscalYear.FiscalYearStatus = fiscalYear.FiscalYearStatus == 1 ? 0 : 1;
+                if(fiscalYear.FiscalYearStatus == 0 || fiscalYear ==null )
+                {
+                 fiscalYear.FiscalYearStatus=1;
+                }
+                else
+                {
+                    fiscalYear.FiscalYearStatus = 0;
+                }
+               // fiscalYear.FiscalYearStatus = fiscalYear.FiscalYearStatus == 1 ? 0 : 1;
                 fiscalYear.SystemUsers = "6f94621c-3508-435c-98fe-c51cc63d076f";
 
                 bolret = _Repo.Edit(fiscalYear);
