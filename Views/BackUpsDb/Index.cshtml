@@ -1,12 +1,11 @@
 ﻿@model IEnumerable<POS.Models.DB.BackUpsDb>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
 <!--------------------------Start Header-------------------------->
 
-
+@{
+    ViewData["Title"] = "Create";
+    Layout = null;
+}
  @inject UserManager<ApplicationUser> userManager
 @inject SignInManager<ApplicationUser> signInManager
 <!DOCTYPE html>
@@ -19,7 +18,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>نسخة احنياطية</title>
+  <title>النسخ الاحتياطي للنظام</title>
 
   <meta name="description" content="" />
 
@@ -396,7 +395,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">ادارة النسخ الاحتياطي للنظام</h3>
+                <h3 class="nav-item pt-3">النسخة الاحتياطية</h3>
 
               </div>
               <!-- nav-->
@@ -520,24 +519,21 @@
             <div class="card">
             <div class="table-responsive card-datatable">
                 <table class="table datatables-basic">
-                 <thead>
+                  <thead>
                     <tr>
                         <th>
-                            رقم النسخة
+                        رقم النسخة
                         </th>
-            
                         <th>
                             اسم النسخة
                         </th>
                         <th>
                             التاريخ
                         </th>
-                        <th>
-                           رقم المستخدم
-                        </th>
-                        <th></th>
+
+                      <th>الإجرائات</th>
                     </tr>
-                </thead>
+                  </thead>
                   <tbody>
                    @foreach (var item in Model) {
                    <tr>
@@ -547,31 +543,27 @@
                       <td>
                        @Html.DisplayFor(modelItem => item.Filename)
                      </td>
-                     <td>
+                      <td>
                        @Html.DisplayFor(modelItem => item.StampDate)
                      </td>
-                      <td>
-                       @Html.DisplayFor(modelItem => item.SystemUsers)
-                     </td>
             
-                      <td>
-             
-                   
-            </td>
-             <td>
+          
+            
+                     
+                     <td>
                         <div class="dropdown">
                           <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                             <i class="icon-ellipsis-vertical"></i>
                           </button>
                           <!-- إجرائات -->
                           <div class="dropdown-menu">
-                            <a class="dropdown-item me-1" asp-action="ٌrecoverDb" asp-route-id="@item.BackupId">
+                            <a class="dropdown-item me-1" asp-action="RestoreDatabase" asp-route-id="@item.Filename">
                               <i class="icon-pen-to-square"></i>
                               استعادة
                             </a>
                             <a class="dropdown-item me-1"asp-action="Delete" asp-route-id="@item.BackupId">
                               <i class="icon-lock"></i>
-                              حذف
+                              حذف نهائي
                             </a>
                           </div>
                           <!-- / إجرائات -->
@@ -592,9 +584,9 @@
           <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasEndLabel">
             <!-- Header -->
             <div class="offcanvas-header">
-              <h5 id="offcanvasEndLabel" class="offcanvas-title">نسخة احتياطي لنظام</h5>
+              <h5 id="offcanvasEndLabel" class="offcanvas-title">نسخة احتياطية</h5>
             </div>
-            <form class="browser-default-validation mt-0" asp-action="Create">
+            <form class="browser-default-validation mt-0" asp-action="BackupDatabase">
               <!-- body -->
               <div class="offcanvas-body my-auto mx-0 flex-grow-0">
                 <div class="mb-3">
@@ -602,22 +594,24 @@
                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                   <div class="col">
                        
-                    <label for="defaultFormControlInput" class="form-label">اسم النسخة </label>
-                    <input readonly  value="سيتم اضافة الاسم التلقائي من قبل النظام" type="text" class="form-control" id="defaultFormControlInput"
+                    <label for="defaultFormControlInput" class="form-label">اسم النسخة الاحتياطية</label>
+                    <input readonly asp-for="@Model.First().Filename" value="سيتم اعتماد التاريخ كأسم لهذه النسخة من قاعدة البيانات" type="text" class="form-control" id="defaultFormControlInput"
                       aria-describedby="defaultFormControlHelp" />
-                      @*<span asp-validation-for="@Model." class="text-danger"></span>*@
+                      <span asp-validation-for="@Model.First().Filename" class="text-danger"></span>
                   </div>
                   <div class="col">
-                    <label for="exampleFormControlSelect1" class="form-label">  التاريخ الحالي</label>
-                   <input readonly asp-for="@DateTime.Now" value="سيتم اضافة الاسم التلقائي من قبل النظام" type="text" class="form-control" id="defaultFormControlInput"
+                       
+                    <label for="defaultFormControlInput" class="form-label">التاريخ الحالي</label>
+                    <input readonly asp-for="@Model.First().StampDate" value=" سيتم اعتماد التاريخ والوقت التي تمت فيه عملية النسخ الاحتياطي" type="text" class="form-control" id="defaultFormControlInput"
                       aria-describedby="defaultFormControlHelp" />
-                    
+                      <span asp-validation-for="@Model.First().StampDate" class="text-danger"></span>
                   </div>
+                  
                 
                   
                   <!-- / content -->
                 </div>
-                <button type="submit" class="btn btn-primary mb-2 d-grid w-100">تم</button>
+                <button type="submit" class="btn btn-primary mb-2 d-grid w-100">اجراء نسخة احتياطية</button>
                 <button type="button" class="btn btn-label-secondary d-grid w-100"
                   data-bs-dismiss="offcanvas">إلغاء</button>
               </div>
@@ -673,6 +667,59 @@
 
 
   
-   
+    @section Scripts{
+        @if (!string.IsNullOrEmpty(Context.Session.GetString(Helper.MsgType)))
+        {
+        if (Context.Session.GetString(Helper.MsgType) == Helper.Success)
+            {
+                <script>
 
+            Swal.fire({
+                title: '@Context.Session.GetString(Helper.Title)',
+                    text: '@Html.Raw(@Context.Session.GetString(Helper.Msg))',
+                    confirmButtonText: '@ResourceWeb.lbOk',
+                icon: 'success'
+            });
+                </script>
 
+            }
+            else
+            {
+                <script>
+
+             Swal.fire({
+                    title: '@Context.Session.GetString(Helper.Title)',
+                    text: '@Html.Raw(@Context.Session.GetString(Helper.Msg))',
+                    confirmButtonText: '@ResourceWeb.lbOk',
+                 icon: 'error'
+             });
+                </script>
+            }
+            Context.Session.SetString(Helper.MsgType, "");
+        }
+        <!-- Main JS -->
+  <script src="~/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="~/pages1/sys6.js"></script>
+         <script src="~/Modules/Reg.js"></script>
+
+    <script>
+
+        let lbTitleEdit = '@Html.Raw(ResourceWeb.lbTitleEdit)';
+        let lbEdit = '@Html.Raw(ResourceWeb.lbEdit)';
+        let lbAddNewRole = '@Html.Raw(ResourceWeb.lbAddNewRegister)';
+        let lbbtnSave = '@Html.Raw(ResourceWeb.lbbtnSave)';
+
+        let lbTitleMsgDelete = '@Html.Raw(ResourceWeb.lbbtnSave)';
+        let lbTextMsgDelete = '@Html.Raw(ResourceWeb.lbTextMsgDelete)';
+        let lbconfirmButtonText = '@Html.Raw(ResourceWeb.lbconfirmButtonText)';
+        let lbcancelButtonText = '@Html.Raw(ResourceWeb.lbcancelButtonText)';
+
+        let lbTitleDeletedOk = '@Html.Raw(ResourceWeb.lbTitleDeletedOk)';
+        let lbMsgDeletedOkRegister = '@Html.Raw(ResourceWeb.lbMsgDeletedOkRegister)';
+        let lbSuccess = '@Html.Raw(Helper.Success)';
+        let PathImageuser = '@Html.Raw(Helper.PathImageuser)';
+
+    </script>
+    }
