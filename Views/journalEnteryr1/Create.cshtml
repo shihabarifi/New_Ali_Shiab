@@ -551,9 +551,16 @@
 
         <!-- Content wrapper -->
       
-    
+    @if (ViewBag.FiscalYearStatus != null && ViewBag.FiscalYearStatus ==false)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @ViewBag.Message
+                        </div>
+                       
+                    }
 
-        <form   form-light style="margin:1% ;text-align:left" asp-action="Create" enctype="multipart/form-data" dir="rtl">
+                    else{
+                       <form   form-light style="margin:1% ;text-align:left" asp-action="Create" enctype="multipart/form-data" dir="rtl">
             
            <div class="row">
              <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -599,130 +606,131 @@
                 <span asp-validation-for="MainPaycheckGlobalNote" class="text-danger"></span>
                 </div>
             </div>
-            <div   class="form-group" >
-                <table id="ExpTable" class="table table-striped table-sm">
-                  <thead>
-                       <tr>
-                             <th>
-                                 رقم الحساب
-                            </th>
-                             <th>
-                                 أسم الحساب
-                              </th>
-                              <th>
-                                 نوع العملة
-                              </th>
-                               <th>
-                                 سعر التحويل
-                              </th>
-                              <th>
-                                 البيان
-                               </th>
-                               <th>
-                                  مدين محلي
-                               </th>
-                               <th>
-                                   دائن محلي
-                                </th>
-                                <th>
-                                     مدين أجنبي
-                                </th>
-                                <th>
-                                   دائن أجنبي
-                                </th>
-                                <th  style="left:90%;position:-webkit-sticky;">
-                                     الاجراء
-                                </th>
             
-                                <th></th>
-                           </tr>
-                  </thead>
-                  <tbody>
+                    <div   class="form-group" >
+                        <table id="ExpTable" class="table table-striped table-sm">
+                          <thead>
+                               <tr>
+                                     <th>
+                                         رقم الحساب
+                                    </th>
+                                     <th>
+                                         أسم الحساب
+                                      </th>
+                                      <th>
+                                         نوع العملة
+                                      </th>
+                                       <th>
+                                         سعر التحويل
+                                      </th>
+                                      <th>
+                                         البيان
+                                       </th>
+                                       <th>
+                                          مدين محلي
+                                       </th>
+                                       <th>
+                                           دائن محلي
+                                        </th>
+                                        <th>
+                                             مدين أجنبي
+                                        </th>
+                                        <th>
+                                           دائن أجنبي
+                                        </th>
+                                        <th  style="left:90%;position:-webkit-sticky;">
+                                             الاجراء
+                                        </th>
+            
+                                        <th></th>
+                                   </tr>
+                          </thead>
+                          <tbody>
                        
-                         @for (int i=0;i< Model.DetailedJournalEnteries.Count;i++)
-                              {
+                                 @for (int i=0;i< Model.DetailedJournalEnteries.Count;i++)
+                                      {
                                  
          
-                                    <tr>
+                                            <tr>
                                        
-                                        <td>
-                                          <input readonly  id="NumbersAcccount-@i" class="form-control CreditChildAccount" />
+                                                <td>
+                                                  <input readonly  id="NumbersAcccount-@i" class="form-control CreditChildAccount" />
 
-                                        </td>
-                                        <td>
-                                       @* <div class="modal fade" id="AccountsModal" role="dialog" data-url='@Url.Action("ManualAccountsPartialView","journalEnteryr1")'>
+                                                </td>
+                                                <td>
+                                               @* <div class="modal fade" id="AccountsModal" role="dialog" data-url='@Url.Action("ManualAccountsPartialView","journalEnteryr1")'>
 
-                                        </div>*@
-                                             <input asp-for="DetailedJournalEnteries[i].CreditChildAccount"  hidden class="form-control" id="CreditAccountID-@i" />
+                                                </div>*@
+                                                     <input asp-for="DetailedJournalEnteries[i].CreditChildAccount"  hidden class="form-control" id="CreditAccountID-@i" />
 
-                                             <select onkeyup="AccountListKeyPress(event,this.id);" onchange="creditChildAccount(this.id);"  id="Acccount-@i"  class="form-control"
-                                                        asp-items="@(new SelectList(ViewBag.CreditChildAccountList,"AccNumber","ArabicAccName"))"></select> 
+                                                     <select onkeyup="AccountListKeyPress(event,this.id);" onchange="creditChildAccount(this.id);"  id="Acccount-@i"  class="form-control"
+                                                                asp-items="@(new SelectList(ViewBag.CreditChildAccountList,"AccNumber","ArabicAccName"))"></select> 
 
-                                              <span asp-validation-for="DetailedJournalEnteries[i].CreditChildAccount" class="text-danger"></span>
-                                        </td>
-                                        <td>
+                                                      <span asp-validation-for="DetailedJournalEnteries[i].CreditChildAccount" class="text-danger"></span>
+                                                </td>
+                                                <td>
                                     
                                       
-                                                <select onchange="currChangeRate(this.id);"  id="currList-@i" asp-for="DetailedJournalEnteries[i].Currencies" class="form-control"   ></select> 
-                                              @*<select onchange="currChangeRate(this.id);"  id="currList-@i" asp-for="DetailedJournalEnteries[i].Currencies" class="form-control"
-                                                        asp-items="@(new SelectList(ViewBag.CurrenciesList,"CurrenciesId","CurrenName"))"></select> *@
+                                                        <select onchange="currChangeRate(this.id);"  id="currList-@i" asp-for="DetailedJournalEnteries[i].Currencies" class="form-control"   ></select> 
+                                                      @*<select onchange="currChangeRate(this.id);"  id="currList-@i" asp-for="DetailedJournalEnteries[i].Currencies" class="form-control"
+                                                                asp-items="@(new SelectList(ViewBag.CurrenciesList,"CurrenciesId","CurrenName"))"></select> *@
                                                         
                
-                                        </td>
-                                        <td>
-                                            <input   type="number" readonly class="form-control" id="currRatecurrList-@i" />
-                                            <input asp-for="DetailedJournalEnteries[i].CurrenciesExchangeRate" hidden  type="text" readonly class="form-control" id="currRateRealcurrList-@i" />
+                                                </td>
+                                                <td>
+                                                    <input   type="number" readonly class="form-control" id="currRatecurrList-@i" />
+                                                    <input asp-for="DetailedJournalEnteries[i].CurrenciesExchangeRate" hidden  type="text" readonly class="form-control" id="currRateRealcurrList-@i" />
      
 
-                                        </td>
-                                        <td>
+                                                </td>
+                                                <td>
 
-                                            @Html.EditorFor(x=> x.DetailedJournalEnteries[i].DetailedournalDescription,new{htmlAttributes=new{@class="form-control"}})
-                                            <span asp-validation-for="DetailedJournalEnteries[i].DetailedournalDescription" class="text-danger"></span>
+                                                    @Html.EditorFor(x=> x.DetailedJournalEnteries[i].DetailedournalDescription,new{htmlAttributes=new{@class="form-control"}})
+                                                    <span asp-validation-for="DetailedJournalEnteries[i].DetailedournalDescription" class="text-danger"></span>
                 
 
 
 
-                                        </td>
-                                        <td>
-                                            <input asp-for="DetailedJournalEnteries[i].DebittAmountRly" type="number"   onblur="OnInputAmount(this.id);"  type="text"  class="form-control" id="DebitAmountRly-@i" />
-                                            <input     hidden  type="text"  class="form-control" id="hnDebitAmountRly-@i" />
+                                                </td>
+                                                <td>
+                                                    <input asp-for="DetailedJournalEnteries[i].DebittAmountRly" type="number"   onblur="OnInputAmount(this.id);"  type="text"  class="form-control" id="DebitAmountRly-@i" />
+                                                    <input     hidden  type="text"  class="form-control" id="hnDebitAmountRly-@i" />
 
 
                  
-                                        </td>
-                                        <td>
-                                             <input asp-for="DetailedJournalEnteries[i].CreditAmountRly" type="number"   onblur="OnInputAmount(this.id);"  type="text"  class="form-control" id="CreditAmountRly-@i" />
-                                              <input     hidden  type="text"  class="form-control" id="hnCreditAmountRly-@i" />
+                                                </td>
+                                                <td>
+                                                     <input asp-for="DetailedJournalEnteries[i].CreditAmountRly" type="number"   onblur="OnInputAmount(this.id);"  type="text"  class="form-control" id="CreditAmountRly-@i" />
+                                                      <input     hidden  type="text"  class="form-control" id="hnCreditAmountRly-@i" />
 
 
                
-                                        </td>
-                                        <td>
-                                            <input asp-for="DetailedJournalEnteries[i].DebittAmountUdo" readonly type="number"   onblur="OnInputAmountUdo(this.id);" type="text"  class="form-control" id="DebitAmountUdo-@i" />
-                                            <input     hidden  type="text"  class="form-control" id="hnDebitAmountUdo-@i" />
+                                                </td>
+                                                <td>
+                                                    <input asp-for="DetailedJournalEnteries[i].DebittAmountUdo" readonly type="number"   onblur="OnInputAmountUdo(this.id);" type="text"  class="form-control" id="DebitAmountUdo-@i" />
+                                                    <input     hidden  type="text"  class="form-control" id="hnDebitAmountUdo-@i" />
 
               
-                                        </td>
-                                        <td>
-                                            <input asp-for="DetailedJournalEnteries[i].CreditAmountUdo" readonly type="number"  onblur="OnInputAmountUdo(this.id);" type="text"  class="form-control" id="CreditAmountUdo-@i" />
-                                            <input     hidden  type="text"  class="form-control" id="hnCreditAmountUdo-@i" />
+                                                </td>
+                                                <td>
+                                                    <input asp-for="DetailedJournalEnteries[i].CreditAmountUdo" readonly type="number"  onblur="OnInputAmountUdo(this.id);" type="text"  class="form-control" id="CreditAmountUdo-@i" />
+                                                    <input     hidden  type="text"  class="form-control" id="hnCreditAmountUdo-@i" />
 
                
-                                        </td>
-                                        <td>
-                                            <button id="btndummy-@i" type="button" class="btn btn-outline-info invisible" style="left:95%;position:absolute;"> Dummy</button>
-                                            <button id="btnadd-@i" type="button" class="btn btn-outline-info visible" onclick="AddItem(this)" style="right:95%;position:absolute;"> اضافة</button>
-                                            <button id="btnremove-@i" type="button" class=" btn btn-danger invisible"  onclick="DeleteItem(this)" style="right:95%;position:absolute;"> حذف</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btndummy-@i" type="button" class="btn btn-outline-info invisible" style="left:95%;position:absolute;"> Dummy</button>
+                                                    <button id="btnadd-@i" type="button" class="btn btn-outline-info visible" onclick="AddItem(this)" style="right:95%;position:absolute;"> اضافة</button>
+                                                    <button id="btnremove-@i" type="button" class=" btn btn-danger invisible"  onclick="DeleteItem(this)" style="right:95%;position:absolute;"> حذف</button>
 
-                                        </td>
+                                                </td>
                                        
-                                    </tr>
+                                            </tr>
                                     
-                               }
-                  </tbody> 
-                 </table>
-            </div>  
+                                       }
+                          </tbody> 
+                         </table>
+                       </div>  
              
                 <div class="modal fade modal" id="accountsList" >
                     <div class="modal-dialog">
@@ -856,12 +864,24 @@
              <input type="hidden"id="currentRow" value="0"  />
             <input type="hidden"id="hdnLastRowIndex" value="0"  />
             <div class="form-group">
-                <input id="submit" type="submit" disabled value="إضافة"  class="btn btn-primary" />
-                <a asp-action="Index">رجوع للقائمة</a>
+               @* @if (ViewBag.FiscalYearStatus != null && ViewBag.FiscalYearStatus ==false)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @ViewBag.Message
+                        </div>
+                       
+                    }*@
+                        <input id="submit" type="submit" disabled value="إضافة"  class="btn btn-primary" />
+                        <a asp-action="Index">رجوع للقائمة</a>
+                   
+                
             </div>
            </div>
             
         </form>
+                    }
+
+        
     </div>
     
 </div>
