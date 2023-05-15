@@ -891,7 +891,7 @@
              
 
     var table = $('#jounaltable').DataTable( {
-    order: [[1, 'asc']],
+     order: [[1, 'asc']],
         scrollY: 400,
         ordering: false,
 
@@ -922,47 +922,29 @@
           className: 'CreateJu btn btn-primary mb-3 mb-md-0',
           
             },
-            //   {
-            //    extend: 'print',
-            //    text: '<i class="bx bx-printer me-1"></i>طباعة ',
-            //    className: 'btn btn-label-danger mx-1',
-            //     customize: function (win) {
-            //        $(win.document.body)
-            //            .css('font-size', '10pt')
-            //            .prepend(
-            //                '<div><img src="/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle"></div>'
-            //            );
-
-            //        $(win.document.body).find('table')
-            //            .addClass('compact')
-            //            .css('font-size', 'inherit');
-            //    },
-            //    exportOptions: { columns: [3, 2, 1, 0] }
-           
-            //},
+            
             {
                 extend: 'print',
                 text: '<i class="bx bx-printer me-1"></i>طباعة ',
                 className: 'btn btn-label-danger mx-1',
                 orientation: 'landscape', // set the orientation to landscape
                 exportOptions: {
-                    columns: ':visible'
+                    columns: 'visible'
                     },
                 customize: function (win) {
                     // Add a header to the print view
-                    //var headerHtml = '<div style="text-align:center;"><img src="/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" width="50" height="50"><br><h3>Financial Report</h3><p>Date: 12/05/2023</p></div>';
-                    //$(win.document.body).prepend(headerHtml);
+                    
                     var headerHtml = '<div style="text-align:center;">'
-                                + '<img src="/Images/Users/31a4b4a1-4479-4db9-813d-da34bf148f8b.png" width="50" height="50"><br>'
+                                + '<img width="50" height="50" src="http://localhost:5017/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle">'
                                 + '<h3>تقرير القيود اليومية</h3>'
                                 + '<p>التاريخ : 12/05/2023</p>'
                                 + '<p>اسم الموظف: _________________</p>'
                                 + '</div>';
-                $(win.document.body).prepend(headerHtml);
+                            $(win.document.body).prepend(headerHtml);
 
 
                     // Add a footer to the print view
-                    var footerHtml = '<div style="text-align:right;"><p>www.ِAliAndShihab.com</p></div>';
+                    var footerHtml = '<div style="text-align:left;"><p>أسم الموظف:_____________________</p></div>';
                     $(win.document.body).append(footerHtml);
 
                     // Add a sum field to the table
@@ -987,7 +969,7 @@
                     $(win.document.body).find('tfoot th:nth-child(2)').html('Total');
                     $(win.document.body).find('tfoot th:last-child').css('text-align', 'right');
                         },
-                exportOptions: { columns: [4,3, 2, 1, 0] }
+                    exportOptions: { columns: [4,3, 2, 1, 0] }
 
                             },
 
