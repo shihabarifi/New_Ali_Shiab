@@ -29,6 +29,13 @@ namespace POS.Constants
             public const string Edit = "Permissions.Home.Edit";
             public const string Delete = "Permissions.Home.Delete";
         }
+        public static class AccountingManual
+        {
+            public const string View = "Permissions.AccountingManual.View";
+            public const string Create = "Permissions.AccountingManual.Create";
+            public const string Edit = "Permissions.AccountingManual.Edit";
+            public const string Delete = "Permissions.AccountingManual.Delete";
+        }
         public static class Accounts
         {
             public const string View = "Permissions.Accounts.View";
