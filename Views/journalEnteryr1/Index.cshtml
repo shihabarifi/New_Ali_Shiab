@@ -581,122 +581,133 @@
         </tr>
     </thead>
     <tbody>
+           
+                    
 @foreach (var items in Model) {
-        <tr>
+    <tr>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => items.MainJouralEntNumber)
+                </td>
            
-            <td>
-                @Html.DisplayFor(modelItem => items.MainJouralEntNumber)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items.FiscalYearNavigation.FiscalYearName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items.MainJournalEnteriesAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem =>@JournalEnteryStatus[items.IsStage])
+                </td>
            
-            <td>
-                @Html.DisplayFor(modelItem => items.FiscalYearNavigation.FiscalYearName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => items.MainJournalEnteriesAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem =>@JournalEnteryStatus[items.IsStage])
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items.MainJournalDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items.MainPaycheckGlobalNote)
+                </td>
            
-            <td>
-                @Html.DisplayFor(modelItem => items.MainJournalDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => items.MainPaycheckGlobalNote)
-            </td>
-           
-            <td>
-                    <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="icon-ellipsis-vertical"></i>
-                        </button>
-                        <!-- إجرائات -->
-                        <div class="dropdown-menu">
-                        <a class="dropdown-item me-1" asp-action="Details"  asp-route-id="@items.MainJournalEnteriesId">
-                            <i class="icon-file-lines"></i>
-                            عرض 
-                        </a>
+                <td>
+                        <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                            <i class="icon-ellipsis-vertical"></i>
+                            </button>
+                            <!-- إجرائات -->
+                            <div class="dropdown-menu">
+                            <a class="dropdown-item me-1" asp-action="Details"  asp-route-id="@items.MainJournalEnteriesId">
+                                <i class="icon-file-lines"></i>
+                                عرض 
+                            </a>
                            
-                        <a class="dropdown-item me-1" asp-action="Delete"   asp-route-id="@items.MainJournalEnteriesId">
-                            <i class="icon-trash-can"></i>
-                            حذف
-                        </a>
+                            <a class="dropdown-item me-1" asp-action="Delete"   asp-route-id="@items.MainJournalEnteriesId">
+                                <i class="icon-trash-can"></i>
+                                حذف
+                            </a>
+                            </div>
+                            <!-- / إجرائات -->
                         </div>
-                        <!-- / إجرائات -->
-                    </div>
-            </td>
-             @*<td hidden>
-                <table id="detailedId" class="table datatables-basic" hidden>
-                                <thead>
-                                    <tr>
+                </td>
+                <td>
+                     <table id="detailedId"  class="table datatables-basic" hidden >
+                                    <thead>
+                                        <tr>
             
-                                        <th>
-                                            رقم الحساب
-                                        </th>
-                                        <th>
-                                                اسم الحساب
-                                        </th>
-                                        <th>
-                                            نوع العملة
-                                        </th>
-                                        <th>
-                                            البيان
-                                        </th>
-                                        <th>
-                                            مدين محلي
-                                        </th>
-                                        <th>
-                                            دائن محلي
-                                        </th>
-                                        <th>
-                                            مدين أجنبي
-                                        </th>
-                                        <th>
-                                            دائن أجنبي
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach(var j in items.DetailedJournalEnteries) {
-                                            <tr>
+                                            <th>
+                                                رقم الحساب
+                                            </th>
+                                            <th>
+                                                    اسم الحساب
+                                            </th>
+                                            <th>
+                                                نوع العملة
+                                            </th>
+                                            <th>
+                                                البيان
+                                            </th>
+                                            <th>
+                                                مدين محلي
+                                            </th>
+                                            <th>
+                                                دائن محلي
+                                            </th>
+                                            <th>
+                                                مدين أجنبي
+                                            </th>
+                                            <th>
+                                                دائن أجنبي
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(var j in items.DetailedJournalEnteries) {
+                                                <tr>
            
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => j.CreditChildAccountNavigation.AccNumber)
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => j.CreditChildAccountNavigation.AccNumber)
                                        
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => j.CreditChildAccountNavigation.ArabicAccName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => j.CreditChildAccountNavigation.ArabicAccName)
                                        
-                                                </td>
+                                                    </td>
                                                
                                                     
-                                                <td>
-                                                     @Html.DisplayFor(modelItem => j.Currencies)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => j.CurrenciesExchangeRate)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => j.DebittAmountRly)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => j.CreditAmountRly)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => j.DebittAmountUdo)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => j.CreditAmountUdo)
-                                                </td>
+                                                    <td>
+                                                         @Html.DisplayFor(modelItem => j.Currencies)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => j.CurrenciesExchangeRate)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => j.DebittAmountRly)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => j.CreditAmountRly)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => j.DebittAmountUdo)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => j.CreditAmountUdo)
+                                                    </td>
             
-                                            </tr>
-                                    }
-                                </tbody>    
-                             </table>
-                    </td>*@
+                                                </tr>
+                                        }
+                                    </tbody>    
+                                 </table>
 
-        </tr>
+                    
+            
+                </td>
+
+            </tr>
+
+          
+    
+            
+       
+         
       
 }
     </tbody>
@@ -742,7 +753,9 @@
      
 
         $(document).ready(function() {
-
+            const columns = [
+                  { title: '' },
+                ]
             function processDoc(doc) {
 
                 pdfMake.fonts = {
@@ -754,12 +767,12 @@
 
                 };
                 
-   doc.defaultStyle.direction = 'rtl';
+                   doc.defaultStyle.direction = 'rtl';
 
-    // add the autoArabic and alignment options to the default style
-    doc.defaultStyle.autoArabic = true;
-    doc.defaultStyle.alignment = 'right';
-    doc.defaultStyle.font = "Amiri";
+                    // add the autoArabic and alignment options to the default style
+                    doc.defaultStyle.autoArabic = true;
+                    doc.defaultStyle.alignment = 'right';
+                    doc.defaultStyle.font = "Amiri";
                 //var i = 1;
                   // Define the columns for the report
                   var columns = [
@@ -910,12 +923,19 @@
              
 
     var table = $('#jounaltable').DataTable( {
-     order: [[1, 'asc']],
-        scrollY: 400,
-        ordering: false,
+        createdRow: function(row) {
+                $(row).find('td table')
+                  .DataTable({
+                    columns: columns,
+                    dom: 'tf'
+                  })
+              }
+                 order: [[1, 'asc']],
+                    scrollY: 400,
+                    ordering: false,
 
-        lengthMenu: [5, 10, 25, 50, 100],
-       dom:
+                    lengthMenu: [5, 10, 25, 50, 100],
+                   dom:
                 '<"row mx-1"' +
                 '<"col-sm-12 col-md-1" l>' +
                 '<"col-sm-12 col-md-11"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-between justify-content-center flex-wrap me-1"<"me-3"f>B>>' +
