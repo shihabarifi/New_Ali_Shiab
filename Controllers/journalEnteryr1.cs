@@ -429,6 +429,11 @@ namespace POS.Controllers
             return Json(new SelectList(CurrenciesList.ToList(), "CurrenciesId","CurrenName"));
 
         }
+        public IActionResult ViewRep()
+        {
+            return View();
+        }
+        
 
     }
 }
