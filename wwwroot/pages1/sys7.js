@@ -85,7 +85,7 @@ $(function () {
                     $(win.document.body)
                         .css('font-size', '10pt')
                         .prepend(
-                            '<div><img src="/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle"></div>'
+                            '<div><img src="/Images/Users/‏‫‏‏لقطة شاشة‬ (2).png" ></div>'
                         );
 
                     $(win.document.body).find('table')
