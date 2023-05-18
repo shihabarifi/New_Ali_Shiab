@@ -17,7 +17,13 @@ namespace POS.Controllers
         // GET: BackUpsDbController
         public ActionResult Index()
         {
+            var backupin = new BackUpsDb();
+            backupin.BackupId = 1;
+            backupin.Filename = "AliAbackUp";
+            backupin.StampDate = DateTime.Now;
             var BackUpsList=backUpsDb_Repo.List().ToList();
+            BackUpsList.Add(backupin);
+
             return View(BackUpsList);
         }
 
@@ -39,13 +45,15 @@ namespace POS.Controllers
         }
 
 
-public IActionResult BackupDatabase()
+        public IActionResult BackupDatabase(BackUpsDb backUpsDb)
     {
         string connectionString = "Data Source=DESKTOP-5LD4310\\MSSQLSERVER2;Initial Catalog=Fin;Integrated Security=True";
         string backupFilename = $"backup_{DateTime.Now.ToString("yyyyMMddHHmmss")}.bak";
         string backupQuery = $"BACKUP DATABASE Fin TO DISK = N'{backupFilename}'";
+            // string system_users
+        string SystemUsers = "6f94621c-3508-435c-98fe-c51cc63d076f";
 
-        using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
@@ -53,8 +61,11 @@ public IActionResult BackupDatabase()
             {
                 command.ExecuteNonQuery();
             }
+                DateTime backupDateTime = DateTime.Now;
+                string insertQuery = $"INSERT INTO [dbo].[BackUpsDb] ([Filename], [system_users],[StampDate]) VALUES ('{backupFilename}','{SystemUsers}', '{backupDateTime.ToShortDateString()}')";
 
-            string insertQuery = $"INSERT INTO [dbo].[Backups] ([Filename]) VALUES ('{backupFilename}')";
+
+                //string insertQuery = $"INSERT INTO [dbo].[BackUpsDb] ([Filename]) VALUES ('{backupFilename}')";
 
             using (var command = new SqlCommand(insertQuery, connection))
             {
@@ -125,16 +136,55 @@ public IActionResult RestoreDatabase(string backupFilename)
         // GET: BackUpsDbController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var SingleBackUp = backUpsDb_Repo.Find(id);
+
+            return View(SingleBackUp);
         }
+        public IActionResult DeleteBackup(string backUpDb)//string backupFilename
+        {
+            string connectionString = "Data Source=DESKTOP-5LD4310\\MSSQLSERVER2;Initial Catalog=Fin;Integrated Security=True";
+            string deleteQuery = $"DELETE FROM [dbo].[BackUpsDb] WHERE [Filename] = '{backUpDb}'";
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string backupPath = "C:\\Program Files\\Microsoft SQL Server\\MSSQL15.MSSQLSERVER2\\MSSQL\\Backup\\" + backUpDb;
+                    if (System.IO.File.Exists(backupPath))
+                    {
+                        System.IO.File.Delete(backupPath);
+                    }
+
+
+                    using (var command = new SqlCommand(deleteQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return View(ex);
+            }
+
+        }
+
 
         // POST: BackUpsDbController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, BackUpsDb backUpsDb )
         {
             try
             {
+                string backupPath = "C:\\Program Files\\Microsoft SQL Server\\MSSQL15.MSSQLSERVER2\\MSSQL\\Backup\\" + backUpsDb.Filename;
+                if (System.IO.File.Exists(backupPath))
+                {
+                    System.IO.File.Delete(backupPath);
+                }
+                //backUpsDb_Repo.Delete(backUpsDb);
                 return RedirectToAction(nameof(Index));
             }
             catch

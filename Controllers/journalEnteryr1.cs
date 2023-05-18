@@ -15,6 +15,7 @@ using POS.viewModels;
 using POS.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using POS.Data;
+using POS.Models;
 /*using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
@@ -93,9 +94,16 @@ namespace POS.Controllers
         // GET: journalEnteryr1/Create
         public ActionResult Create()
         {
+            IEnumerable<FiscalYear> cachedData = DataCache.GetCachedData();
+            Console.WriteLine("the cached data is : " + cachedData);
             //string journalEnteryNumber = GetJournalEnteryAutoNumber();
             // var CurrRateList=CurrenciesExchangeRate_Repo.List().ToList();
-
+            bool FiscalYearIsOn = cachedData.Any(item => item.FiscalYearStatus == 1);
+            if (!FiscalYearIsOn)
+            {
+                ViewBag.FiscalYearStatus = false;
+                ViewBag.Message = " لايمكن اجراء اي عملية اضافية ،السنة المالية تم اغلاقها مسبقاً";
+            }
             MainJournalEntery mainJournalEntery = new MainJournalEntery();
 
             mainJournalEntery.MainJouralEntNumber = GetJournalEnteryAutoNumber();
@@ -421,6 +429,11 @@ namespace POS.Controllers
             return Json(new SelectList(CurrenciesList.ToList(), "CurrenciesId","CurrenName"));
 
         }
+        public IActionResult ViewRep()
+        {
+            return View();
+        }
+        
 
     }
 }

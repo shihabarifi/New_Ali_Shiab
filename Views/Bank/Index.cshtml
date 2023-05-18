@@ -563,32 +563,32 @@
                    @foreach (var item in Model) {
                    <tr>
                        <td>
-                       @Html.DisplayFor(modelItem => item.BankId)
-                     </td>
+                           @Html.DisplayFor(modelItem => item.BankId)
+                       </td>
                       <td>
                        @Html.DisplayFor(modelItem => item.BankName)
-                     </td>
+                      </td>
             
           
             
                       <td>
              
-                    @{
-                        @if((item.BankStatus) == 1)
-                        {
-                          <a asp-action="Delete" asp-route-id="@item.BankId">
-                          <span style="color:#fff;background-color:#fc5a5a" class="badge ">موقف</span>
-                            </a>  
-                        }
-                        else
-                        {
-                          <a asp-action="Delete" asp-route-id="@item.BankId">
-                          <span style="color:#fff  " class="badge bg-success ">نشط</span>
-                            </a>
-                        }
-                    }
-            </td>
-             <td>
+                            @{
+                                @if((item.BankStatus) == 1)
+                                {
+                                  <a asp-action="Delete" asp-route-id="@item.BankId">
+                                  <span style="color:#fff;background-color:#fc5a5a" class="badge ">موقف</span>
+                                    </a>  
+                                }
+                                else
+                                {
+                                  <a asp-action="Delete" asp-route-id="@item.BankId">
+                                  <span style="color:#fff  " class="badge bg-success ">نشط</span>
+                                    </a>
+                                }
+                            }
+                       </td>
+                       <td>
                         <div class="dropdown">
                           <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                             <i class="icon-ellipsis-vertical"></i>

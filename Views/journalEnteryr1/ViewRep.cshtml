@@ -523,182 +523,374 @@
         <div class="content-wrapper">
           <!-- Content -->
 
-          <div class="container-xxl flex-grow-1 container-p-y">
-            <div class="card">
-              <div class="table-responsive card-datatable">
-                <h1>القيود اليومية</h1>
+          <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
-                <p class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <tr>
-                        <td>
-                            <a style="margin:2%" asp-action="index">القيود اليومية  </a>
-                        </td>
-                    </tr>
-                </p>
 
-                <div class="col-md-30 mx-auto pt-0 p-0">
-                    <div class="card">
-                        <form method="post" form-light style="margin:1% ;text-align:left"  enctype="multipart/form-data">
-                            <div class="form-group">
-                                <table id="jounaltable" class ="table table-striped table-sm">
-                                    <thead>
-                                        <tr>
-           
-                                            <th>
-                                                رقم القيد
-                                            </th>
-           
-                                            <th>
-                                               نوع القيد
-                                            </th>
-                                            <th>
-                                                السنة المالية
-                                            </th>
-                                            <th>
-                                                المبلغ الاجمالي
-                                            </th>
-                           
-                                            <th>
-                                                ملاحظة
-                                            </th>
-                                             <th>
-                                               الغاء الترحيل
-                                            </th>
-                                            
-                                            <th>
-                                                الكل<input style="margin:1%" type="checkbox" id="isAllStage">
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                            @for (int item1=0; item1 < Model.MainJournalEnteries.Count;item1++) {
-                                                  <tr>
-           
-                                                    <td>
-                                                        @Model.MainJournalEnteries[item1].MainJouralEntNumber
-                                                        <input asp-for="@Model.MainJournalEnteries[item1].MainJournalEnteriesId" hidden  type="text" >
-                                                        <input asp-for="@Model.MainJournalEnteries[item1].MainJouralEntNumber" hidden  type="text" >
 
-                                
-               
-                                                    </td>
-                                                    <td>
-                                                        @Model.MainJournalEnteries[item1].JournalEnterieTypesNavigation.JournalEnteryName
-                                                        <input hidden asp-for="@Model.MainJournalEnteries[item1].JournalEnterieTypes"   type="text" >
-                               
-                                                    </td>
-                                                    <td>
-                                                        @Model.MainJournalEnteries[item1].FiscalYearNavigation.FiscalYearName
-                                                        <input asp-for="@Model.MainJournalEnteries[item1].FiscalYear" hidden  type="text" >
-                               
-                                                    </td>
-                                                    <td>
-                                                        @Model.MainJournalEnteries[item1].MainJournalEnteriesAmount
-                                                        <input asp-for="@Model.MainJournalEnteries[item1].MainJournalEnteriesAmount" hidden  type="text" >
-                               
-                                                    </td>
-                                                       @* <td>
-                                                            <input asp-for="@Model.MainJournalEnteries[item1].MainournalEnteriesStatus" placeholder="@JournalEnteryStatus[@Model.MainJournalEnteries[item1].IsStage]" readonly  type="text" >
-                               
-                                                        </td>
-                                                        <td>
-                                                            <input asp-for="@Model.MainJournalEnteries[item1].MainJournalReferenceNumber" readonly  type="text" >
-                               
-                                                        </td>
-                                                        <td>
-                                                            <input asp-for="@Model.MainJournalEnteries[item1].MainJournalDateTime" readonly  type="text" >
-                              
-                                                        </td>*@
-                                                    <td>
-                                                        @Model.MainJournalEnteries[item1].MainPaycheckGlobalNote
-                                                        <input asp-for="@Model.MainJournalEnteries[item1].MainPaycheckGlobalNote" hidden  type="text" >
-                               
-                                                    </td>
-                                                    <td>
-                                                       <input asp-for="MainJournalEnteriesIsStage[item1]"  type="checkbox" id="isStage-@item1" class="child-checkbox" style="width:5px,height:5px">
-                               
-                                                    </td>
-                                                    <td>
-                                                        <table id="detailedId" class="table" hidden>
-                                                        <thead>
-                                                            <tr>
-            
-                                                                <th>
-                                                                    رقم الحساب
-                                                                </th>
-                                                                <th>
-                                                                        اسم الحساب
-                                                                </th>
-                                                                <th>
-                                                                    نوع العملة
-                                                                </th>
-                                                                <th>
-                                                                    البيان
-                                                                </th>
-                                                                <th>
-                                                                    مدين محلي
-                                                                </th>
-                                                                <th>
-                                                                    دائن محلي
-                                                                </th>
-                                                                <th>
-                                                                    مدين أجنبي
-                                                                </th>
-                                                                <th>
-                                                                    دائن أجنبي
-                                                                </th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @for(int i=0; i< Model.MainJournalEnteries[item1].DetailedJournalEnteries.Count;i++) {
-                                                                    <tr>
-           
-                                                                        <td>
-                                                                            <input asp-for="@Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CreditChildAccount"    >
-                                                                            <input asp-for="@Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].MainJournalEnteries"   >
-                                                                        </td>
-                                               
-                                                    
-                                                                        <td>
-                                                                            <input asp-for="@Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].Currencies"   >
-                                                                        </td>
-                                                                        <td>
-                                                                           <input asp-for="@Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CurrenciesExchangeRate" readonly   >
-                                                                        </td>
-                                                                        <td>
-                                                                            <input asp-for="@Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].DebittAmountRly" readonly   >
-                                                                        </td>
-                                                                        <td>
-                                                                            <input asp-for="@Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CreditAmountRly" readonly   >
-                                                                        </td>
-                                                                        <td>
-                                                                            <input asp-for="@Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].DebittAmountUdo" readonly >
-                                                                        </td>
-                                                                        <td>
-                                                                            <input asp-for="@Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CreditAmountUdo" readonly   >
-                                                                        </td>
-            
-                                                                    </tr>
-                                                            }
-                                                  </tbody>    
-                                            </table>
-                                                    </td>
-          
-                                                </tr>
-                                                     }
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="form-group">
-                                            <input  id="submit" type="submit"  value=" ترحيل"  class="btn btn-primary" />
-                                            <a asp-action="Index">رجوع </a>
-                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+<html>
+    <head>
+
+    </head>
+    <body>
+   <div class="container">
+    <table id="example" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Date</th>
+                <th>TC NAME</th>
+                <th>NS FLOW</th>
+                <th>SN FLOW</th>
+                <th>NS FLOW</th>
+                <th>SN FLOW</th>
+                <th>NS FLOW</th>
+                <th>SN FLOW</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>721</td>
+                <td>3/15/20</td>
+
+                <td>
+                    <table id="example1" class="table table-nostriped">
+                        <tr>
+                            <td>TC1</td>
+                        </tr>
+                        <tr>
+                            <td>TC2</td>
+                        </tr>
+                        <tr>
+                            <td>TC3</td>
+                        </tr>
+                    </table>
+
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>600</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>800</td>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                    </table>
+                </td>
+
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+
+
+
+
+
+        <tr>
+                <td>722</td>
+                <td>3/16/20</td>
+
+                <td>
+                    <table class="table table-nostriped">
+                        <tr>
+                            <td>TC1</td>
+                        </tr>
+                        <tr>
+                            <td>TC2</td>
+                        </tr>
+                        <tr>
+                            <td>TC3</td>
+                        </tr>
+                    </table>
+
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>600</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>800</td>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                    </table>
+                </td>
+
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+
+
+
+
+        <tr>
+                <td>633</td>
+                <td>3/17/20</td>
+
+                <td>
+                    <table class="table table-nostriped">
+                        <tr>
+                            <td>TC1</td>
+                        </tr>
+                        <tr>
+                            <td>TC2</td>
+                        </tr>
+                        <tr>
+                            <td>TC3</td>
+                        </tr>
+                    </table>
+
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>600</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>800</td>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                    </table>
+                </td>
+
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                 <table class="table table-nostriped">
+                        <tr>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>300</td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+    </div>
+    </body>
+
+</html>
+
+
+
+
+
+
+
        </div>
 </div>
 </div>
@@ -709,159 +901,60 @@
 
 
 
-      <script type="text/javascript">
-            var $j = jQuery.noConflict();
-            $j(document).ready(function() {
-               const checkboxshingleItem= document.getElementById('isStage');
-                 const checkAll=document.getElementById('isAllStage');
-           
-                function showDetailedTable(button) {
-                  var tableId = button.closest('tr').find('#detailedId').attr('id');
-                  var table = document.getElementById(tableId);
-                  table.hidden = !table.hidden;
-                }
-             /* هذه الفانكشن تقوم بعمل التحديد على جميع العناصر في حال النقر على زر تحديد الكل والعكس */
-             $(function(){
-            $("#isAllStage").click(function(e){
-               
-                const checked=$(e.target).is(":checked");
-                if(checked){
-                    $('.child-checkbox').map(function(i,c){
-                        $(c).prop('checked',true);
-                        $(c).val(true);
-                    });
-                }else{
-                    $('.child-checkbox').map(function(i,c){
-                        $(c).prop('checked',false);
-                        $(c).val(false);
-                    });
-                }
-            })
-            })
-            /*change the checkbox status */
-            $('input[type="checkbox"]').click(function(event){
+     <script>
+          $(document).ready(function() {
+              const columns = [
+                  { title: '' },
+                        ]
+            let table = $('#example').DataTable({
                 
-                  console.log(checkAll.checked);
-                 console.log(event.target.value+event.target.id);
+                    order: [[1, 'asc']],
+                    scrollY: 400,
+                    ordering: false,
 
-                 if(event.target.id !="isAllStage"){
-                     
-                     if(checkAll.checked ){
-                         
-                         $("#isAllStage").prop('checked',false);
-                         $("#isAllStage").val(false);
-                       
-                           $("#"+event.target.id).prop('checked',false);
-                            $("#"+event.target.id).val(false);
-                        }
-                     else{
-                         if(event.target.checked ==true){
-                              console.log(event.target.checked+"event.target.checked")
-                             $("#"+event.target.id).prop('checked',true);
-                            $("#"+event.target.id).val(true);
-                         }else{
-                              console.log(event.target.checked+"event.target.checked")
-                           $("#"+event.target.id).prop('checked',false);
-                     
-                      $("#"+event.target.id).val(false);
-                         }
-                        
-                     }
-                 }
-                    })
-
-            var table = $('#jounaltable').DataTable( {
-                             order: [[1, 'asc']],
-                                scrollY: 400,
-                                ordering: false,
-
-                                lengthMenu: [5, 10, 25, 50, 100],
-                               dom:
-                                        '<"row mx-1"' +
-                                        '<"col-sm-12 col-md-1" l>' +
-                                        '<"col-sm-12 col-md-11"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-between justify-content-center flex-wrap me-1"<"me-3"f>B>>' +
-                                        '>t' +
-                                        '<"row mx-2"' +
-                                        '<"col-sm-12 col-md-6"i>' +
-                                        '<"col-sm-12 col-md-6"p>' +
-                                        '>',
-                                language: {
-                                    sLengthMenu: '_MENU_',
-                                    search: '',
-                                    searchPlaceholder: 'بحث..',
-                                    paginate: {
-                                        first: 'الأول',
-                                        last: 'الأخير',
-                                        next: 'التالي',
-                                        previous: 'السابق'
-                                    }
-                                },
-                                buttons: [
+                    lengthMenu: [5, 10, 25, 50, 100],
+                  createdRow: function(row) {
+                    $(row).find('td table')
+                      .DataTable({
+                        columns: columns,
+                        dom: 'tf'
+                      })
+                  },
+                  dom:
+                    '<"row mx-1"' +
+                    '<"col-sm-12 col-md-1" l>' +
+                    '<"col-sm-12 col-md-11"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-between justify-content-center flex-wrap me-1"<"me-3"f>B>>' +
+                    '>t' +
+                    '<"row mx-2"' +
+                    '<"col-sm-12 col-md-6"i>' +
+                    '<"col-sm-12 col-md-6"p>' +
+                    '>',
+        language: {
+            sLengthMenu: '_MENU_',
+            search: '',
+            searchPlaceholder: 'بحث..',
+            paginate: {
+                first: 'الأول',
+                last: 'الأخير',
+                next: 'التالي',
+                previous: 'السابق'
+            }
+        },
+        buttons: [
                                     {
-                                  text: '<i class="icon-plus"></i>القيود غير المرحلة',
+                                  text: '<i class="icon-plus"></i>القيود المرحلة',
                                   className: 'CreateJu btn btn-primary mb-3 mb-md-0',
           
                                     },
             
-                                    //{
-                                    //    extend: 'print',
-                                    //    text: '<i class="bx bx-printer me-1"></i>طباعة ',
-                                    //    className: 'btn btn-label-danger mx-1',
-                                    //    orientation: 'landscape', // set the orientation to landscape
-                                    //   customize: function (win) {
-                                    //        // Add a header to the print view
-                                    //        var headerHtml = '<div style="text-align:center;">' +
-                                    //            '<img width="50" height="50" src="http://localhost:5017/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle">' +
-                                    //            '<h3>تقرير القيود اليومية</h3>' +
-                                    //            '<p>التاريخ: 12/05/2023</p>' +
-                                    //            '</div>';
-                                    //        $(win.document.body).prepend(headerHtml);
-
-                                    //        // Add a footer to the print view
-                                    //        var footerHtml = '<div style="text-align:left;"><p>أسم الموظف:_____________________</p></div>';
-                                    //        $(win.document.body).append(footerHtml);
-
-                                    //        // Adjust the font size
-                                    //        $(win.document.body).css('font-size', '10pt');
-
-                                    //        // Apply styles to the table
-                                    //        $(win.document.body).find('table').addClass('table table-striped table-bordered');
-                                    //        $(win.document.body).find('thead th').css('font-size', '12pt');
-                                    //        $(win.document.body).find('tbody td').css('font-size', '10pt');
-                                    //        $(win.document.body).find('tbody td:last-child, tfoot td:last-child').css('text-align', 'right');
-                                    //        $(win.document.body).find('tfoot th:nth-child(2)').html('Total');
-                                    //        $(win.document.body).find('tfoot th:last-child').css('text-align', 'right');
-
-                                    //        // Loop through each main row and append the detailed table beside it
-                                    //        $(win.document.body).find('tbody tr').each(function () {
-                                    //            var detailedTableHtml = $(this).find('#detailedId-1').html();
-                                    //            $(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
-                                    //        });
-
-                                    //        // Calculate the total sum
-                                    //        var sum = 0;
-                                    //        $(win.document.body).find('tbody tr').each(function () {
-                                    //            var value = parseInt($(this).find('td:nth-child(3)').text());
-                                    //            if (!isNaN(value)) {
-                                    //                sum += value;
-                                    //            }
-                                    //        });
-                                    //        var totalHtml = '<tfoot><tr><th></th><th>الاجمالي</th><th>' + sum + '</th><th></th></tr></tfoot>';
-                                    //        $(win.document.body).find('table').append(totalHtml);
-                                    //    },
-                                    //    exportOptions: {
-                                    //        columns: [4, 3, 2, 1, 0]
-                                    //                }
-
-                                    //},
                                     {
-                                      extend: 'print',
-                                      text: '<i class="bx bx-printer me-1"></i>طباعة ',
-                                      className: 'btn btn-label-danger mx-1',
-                                      orientation: 'landscape', // set the orientation to landscape
-                                      
+                                        extend: 'print',
+                                        text: '<i class="bx bx-printer me-1"></i>طباعة ',
+                                        className: 'btn btn-label-danger mx-1',
+                                        orientation: 'landscape', // set the orientation to landscape
+                                        
+
                                     },
-,
                                     
                                     {
                                         extend: 'copyHtml5',
@@ -871,20 +964,9 @@
                                     }]
         
                             });
- 
-                        table.buttons().container().appendTo($('.col-md-2:eq(0)', table.table().container()));
-
-                        $(document).on('click', '.CreateJu.btn-primary', function () {
-  
-                          // Redirect to the new page after a short delay to ensure the Offcanvas component is fully shown
-                          setTimeout(function() {
-                            window.location.href = 'journaAllstaged';
-                          }, 500);
-                        });
-            });
-        
-           
-        </script>
+                
+        } );
+</script>
 
   </div>
   <!-- / Layout wrapper -->
@@ -909,10 +991,10 @@
   <script src="~/assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
 
   <!-- Main JS -->
-  <script src="~/assets/js/main.js"></script>
+  @*<script src="~/assets/js/main.js"></script>
 
   <!-- Page JS -->
-  <script src="~/pages1/sys7.js"></script>
+  <script src="~/pages1/sys7.js"></script>*@
 </body>
 
 </html>

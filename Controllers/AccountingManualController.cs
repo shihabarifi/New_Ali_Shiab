@@ -10,10 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using POS.Data;
+using POS.Constants;
 
 namespace POS.Controllers
 {
-    [AllowAnonymous]
+   
     public class AccountingManualController : Controller
     {
 
@@ -28,7 +29,7 @@ namespace POS.Controllers
             this.currencyRepo = currencyRepo;
         }
 
-
+        [Authorize(Permissions.AccountingManual.View)]
         public IActionResult Index(string sortExpression = "", string SearchText = "0", int pg = 1, int pageSize = 50)
         {
             SortModel sortModel = new SortModel();
@@ -56,8 +57,8 @@ namespace POS.Controllers
 
             return View(items);
         }
-      
 
+        [Authorize(Permissions.AccountingManual.Create)]
         public IActionResult Create()
         {
             AccountingManual item = new AccountingManual();
@@ -72,8 +73,9 @@ namespace POS.Controllers
         }
 
        
-
+       
         [HttpPost]
+        [Authorize(Permissions.AccountingManual.Create)]
         public IActionResult Create(AccountingManual item)
         {
             bool bolret = false;
@@ -154,6 +156,8 @@ namespace POS.Controllers
 
             return Json(date);
         }
+
+        [Authorize(Permissions.AccountingManual.Edit)]
         public IActionResult Edit(string id)
         {
             AccountingManual item = _Repo.GetItem(id);
@@ -169,6 +173,7 @@ namespace POS.Controllers
         }
 
         [HttpPost]
+        [Authorize(Permissions.AccountingManual.Edit)]
         public IActionResult Edit(AccountingManual item)
         {
             //item.DetailedPayChecks.RemoveAll(a => a.DetailedPaycheckAmountRly == 0);
@@ -208,7 +213,7 @@ namespace POS.Controllers
             }
         }
 
-
+        [Authorize(Permissions.AccountingManual.View)]
         public IActionResult Details(string id) //Read
         {
             AccountingManual item = _Repo.GetItem(id);

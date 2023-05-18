@@ -58,7 +58,8 @@ namespace POS.Models
             Accounts,
             Roles,
             Registers,
-           
+            AccountingManual,
+
         }
         public static string GetTypeName(string fullTypeName)
         {

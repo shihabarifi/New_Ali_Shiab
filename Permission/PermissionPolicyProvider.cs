@@ -14,19 +14,14 @@ namespace POS.Permission
         {
             FallbackPolicyProvider = new DefaultAuthorizationPolicyProvider(options);   
         }
-        public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
-        {
-          return  FallbackPolicyProvider.GetFallbackPolicyAsync();
-        }
+        public Task<AuthorizationPolicy> GetDefaultPolicyAsync()=> FallbackPolicyProvider.GetFallbackPolicyAsync();
+       
 
-        public Task<AuthorizationPolicy?> GetFallbackPolicyAsync()
-        {
-            return FallbackPolicyProvider.GetFallbackPolicyAsync();
-        }
+       
 
-        public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
+        public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
-            if (policyName.StartsWith(Helper.Permission, System.StringComparison.OrdinalIgnoreCase))
+            if (policyName.StartsWith(Helper.Permission, StringComparison.OrdinalIgnoreCase))
             {
                 var policy = new AuthorizationPolicyBuilder();
                 policy.AddRequirements(new PermissionRequirement(policyName));
@@ -34,5 +29,7 @@ namespace POS.Permission
             }
             return FallbackPolicyProvider.GetPolicyAsync(policyName);
         }
+        public Task<AuthorizationPolicy> GetFallbackPolicyAsync() => FallbackPolicyProvider.GetDefaultPolicyAsync();
+
     }
 }

@@ -16,12 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.Configure<SecurityStampValidatorOptions>(op =>
-op.ValidationInterval = TimeSpan.FromSeconds(0));
+
 
 builder.Services.AddSession();
-builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
 builder.Services.AddScoped<ICurrency, CurrencyRepo>();
 builder.Services.AddScoped<IExchangeRate, ExchangeRateRepo>();
 builder.Services.AddScoped<IFund, FundRepo>();
@@ -42,7 +40,7 @@ builder.Services.AddScoped<AccountingManualCurrens_Db_REpository>();
 builder.Services.AddScoped<pay_recie_finRepository<FinalAccountType>, FinalAccountDB_Repo>();
 //builder.Services.AddScoped<pay_recie_finRepository<ActivityType>, ActivityTypeDb_Repository>();
 builder.Services.AddScoped<pay_recie_finRepository<CurrenciesExchangeRate>, CurrenciExchangeRateDb_Repository>();
-//builder.Services.AddScoped<pay_recie_finRepository<BackUpsDb>, BackUpDb_Repo>();
+builder.Services.AddScoped<pay_recie_finRepository<BackUpsDb>, BackUpDb_Repo>();
 
 builder.Services.AddScoped<pay_recie_finRepository<MainJournalEntery>, MainJournalEnteryDb_Repository>();
 builder.Services.AddDbContext<posDbContext>(options =>
@@ -64,7 +62,12 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "";
     options.AccessDeniedPath = "/Home/Denied";
 });
-
+builder.Services.Configure<SecurityStampValidatorOptions>(op =>
+{
+    op.ValidationInterval = TimeSpan.Zero;
+});
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
 
 var app = builder.Build();
@@ -72,6 +75,7 @@ using var Scope = app.Services.CreateScope();
 var services = Scope.ServiceProvider;
 try
 {
+  
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
