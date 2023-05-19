@@ -15,7 +15,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>الرئيسية</title>
+  <title>إضافة سند صرف</title>
 
   <meta name="description" content="" />
 
@@ -1084,9 +1084,9 @@
                 <thead>
                     <tr>
                    
-                  @*  <th >
+                    <th >
                        رقم الحساب
-                    </th> *@
+                    </th> 
                     <th>
                         الحساب اسم  
                     </th>
@@ -1113,17 +1113,15 @@
                         {
                        <tr>
                        <td>
-                             <select asp-for="DetailedExpensVouchers[i].DebitChildAccount" class ="form-control" asp-items="ViewBag.AccountList">
-                                  </select>
-                                  <input type="hidden"  asp-for="@Model.DetailedExpensVouchers[i].IsDeleted" class="form-control IsDeleted" />
                           
-                            @* <input asp-for="DetailedExpensVouchers[i].DebitChildAccount" class="form-control" />*@
+                             <input asp-for="DetailedExpensVouchers[i].DebitChildAccount" class="form-control" />
+                             <input type="hidden"  asp-for="@Model.DetailedExpensVouchers[i].IsDeleted" class="form-control IsDeleted" />
                         </td>
-        @*               <td>
+                       <td>
                      
                             <input asp-for="@Model.DetailedExpensVouchers[i].ArabicAccName" class="form-control form-control-plaintext" readonly />
 
-                       </td>*@
+                       </td>
 
                          <td>
                         <input asp-for="@Model.DetailedExpensVouchers[i].DetailedExpensVoucherAmountDescription" class="form-control"/>
@@ -1214,11 +1212,11 @@
             </div>
              <input  asp-for="CurrenciesExchangeRate"  class="form-control exchange1" />
 
-@*
+
              <select id="mySelect" class ="form-control"  size="5"
              style="visibility: hidden;"
              asp-items="ViewBag.AccountList">
-             </select>*@
+             </select>
 
 
              <input id="txtValue" class="form-control col-2 invisible" />
@@ -1239,6 +1237,7 @@
         </form>
 
 </div>
+
 </div>
 </div>
 
@@ -1307,7 +1306,7 @@
 	              var rows = table.getElementsByTagName('tr');
                   
                   if(rows.length==2){
-                      alert("xxxxxxx");
+                      alert("لايمكنك حذف هذا الصف");
                       return;
                   }
 
@@ -1318,25 +1317,7 @@
             txtDetailedExpensVoucherAmountRly.value = 0;
                    $(btn).closest('tr').hide();
                     CalcAmunt();
-                   
-	              //  var btnIdx = btn.id.replaceAll('btnremove-', '');
-               //     var idOfQuantity = btnIdx + "__money";
-               //     var txtQuantity = document.querySelector("[id$='" + idOfmoney + "']");
-
-               //  txtQuantity.value = 0;
-                             
-
-               //  var idOfIsDeleted = btnIdx + "__IsDeleted";
-               //  var txtIsDeleted = document.querySelector("[id$='" + idOfIsDeleted + "']");            
-               //  txtIsDeleted.value="true";
-                            
-
-
-
-               //  $(btn).closest('tr').hide();
-
-               
-
+                
                  }
   ///////////////////////////////////////////////////////////////////////////////////
         
@@ -1503,106 +1484,78 @@
                 submitbtn.disabled=false;
                    }
                    
-
+                 }
                  //-----------------------------------------------------------------------------
 
-                 /////////////////////////////////////////////////////////////////////
-  
-   
-               //   function DeleteItem(btn) {
-
-	              //var table = document.getElementById('CodesTable');
-	              //var rows = table.getElementsByTagName('tr');	           
-                    
-	              //  var btnIdx = btn.id.replaceAll('btnremove-', '');
-               //     var idOfQuantity = btnIdx + "__money";
-               //     var txtQuantity = document.querySelector("[id$='" + idOfmoney + "']");
-
-               //  txtQuantity.value = 0;
-                             
-
-               //  var idOfIsDeleted = btnIdx + "__IsDeleted";
-               //  var txtIsDeleted = document.querySelector("[id$='" + idOfIsDeleted + "']");            
-               //  txtIsDeleted.value="true";
-                            
-
-
-
-               //  $(btn).closest('tr').hide();
-
-               //  CalcAmunt();
-
-               //  }
-
-                        ///////////////////////////////////////////////////////////////////////////////////
-        }
+            
+      
          
-                //  //-----------------------------------------------------------------------------------
-                //  document.addEventListener('keydown',ShowSearchableList);
+                  //-----------------------------------------------------------------------------------
+                  document.addEventListener('keydown',ShowSearchableList);
 
-                //   function setSameWidth(srcElement,desElement){
-                //      desElement.style.setSameWidth = "260px";
-                //      }
+                   function setSameWidth(srcElement,desElement){
+                      desElement.style.setSameWidth = "260px";
+                      }
                          
-                //     function ShowSearchableList(event){
+                     function ShowSearchableList(event){
 
-                //      if(event.target.id.indexOf('DebitChildAccount')<0){
-                //          return ;
-                //}
+                      if(event.target.id.indexOf('DebitChildAccount')<0){
+                          return ;
+                }
 
-                //var objDiv = document.getElementById("CsDiv");
-                //     objDiv.scrollTop=objDiv.scrollHeight;
-
-
-                //  var tid =event.target.id;
-                //  var txtDescId =tid.replaceAll('DebitChildAccount' , 'ArabicAccName');
-                //  var txtValue=document.getElementById('txtValue');
-                //  var txtText =document.getElementById(txtDescId);
-                //  var txtSearch =event.target;
-
-                //  var lstbox= document.getElementById('mySelect');
-
-                //  $(txtSearch).after($(lstbox).show('slow'));
-
-                //  if(event.keyCode === 13 || event.keyCode ==9){
-
-                //      txtSearch.value=txtValue.value;
-                //      lstbox.style.visibility="hidden";
-                //      var divlst = document.getElementById("HiddenDiv");
-                //      $(divlst).after($(lstbox).show('slow'));
-
-                //      if( event.keyCode===13){
-                //          event.preventDefault();
-                //          txtSearch.focus();
-                //     return;
-                // }
-                // else
-                //    return;
-                // }
-                // setSameWidth(txtSearch, lstbox);
-                // lstbox.style.visibility = "visible";
-
-                // txtValue.value="";
-                // txtText.value= "";
-
-                // var items =lstbox.options;
-
-                // for(var i=items.length - 1 ; i>= 0 ; i-- ){
-                //     if(items[i].text.toLowerCase().indexOf(txtSearch.value.toLowerCase()) > -1){
-                //         items[i].style.display = 'block';
-                //         items[i].selected =true;
-                //         txtValue.value=items[i].value;
-                //         txtText.value=items[i].text;
-                //     }
-                //     else {
-                //         items[i].style.display = 'none';
-                //         items[i].selected= false;
-                //     }
-                // }
+                var objDiv = document.getElementById("CsDiv");
+                     objDiv.scrollTop=objDiv.scrollHeight;
 
 
+                  var tid =event.target.id;
+                  var txtDescId =tid.replaceAll('DebitChildAccount' , 'ArabicAccName');
+                  var txtValue=document.getElementById('txtValue');
+                  var txtText =document.getElementById(txtDescId);
+                  var txtSearch =event.target;
 
-                //     }
+                  var lstbox= document.getElementById('mySelect');
+
+                  $(txtSearch).after($(lstbox).show('slow'));
+
+                  if(event.keyCode === 13 || event.keyCode ==9){
+
+                      txtSearch.value=txtValue.value;
+                      lstbox.style.visibility="hidden";
+                      var divlst = document.getElementById("HiddenDiv");
+                      $(divlst).after($(lstbox).show('slow'));
+
+                      if( event.keyCode===13){
+                          event.preventDefault();
+                          txtSearch.focus();
+                     return;
+                 }
+                 else
+                    return;
+                 }
+                 setSameWidth(txtSearch, lstbox);
+                 lstbox.style.visibility = "visible";
+
+                 txtValue.value="";
+                 txtText.value= "";
+
+                 var items =lstbox.options;
+
+                 for(var i=items.length - 1 ; i>= 0 ; i-- ){
+                     if(items[i].text.toLowerCase().indexOf(txtSearch.value.toLowerCase()) > -1){
+                         items[i].style.display = 'block';
+                         items[i].selected =true;
+                         txtValue.value=items[i].value;
+                         txtText.value=items[i].text;
+                     }
+                     else {
+                         items[i].style.display = 'none';
+                         items[i].selected= false;
+                     }
+                 }
+
+
+
+                     }
  
 
 </script>

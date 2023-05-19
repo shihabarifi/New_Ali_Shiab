@@ -264,7 +264,7 @@ namespace POS.Controllers
         {
             //item.DetailedExpensVouchers.RemoveAll(a => a.DetailedExpensVoucherAmountRly == 0);
 
-
+            item.DetailedExpensVouchers.RemoveAll(a => a.DetailedExpensVoucherAmountRly == 0);
             bool bolret = false;
             string errMessage = "";
             try
