@@ -128,7 +128,7 @@ namespace POS.Controllers
         [HttpPost]
         public IActionResult Create(MainExpensVoucher item)
         {
-            //item.DetailedExpensVouchers.RemoveAll(a => a.DetailedExpensVoucherAmountRly == 0);
+            item.DetailedExpensVouchers.RemoveAll(a => a.DetailedExpensVoucherAmountRly == 0);
             //item.DetailedExpensVouchers.RemoveAll(d => d.IsDeleted == true);
 
             bool bolret = false;

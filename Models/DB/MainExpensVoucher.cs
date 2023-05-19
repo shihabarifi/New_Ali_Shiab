@@ -32,13 +32,20 @@ namespace POS.Models.DB
         [Column("currencies")]
         public int Currencies { get; set; }
         public int MainExpensVoucherStatus { get; set; }
+
+        [Range(1, 10000000, ErrorMessage = "AmountRly should be greater than 0")]
+        [DisplayFormat(DataFormatString = "{0:0.000}", ApplyFormatInEditMode = true)]
         [Column("MainExpensVoucherAmount_RLY")]
         public double MainExpensVoucherAmountRly { get; set; }
+
+
         [Column("MainExpensVoucherAmount_UDO")]
+        [Range(1, 10000000, ErrorMessage = "AmountUDO should be greater than 0")]
+        [DisplayFormat(DataFormatString = "{0:0.000}", ApplyFormatInEditMode = true)]
         public double? MainExpensVoucherAmountUdo { get; set; }
         public int? ReferenceNumber { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? MainExpensVoucherDate { get; set; }
+        public DateTime? MainExpensVoucherDate { get; set; }= DateTime.Now.Date;
         public int? IsDelete { get; set; }
 
         [ForeignKey("CurrenciesExchangeRate")]

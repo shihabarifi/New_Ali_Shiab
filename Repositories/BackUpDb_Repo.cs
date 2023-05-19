@@ -1,7 +1,7 @@
 ﻿using POS.Data;
 using POS.Interfaces;
 using POS.Models.DB;
-using POS.Models.DbContextDir;
+
 
 namespace POS.Repositories
 {

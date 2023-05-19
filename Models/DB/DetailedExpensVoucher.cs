@@ -15,8 +15,14 @@ namespace POS.Models.DB
         [Column("main_expens_voucher_number")]
         [StringLength(50)]
         public string MainExpensVoucherNumber { get; set; } = null!;
+
         [Column("DetailedExpensVoucherAmount_RLY")]
+        [Range(1, 10000000, ErrorMessage = "AmountRly should be greater than 0")]
+        [DisplayFormat(DataFormatString = "{0:0.000}", ApplyFormatInEditMode = true)]
         public double DetailedExpensVoucherAmountRly { get; set; }
+
+        [Range(1, 10000000, ErrorMessage = "AmountUdo should be greater than 0")]
+        [DisplayFormat(DataFormatString = "{0:0.000}", ApplyFormatInEditMode = true)]
         [Column("DetailedExpensVoucherAmount_UDO")]
         public double? DetailedExpensVoucherAmountUdo { get; set; }
         [StringLength(50)]
