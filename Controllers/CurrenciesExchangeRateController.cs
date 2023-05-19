@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace POS.Controllers
 {
-    [AllowAnonymous]
+
     public class CurrenciesExchangeRateController : Controller
     {
-        private readonly IExchangeRate _Repo;
+        private readonly ICurrenciesExchangeRate _Repo;
 
-        public CurrenciesExchangeRateController(IExchangeRate repo)
+        public CurrenciesExchangeRateController(ICurrenciesExchangeRate repo)
         {
-           _Repo = repo;
+            _Repo = repo;
         }
         public IActionResult Index(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
         {

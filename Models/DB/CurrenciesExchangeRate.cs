@@ -18,6 +18,7 @@ namespace POS.Models.DB
             MainExpensVouchers = new HashSet<MainExpensVoucher>();
             MainPayChecks = new HashSet<MainPayCheck>();
         }
+      
 
         [Key]
         [Column("Currencies_Exchange_Rate_Id")]
