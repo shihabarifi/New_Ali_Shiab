@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Microsoft.AspNetCore.Identity;
+using POS.ViewModel;
 
 namespace POS.Controllers
 {
@@ -20,16 +21,21 @@ namespace POS.Controllers
         private readonly IAccountingManual _AccountingManualRepo;
         private readonly IFund _FundRepo;
         private readonly ICurrency _CurrencyRepo;
+        private readonly IFiscalYear _fiscalYearRepo;
         private readonly IExchangeRate _exchangeRateRepo;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public ExpensVoucherController(IExpensVoucher repo, IAccountingManual accountingManualRepo,
-            IFund fundRepo, ICurrency currencyRepo, IExchangeRate exchangeRateRepo) // here the repository will be passed by the dependency injection.
+            IFund fundRepo, ICurrency currencyRepo, IFiscalYear fiscalYearRepo, 
+            IExchangeRate exchangeRateRepo,UserManager<ApplicationUser> userManager) // here the repository will be passed by the dependency injection.
         {
             _Repo = repo;
             _AccountingManualRepo = accountingManualRepo;
             _FundRepo = fundRepo;
             _CurrencyRepo = currencyRepo;
+           _fiscalYearRepo = fiscalYearRepo;
             _exchangeRateRepo = exchangeRateRepo;
+           _userManager = userManager;
         }
         public IActionResult Index(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
         {
@@ -118,8 +124,9 @@ namespace POS.Controllers
             ViewBag.AccountList = GetAccounts();
             ViewBag.FundList = GetFunds();
             item.MainExpensVoucherNumber = _Repo.GetNewEXNumber();
-            item.FiscalYear = 7;
-            item.SystemUsers = "6f94621c-3508-435c-98fe-c51cc63d076f";
+            var f = _fiscalYearRepo.GetItem(1);
+            item.FiscalYear = f.FiscalYearId;
+            item.SystemUsers = _userManager.GetUserId(User);
             item.MainExpensVoucherStatus = 0;
             item.CurrenciesExchangeRate = 1;
             return View(item);
@@ -262,9 +269,12 @@ namespace POS.Controllers
         [HttpPost]
         public IActionResult Edit(MainExpensVoucher item)
         {
-            //item.DetailedExpensVouchers.RemoveAll(a => a.DetailedExpensVoucherAmountRly == 0);
+          
 
             item.DetailedExpensVouchers.RemoveAll(a => a.DetailedExpensVoucherAmountRly == 0);
+            var f = _fiscalYearRepo.GetItem(1);
+            item.FiscalYear = f.FiscalYearId;
+            item.SystemUsers = _userManager.GetUserId(User);
             bool bolret = false;
             string errMessage = "";
             try

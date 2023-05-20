@@ -1,9 +1,11 @@
 ﻿@model POS.Models.DB.MainPayCheck
 
-@{
-    ViewData["Title"] = "Create";
-   Layout = null;
+<!--------------------------Start Header-------------------------->
 
+    @{
+    ViewData["Title"] = "Edit";
+   
+    Layout = null;
 }
 
   @inject UserManager<ApplicationUser> userManager
@@ -18,7 +20,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>الرئيسية</title>
+  <title>حذف سند قبض</title>
 
   <meta name="description" content="" />
 
@@ -378,13 +380,13 @@
               </li>
               <!-- Page -->
               <li class="menu-item">
-                 <a href="/Account/Roles" class="menu-link">
+                 <a href="/Accounts/Roles" class="menu-link">
                   <div>إدارة المستخدمين</div>
                 </a>
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a href="/Account/Registers" class="menu-link">
+                <a href="/Accounts/Registers" class="menu-link">
                   <div> المستخدمين</div>
                 </a>
               </li>
@@ -418,7 +420,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">البنوك</h3>
+                <h3 class="nav-item pt-3">سندات المقبوضات</h3>
 
               </div>
               <!-- nav-->
@@ -543,34 +545,40 @@
   text-align: center;
 }
     </style>
-
 <div style="padding-right: 69px;padding-left: 67px;padding-top: 68px;width: 1149px;margin-right: 58px;/* padding-bottom: 1000px; */margin-bottom: 2%;" class="card">
    <div  class="card-header bg-primary text-Uppercase text-white" style="background-color:#e13b3bc2 !important; " > 
             <h4 style="color:#fff;">حذف سند قبض نقداً</h4>
         </div>
         <hr />
 
-        <form id="CodeSbyAlimo" asp-action="Delete">
+
+         <form id="CodeSbyAlimo" asp-action="Delete">
            <div class="row col-12">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                  
-      
-              <div class="form-group col-2">
+            
+           
+            <div class="form-group col-2">
                    رقم السند
                 </div>
                  <div class="form-form-group col-3">
-                   <input asp-for="MainPaycheckNumber" class="form-control form-control-plaintext " readonly />
-                  
+                   <input asp-for="MainPaycheckNumber" class="form-control" readonly />
+                   <span asp-validation-for="MainPaycheckNumber" class="text-danger"></span>
                 </div>
 
 
-            <div class="form-group col-2">
+
+
+               <div class="form-group col-2">
                  سعر الصرف
                 </div>
                 <div class="form-form-group col-3">
-                <select asp-for="CurrenciesExchangeRate" class ="form-control form-control-plaintext " readonly asp-items="ViewBag.ExchangeRatelist"></select>
-                </div>
-           
+@*                <select asp-for="CurrenciesExchangeRate" class ="form-control exchange" readonly asp-items="ViewBag.CurrenciesExchangeRate"></select>
+*@                
+  
+                <input  class="form-control exchange"readonly />
+ 
+            </div>
         <div class="form-group col-2">
                </div>
 
@@ -578,17 +586,19 @@
             <div class="form-group col-2">
                 الصناديق
              </div>
-             
-                <div class="form-form-group col-3">
-                <select asp-for="Funds" class ="form-control form-control-plaintext " readonly asp-items="ViewBag.FundList"></select>
-              </div>
+              <div class="form-form-group col-3">
+                <select asp-for="Funds" class ="form-control fund" readonly asp-items="ViewBag.FundList"></select>
+              <span asp-validation-for="Funds" class="text-danger"></span>
+            </div>
+
 
               <div class="form-group col-2">
                 العملات
               </div>
               <div class="form-form-group col-3">
-                <select asp-for="Currencies" class ="form-control form-control-plaintext " readonly asp-items="ViewBag.CurrencyList"></select>
-              </div>
+                <select asp-for="Currencies" class ="form-control currency" readonly asp-items="ViewBag.CurrencyList"></select>
+              <span asp-validation-for="Currencies" class="text-danger"></span>
+            </div>
                 
             
             <div class="form-group col-2">
@@ -597,113 +607,112 @@
 
           
 
+
+
             <div class="form-group col-2">
                المبلغ محلي
             </div>
             <div class="form-form-group col-3">
-                <input asp-for="MainPaycheckAmountRly" class="form-control form-control-plaintext " readonly />
-             
+                <input asp-for="MainPaycheckAmountRly" class="form-control money1" readonly/>
+                <span asp-validation-for="MainPaycheckAmountRly" class="text-danger"></span>
             </div>
 
 
-          
 
 
             <div class="form-group col-2">
                   المبلغ اجنبي
             </div>
             <div class="form-form-group col-3">
-                <input asp-for="MainPaycheckAmountUdo" class="form-control form-control-plaintext " readonly />
-                
+                <input asp-for="MainPaycheckAmountUdo" class="form-control" readonly/>
+                <span asp-validation-for="MainPaycheckAmountUdo" class="text-danger"></span>
             </div>
 
-              <div class="form-group col-2">
+            <div class="form-group col-2">
                </div>
 
             <div class="form-group col-2">
                المرجع
             </div>
             <div class="form-form-group col-3">
-                <input asp-for="ReferenceNumber" class="form-control form-control-plaintext " readonly />
-               
+                <input asp-for="ReferenceNumber" class="form-control"readonly />
+             
             </div>
 
 
             
 
+
            <div class="form-group col-2">
                التاريخ
            </div>
            <div class="form-form-group col-3">
-                <input asp-for="MainPaycheckDate" class="form-control form-control-plaintext " readonly />
-             
+                <input type="date" asp-for="MainPaycheckDate" class="form-control" readonly/>
+               <span asp-validation-for="MainPaycheckDate" class="text-danger"></span>
             </div>
 
 
-           
+            
 
             <div class="form-group col-2">
                </div>
-
+             
                
 @*///////////////////////////التفصيلي////////////////////////////////////*@
 
         <div class="col-12 ml-2">
-            <table  class ="table table-borderless table-sm  border " style="background-color:#d2999963;color:#fff ">
+           <table  class ="table table-borderless table-sm  border " style="background-color:#d2999963;color:#fff ">
                 <thead>
                     <tr>
                    
-                    <th>
+                    <th >
                        رقم الحساب
                     </th> 
-                    <th>
+                    <th >
                         الحساب اسم  
                     </th>
                       <th>
                        البيان
                     </th> 
-                    <th>
+                    <th >
                        المبلغ محلي
                     </th>
-                    <th>
+                    <th >
                            المبلغ اجنبي
                     </th>
                   
-                 
+                    
                     </tr>
                 </thead>
-                <tbody >
+                <tbody id="CsDiv">
                      @for (int i = 0; i < Model.DetailedPayChecks.Count;i++)
 
                         {
                        <tr>
 
                         <td>
-                            @* <select asp-for="@Model.DetailedExpensVouchers[i].DebitChildAccount" asp-items="ViewBag.AccountList" class ="form-control"></select>*@
-                            @* <select asp-for="DetailedPayChecks[i].CreditChildAccount"  asp-items="ViewBag.AccountList" class="form-control"></select>*@
-                                  <input asp-for="DetailedPayChecks[i].CreditChildAccount" class="form-control form-control-plaintext " readonly />
-                        </td>
-                         <td>
-                         @* <input asp-for="@Model.DetailedPayChecks[i].CreditChildAccount" class="form-control form-control-plaintext" readonly/>*@
-                           @* <input asp-for="@Model.DetailedPayChecks[i].ArabicAccName" class="form-control form-control-plaintext" readonly />*@
-                               <input asp-for="@Model.DetailedPayChecks[i].ArabicAccName" class="form-control form-control-plaintext" readonly />
-                            
+                             <input asp-for="DetailedPayChecks[i].CreditChildAccount" class="form-control" readonly/>
+                         <input type="hidden"  asp-for="@Model.DetailedPayChecks[i].IsDeleted"  class="form-control IsDeleted"/>
+                         </td>
+                       <td>
+                         <input asp-for="@Model.DetailedPayChecks[i].ArabicAccName" class="form-control form-control-plaintext" readonly />
+
                     </td>
 
                          <td>
-                        <input asp-for="@Model.DetailedPayChecks[i].DetailedPaycheckrDescription" class="form-control form-control-plaintext " readonly/>
-                        
-                        </td>
-                         <td>
+                        <input asp-for="@Model.DetailedPayChecks[i].DetailedPaycheckrDescription" class="form-control"readonly/>
                          
-                        <input asp-for="@Model.DetailedPayChecks[i].DetailedPaycheckAmountRly" class="form-control" readonly"/>
-                     
-                        </td>
-                        <td>
-                        <input asp-for="@Model.DetailedPayChecks[i].DetailedPaycheckAmountUdo" class="form-control form-control-plaintext " readonly/>
                         </td>
 
-                       
+                         <td>
+                        <input asp-for="@Model.DetailedPayChecks[i].DetailedPaycheckAmountRly" class="form-control money AmountTotal"readonly/>
+                        </td>
+                        <td>
+                        <input asp-for="@Model.DetailedPayChecks[i].DetailedPaycheckAmountUdo" class="form-control form-control-plaintext PriceTotal" readonly/>
+                        
+                        </td>
+
+                      
 
 
                        </tr>
@@ -717,33 +726,36 @@
 @*/////////////////////////////////////////////////////////////////*@
 
 
+  <table style="margin-left:50.70%">
+                  <tr >
+                       <td style="padding-inline:20px">
+                                        </td> 
+                      <td>
+                                </td> 
+                    
+                     </tr>
+                    </table>
 
+    
 
 @*/////////////////////////////////////////////////////////////////*@
-
 <hr />
-        <div class="form-group btn-group col-12">
-       
-            <div class="col-4"></div>
-           <div class="col-2">
-         <form asp-action="Delete">
-                 <input type="hidden" asp-for="MainPaycheckNumber" />
-                    <input  onclick="return confirm('هل متاكد من الحذف ؟')") type="submit" value="Delete"  class="btn btn-danger btn-block"  /> 
-       </form>
-   
-                        </div>
 
-                         <div class="col-1">
+        <div class="form-group btn-group col-12">
+            <div  class="col-4"></div>
+            <div  class="col-2">
+                    <input  onclick="return confirm('هل متاكد من الحذف ؟')") type="submit" value="Delete"  class="btn btn-danger btn-block"  /> 
+            </div>  
+
+             <div class="col-1">
                  <a class="btn btn-secondary btn-block" asp-action="index"
                    asp-route-pg="@TempData.Peek("CurrentPage")">Back</a>
-                     </div>
-
-              
+            </div>
              <div class="col-1"></div>
          </div>
-      
 
-   
+
+
 
             <div class="form-group btn-group col-1">
 
@@ -751,13 +763,8 @@
          <div class="form-group invisible">
 
 
-          <div class="form-group col-2">
-                   رقم السند
-                </div>
-                 <div class="form-form-group col-3">
-                   <input asp-for="MainPaycheckNumber" class="form-control" />
-                   <span asp-validation-for="MainPaycheckNumber" class="text-danger"></span>
-                </div>
+
+           
 
 
 
@@ -768,17 +775,13 @@
 
 
                 
-                 <div class="form-form-group col-3">
-                   <input asp-for="MainPaycheckStatus" class="form-control" />
-                   <span asp-validation-for="MainPaycheckStatus" class="text-danger"></span>
-                </div>
+                 
 
                  <div class="form-form-group col-3">
                    <input asp-for="SystemUsers" class="form-control" />
                    <span asp-validation-for="SystemUsers" class="text-danger"></span>
                 </div>
-
-
+                <input  asp-for="CurrenciesExchangeRate"  class="form-control exchange1" />
 
              <select id="mySelect" class ="form-control"  size="5"
              style="visibility: hidden;"
@@ -804,7 +807,6 @@
         </form>
 </div>
 
-
     </div>
     </div>
     </div>
@@ -816,7 +818,94 @@
     <!-- Drag Target Area To SlideIn Menu On Small Screens -->
     <div class="drag-target"></div>
 
+
+
+         <script type="text/javascript">
+      
+
+
+
+
+          function AddItem(btn) {
+    
+    			var table;
+                table= document.getElementById('CodesTable');
+    			var rows = table.getElementsByTagName('tr');
+    
+    			var rowOuterHtml = rows[rows.length - 1].outerHTML;
+
+		    	var lastrowIdx = rows.length - 2;
+
+
+		    	var nextrowIdx = eval(lastrowIdx) + 1;
+
+		    	
+
+		    	rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
+		    	rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
+		    	rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
+
+
+		    	var newRow = table.insertRow();
+		    	newRow.innerHTML = rowOuterHtml;
+
+
+                var x =document.getElementsByTagName("INPUT");
+
+                for(var cnt = 0 ; cnt < x.length; cnt++){
+                    if(x[cnt].type=="text" && x[cnt].id.indexOf('_'+ nextrowIdx + '_')>0)
+                        x[cnt].value='';
+                
+                else if (x[cnt].type=="number" && x[cnt].id.indexOf('_'+ nextrowIdx+ '_')>0)
+                          x[cnt].value=0;
+                    
+                }
+                    rebindvalidators();
+              }
+
+
+                 /////////////////////////////////////////////////////////////////////
+  
+   
+                  function DeleteItem(btn) {
+                     
+	              var table = document.getElementById('CodesTable');
+	              var rows = table.getElementsByTagName('tr');
+                  
+                  if(rows.length==2){
+                      alert("لايمكنك حذف هذا الصف");
+                      return;
+                  }
+
+                     var btnIdx = btn.id.replaceAll('btnremove-', '');
+            var idOfDetailedPaycheckAmountRly = btnIdx + "__DetailedPaycheckAmountRly";
+            var txtDetailedPaycheckAmountRly = document.querySelector("[id$='" + idOfDetailedPaycheckAmountRly + "']");
+
+            txtDetailedPaycheckAmountRly.value = 0;
+                   $(btn).closest('tr').hide();
+                    CalcAmunt();
+                
+                
+                 }
+  ///////////////////////////////////////////////////////////////////////////////////
+        
+                  function rebindvalidators(){
+                    var $form =$("#CodeSbyAlimo");
+                    $form.unbind();
+                    $form.data("validator", null);
+                    $.validator.unobtrusive.parse($form);
+                    $form.validate($form.data("unobtrusiveValidation").options);
+                      }
+       /////////////////////////////////////////////////////////////////////////////////
+
+
+</script>
+
+
+
+
   <!-- / Layout wrapper -->
+
 
   <!-- Core JS -->
   <!-- build:js ~/assets/vendor/js/core.js -->
@@ -840,23 +929,38 @@
   <script src="~/assets/json/locales/en.json"></script>
 
   <!-- Page JS -->
-  <script src="~/sys13.js"></script>
+  <script src="~/pages1/sys13.js"></script>
 
 
-
-
-  <!-- Page JS -->
-  <script src="sys12.js"></script>
 
 
      <script type="text/javascript">
+          $(document).ready(() => {
 
+               //------------------------ جلب سعر الصرف على حسب العملة --------------------------  
 
+                  let id = $(".currency option:selected").val();
+                  $.ajax({
+                type: "GET",
+                url: "/PayCheckVoucher/GetCurr",
+                 data: { CurrenciesId: id },
+                 success: function (data) {
+                  let items = '';
+                 
+                    $.each(data, function (i, exchange) {
+                         $('.exchange1').val(exchange.value);
+                         $('.exchange').val(exchange.text);
+                     items += '<option value="' + exchange.value + '">' + exchange.text + "</option>";
+                    
+                    });
+                     $(".exchange").html(items);
+                 
+                 }
 
-
-
+                      });
+              
                 //-------------------------- جلب العملات على حسب الصندوق ----------------------------  
-          $(".fund").change(function () {
+       
 
           let id = $(".fund option:selected").val();
           $.ajax({
@@ -865,6 +969,7 @@
                  data: { FundId: id },
                  success: function (data) {
                   let items = '';
+                    items += `<option value="">---توجد  (${data.length}) عملات---</option>`;
                     $.each(data, function (i, currency) {
                      items += '<option value="' + currency.value + '">' + currency.text + "</option>";
                     
@@ -873,215 +978,114 @@
                  
                  }
 
-          })
          
          });
          //---------------------------------------------------------------------------------
 
-
-         
-          //------------------------ جلب سعر الصرف على حسب العملة --------------------------  
-
-         
-          $(".currency").change(function () {
-
-          let id = $(".currency option:selected").val();
-          $.ajax({
-                type: "GET",
-                url: "/PayCheckVoucher/GetCurr",
-                 data: { CurrenciesId: id },
-                 success: function (data) {
-                  let items = '';
-                    $.each(data, function (i, exchange) {
-                     items += '<option value="' + exchange.value + '">' + exchange.text + "</option>";
-                    
-                    });
-                     $(".exchange").html(items);
-                 
-                 }
-
-          })
-         
-         });
-
-          //-----------------------------------------------------------------------------------
-
-              var submitbtn= document.getElementById("submitbtn");
-            submitbtn.disabled=true;
-            //-------------------------   جمع المبالغ   ------------------------
-
-         function CalcAmunt(){
-             var x= document.getElementsByClassName('money')
-             var total=0;
-             var i;
-             for(i=0;i<x.length;i++){
-                 total = total +eval(x[i].value);
-             }
-             document.querySelector("input[name=debit]").value=total;
-
-             return;
-         }
-         document.addEventListener('change',function(e){
-             if(e.target.classList.contains('money')){
-                 CalcAmunt();chack();
-             }
-         },false);
-
-            document.addEventListener('change',function(e){
-           
-             if(e.target.classList.contains('money1')){
+       
+  
+          
+            
                  
                  var y= document.getElementsByClassName('money1')
                   var t=0;
                   var i;
-             for(i=0;i<y.length;i++){
+                  for(i=0;i<y.length;i++){
                  t = t +eval(y[i].value);
                  
-             }
+                  }
                  
-            document.querySelector("input[name=cadit]").value=t; chack();
-            return;
-             }
-         },false);
-      //-----------------------------------------------------------------------------
-       //------------------------- التحقق من تساوي المبلغين ------------------------
+                  document.querySelector("input[name=cadit]").value=t.toFixed(2);
+                    
+                     
+                       
+                   CalcAmunt();
+                 
 
-        function chack(){
-            var debit =document.querySelector("input[name=debit]");
-            var cadit =document.querySelector("input[name=cadit]");
 
-            if(debit.value==""|| cadit.value=="" ){
-                 agree.disabled=true;
-                submitbtn.disabled=true;
-            }else if(debit.value !== cadit.value){
+                 chack();
+           
+         
+        });
+
+         var submitbtn= document.getElementById("submitbtn");
+                    submitbtn.disabled=true;
+                    //-------------------------   جمع المبالغ   ------------------------
+
+                function CalcAmunt(){
+                  var x= document.getElementsByClassName('money')
+                  var total=0;
+                  var i;
+                      for(i=0;i<x.length;i++){
+                        
+                         
+                                       total = total +eval(x[i].value);
+                                  
+                      }
+                      document.querySelector("input[name=debit]").value=total.toFixed(2);chack();
+
+                      return;
+                       }
+
+                      document.addEventListener('change',function(e){
+                      if(e.target.classList.contains('money')){
+                          CalcAmunt();chack();
+                      }
+                      },false);
+
+                         document.addEventListener('change',function(e){
+                    
+                      if(e.target.classList.contains('money1')){
+                 
+                 var y= document.getElementsByClassName('money1')
+                  var t=0;
+                  var i;
+                  for(i=0;i<y.length;i++){
+                 t = t +eval(y[i].value);
+                 
+                  }
+                 
+                  document.querySelector("input[name=cadit]").value=t.toFixed(2); chack();
+                     return;
+                      }
+                       },false);
+                       
+
+                 
+                
+                    //-----------------------------------------------------------------------------
+                       //------------------------- التحقق من تساوي المبلغين ------------------------
+
+                  function chack(){
+                 var debit =document.querySelector("input[name=debit]");
+                 var cadit =document.querySelector("input[name=cadit]");
+
+                    if(debit.value=="" && cadit.value==""){
+                         agree.disabled=true;
+                        submitbtn.disabled=true;
+                    }else if(debit.value !== cadit.value){
 
                 
                 debit.style.backgroundColor ="red";
                 
                 cadit.style.backgroundColor ="red";
                 submitbtn.disabled=true ;
-            }else  {
+                }else  {
                 debit.style.backgroundColor ="#549169c7 ";
                 cadit.style.backgroundColor ="#549169c7 ";
             
                 submitbtn.disabled=false;
-            }
-            }
-
-      //-----------------------------------------------------------------------------
-
-         function AddItem(btn) {
-
-			var table = document.getElementById('CodesTable');
-			var rows = table.getElementsByTagName('tr');
-
-			var rowOuterHtml = rows[rows.length - 1].outerHTML;
-
-			var lastrowIdx = rows.length - 2;
-
-
-			var nextrowIdx = eval(lastrowIdx) + 1;
-
-			
-
-			rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
-			rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
-			rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
-
-
-			var newRow = table.insertRow();
-			newRow.innerHTML = rowOuterHtml;
-
-
-            var x =document.getElementsByTagName("INPUT");
-
-            for(var cnt =0 ; cnt < x.length; cnt++){
-                if(x[cnt].type=="text" && x[cnt].id.indexOf('_'+ nextrowIdx + '_')>0)
-                {
+                   }
                    
-
-                    x[cnt].value='';
-                }
-                else if (x[cnt].type=="number" && x[cnt].id.indexOf('_'+ nextrowIdx+ '_')>0)
-                x[cnt].value=0;
-            }
-
-            rebindvalidators();
-             
-         }
-
-   /////////////////////////////////////////////////////////////////////
-  
-   
-      function DeleteItem(btn) {
-
-	   var table = document.getElementById('CodesTable');
-	   var rows = table.getElementsByTagName('tr');	           
-            
-	        var btnIdx = btn.id.replaceAll('btnremove-', '');
-            var idOfQuantity = btnIdx + "__money";
-            var txtQuantity = document.querySelector("[id$='" + idOfmoney + "']");
-
-            txtQuantity.value = 0;
-                        
-
-            var idOfIsDeleted = btnIdx + "__IsDeleted";
-            var txtIsDeleted = document.querySelector("[id$='" + idOfIsDeleted + "']");            
-            txtIsDeleted.value="true";
-                       
-
-
-
-            $(btn).closest('tr').hide();
-
-            CalcAmunt();
-
-}
-
-   
-   //        function DeleteItem(btn) {
-
-  //             var table = document.getElementById('CodesTable');
-		//	var rows = table.getElementsByTagName('tr');
-
-  //          var VisibleRowsCount=0;
-  //          var x= document.querySelectorAll("[id*='Amount']");
-
-  //          for( i= 0 ; i< x.length ; i++)
-  //          {
-  //              if(x[i].value>0)
-  //              VisibleRowsCount++;
-                
-            
-  //          }
-                
-  //          if(VisibleRowsCount<=1){ 
-  //              alert("This Row Cannot Be Deleted"); 
-  //         return;
-  //          }
-
-
+                 }
+                 //-----------------------------------------------------------------------------
 
             
-            
-  //          var btnIdx=btn.id.replaceAll('btnremove-', '');
-  //          var idOfQuantity=btnIdx + "__Amount";
-  //          var txtQuantity=document.querySelector("[id$='"+ idOfQuantity + "']");
-  //          txtQuantity.value=0;
-		//	$(btn).closest('tr').hide();
-			
-  //        //  CalcAmunt();
-		//}
-///////////////////////////////////////////////////////////////////////////////////
 
-          function rebindvalidators(){
-            var $form =$("#CodeSbyAlimo");
-            $form.unbind();
-            $form.data("validator", null);
-            $.validator.unobtrusive.parse($form);
-            $form.validate($form.data("unobtrusiveValidation").options);
-        }
-/////////////////////////////////////////////////////////////////////////////////
+
+        
+
+         
 
         
           //-----------------------------------------------------------------------------------
