@@ -88,7 +88,7 @@ namespace POS.Repositories
         }
         public FiscalYear GetItem(int id)
         {
-            FiscalYear item = _context.FiscalYears.Where(u => u.FiscalYearId == id).FirstOrDefault();
+            FiscalYear item = _context.FiscalYears.Where(u => u.FiscalYearStatus == 1).FirstOrDefault();
             return item;
         }
 
