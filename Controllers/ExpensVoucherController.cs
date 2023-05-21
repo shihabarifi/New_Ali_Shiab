@@ -37,36 +37,49 @@ namespace POS.Controllers
             _exchangeRateRepo = exchangeRateRepo;
            _userManager = userManager;
         }
-        public IActionResult Index(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
+
+        public IActionResult Index()
         {
-            SortModel sortModel = new SortModel();
-            sortModel.AddColumn("name");
-            sortModel.AddColumn("ExDate");
-            sortModel.ApplySort(sortExpression);
-            ViewData["sortModel"] = sortModel;
-
-            ViewBag.SearchText = SearchText;
-
-            PaginatedList<MainExpensVoucher> items = _Repo.GetItems(sortModel.SortedProperty, sortModel.SortedOrder, SearchText, pg, pageSize);
 
 
-            var pager = new PagerModel(items.TotalRecords, pg, pageSize);
-            pager.SortExpression = sortExpression;
-            this.ViewBag.Pager = pager;
+            IList<MainExpensVoucher> items = _Repo.GetItems();
 
             ViewBag.AccountList = GetAccounts();
             ViewBag.FundList = GetFunds();
             ViewBag.CurrencyList = GetCurrency();
             ViewBag.ExchangeRatelist = GetExchangeCurrency();
 
-            TempData["CurrentPage"] = pg;
+           
 
 
             return View(items);
         }
 
 
-       
+
+
+        public IActionResult Index2()
+        {
+           
+
+            IList<MainExpensVoucher> items = _Repo.GetItems();
+
+
+          
+
+            ViewBag.AccountList = GetAccounts();
+            ViewBag.FundList = GetFunds();
+            ViewBag.CurrencyList = GetCurrency();
+            ViewBag.ExchangeRatelist = GetExchangeCurrency();
+
+         
+
+
+            return View(items);
+        }
+
+
+
         public IActionResult Stagelist(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
         {
             SortModel sortModel = new SortModel();
@@ -77,19 +90,12 @@ namespace POS.Controllers
 
             ViewBag.SearchText = SearchText;
 
-            PaginatedList<MainExpensVoucher> items = _Repo.GetItemsStage(sortModel.SortedProperty, sortModel.SortedOrder, SearchText, pg, pageSize);
-
-
-            var pager = new PagerModel(items.TotalRecords, pg, pageSize);
-            pager.SortExpression = sortExpression;
-            this.ViewBag.Pager = pager;
+            IList<MainExpensVoucher> items = _Repo.GetItemsStage();
 
             ViewBag.AccountList = GetAccounts();
             ViewBag.FundList = GetFunds();
             ViewBag.CurrencyList = GetCurrency();
             ViewBag.ExchangeRatelist = GetExchangeCurrency();
-
-            TempData["CurrentPage"] = pg;
 
 
             return View(items);

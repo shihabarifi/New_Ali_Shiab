@@ -5,8 +5,7 @@
 
     @{
     ViewData["Title"] = "Index";
-    SortModel sortModel = (SortModel)ViewData["sortModel"];
-    PagerModel pager = ViewBag.Pager;
+
     Layout = null;
 }
 
@@ -422,7 +421,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">البنوك</h3>
+                <h3 class="nav-item pt-3">استعراض صرف نقداً</h3>
 
               </div>
               <!-- nav-->
@@ -552,8 +551,8 @@
                   <thead>
                     <tr>
                       <th>
-                          <i class="@sortModel.GetColumn("Name").SortIcon" arial-hidden="true"></i>
-                           <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Name").SortExpression"/>
+                         
+                         
                           رقم السند 
 
                       </th>
@@ -598,7 +597,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MainExpensVoucherDate)
             </td>
-           
+       
  <td></td>
               <td>
            @{
@@ -661,6 +660,7 @@
                   </tbody>
                   
                 </table>
+
                 </form>
               </div>
 

@@ -11,9 +11,9 @@ namespace POS.Interfaces
     public interface IExpensVoucher
     {
         public string GetErrors();
-        PaginatedList<MainExpensVoucher> GetItems(string SortProperty, SortOrder sortOrder, string SearchText = "", int pageIndex = 1, int pageSize = 5); //read all
+        IList<MainExpensVoucher> GetItems(); //read all
 
-        PaginatedList<MainExpensVoucher> GetItemsStage(string SortProperty, SortOrder sortOrder, string SearchText = "", int pageIndex = 1, int pageSize = 5);
+        IList<MainExpensVoucher> GetItemsStage();
         MainExpensVoucher GetItem(string id); // read particular item
 
         bool Create(MainExpensVoucher mainExpensVoucher);

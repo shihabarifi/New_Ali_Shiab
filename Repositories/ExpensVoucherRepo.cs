@@ -137,37 +137,23 @@ namespace POS.Repositories
             return items;
         }
 
-        public PaginatedList<MainExpensVoucher> GetItems(string SortProperty, SortOrder sortOrder, string SearchText = "", int pageIndex = 1, int pageSize = 5)
+        public IList<MainExpensVoucher> GetItems()
         {
             List<MainExpensVoucher> items;
 
-            if (SearchText != "" && SearchText != null)
-            {
-                items = _context.MainExpensVouchers.Where(n =>n.IsDelete==0 && n.MainExpensVoucherNumber.Contains(SearchText) || n.MainExpensVoucherDate.ToString().Contains(SearchText))
+                items = _context.MainExpensVouchers.Where(n =>n.IsDelete!=1).OrderByDescending(n=>n.MainExpensVoucherNumber)
                      .Include(f => f.FundsNavigation)
                      .Include(c => c.CurrenciesNavigation)
                       .Include(x => x.CurrenciesExchangeRateNavigation)
                       .Include(y => y.FiscalYearNavigation)
                      // .Include(u => u.SystemUsersNavigation)
                       .Include(d=>d.DetailedExpensVouchers)
-
+                        .ThenInclude(a => a.DebitChildAccountNavigation)
                     .ToList();
-            }
-            else
-                items = _context.MainExpensVouchers.Where(d=>d.IsDelete==0)
-                    .Include(f => f.FundsNavigation)
-                     .Include(c => c.CurrenciesNavigation)
-                      .Include(x => x.CurrenciesExchangeRateNavigation)
-                      .Include(y => y.FiscalYearNavigation)
-                     
-                      .Include(d => d.DetailedExpensVouchers)
-                    
-                    .ToList();
-            items = DoSort(items, SortProperty, sortOrder);
+         
+          
 
-            PaginatedList<MainExpensVoucher> retItems = new PaginatedList<MainExpensVoucher>(items, pageIndex, pageSize);
-
-            return retItems;
+            return items;
         }
 
         public MainExpensVoucher GetItem(string id)
@@ -220,13 +206,11 @@ namespace POS.Repositories
             throw new NotImplementedException();
         }
 
-        public PaginatedList<MainExpensVoucher> GetItemsStage(string SortProperty, SortOrder sortOrder, string SearchText = "", int pageIndex = 1, int pageSize = 5)
+        public IList<MainExpensVoucher> GetItemsStage()
         {
             List<MainExpensVoucher> items;
 
-            if (SearchText != "" && SearchText != null)
-            {
-                items = _context.MainExpensVouchers.Where(n => n.IsDelete == 0 && n.MainExpensVoucherStatus==0 && n.MainExpensVoucherNumber.Contains(SearchText) || n.MainExpensVoucherDate.ToString().Contains(SearchText))
+                items = _context.MainExpensVouchers.Where(n => n.IsDelete == 0 && n.MainExpensVoucherStatus==0 ).OrderByDescending(n => n.MainExpensVoucherNumber)
                      .Include(f => f.FundsNavigation)
                      .Include(c => c.CurrenciesNavigation)
                       .Include(x => x.CurrenciesExchangeRateNavigation)
@@ -235,21 +219,8 @@ namespace POS.Repositories
                       .Include(d => d.DetailedExpensVouchers)
 
                     .ToList();
-            }
-            else
-                items = _context.MainExpensVouchers.Where(d => d.IsDelete == 0 && d.MainExpensVoucherStatus==0)
-                    .Include(f => f.FundsNavigation)
-                     .Include(c => c.CurrenciesNavigation)
-                      .Include(x => x.CurrenciesExchangeRateNavigation)
-                      .Include(y => y.FiscalYearNavigation)
-                      //.Include(u => u.SystemUsersNavigation)
-                      .Include(d => d.DetailedExpensVouchers)
-                    .ToList();
-            items = DoSort(items, SortProperty, sortOrder);
-
-            PaginatedList<MainExpensVoucher> retItems = new PaginatedList<MainExpensVoucher>(items, pageIndex, pageSize);
-
-            return retItems;
+            return items;
+           
         }
 
         public bool Stagelist(MainExpensVoucher mainExpensVoucher)
