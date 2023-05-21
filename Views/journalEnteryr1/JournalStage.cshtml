@@ -619,7 +619,7 @@
                                
                                                     </td>
                                                     <td>
-                                                        <table id="detailedId" class="table" hidden>
+                                                       <table id="detailedId" class="table" hidden>
                                                         <thead>
                                                             <tr>
             
@@ -681,8 +681,8 @@
             
                                                                     </tr>
                                                             }
-                                                  </tbody>    
-                                            </table>
+                                                         </tbody>    
+                                                        </table>
                                                     </td>
           
                                                 </tr>
@@ -803,57 +803,7 @@
           
                                     },
             
-                                    //{
-                                    //    extend: 'print',
-                                    //    text: '<i class="bx bx-printer me-1"></i>طباعة ',
-                                    //    className: 'btn btn-label-danger mx-1',
-                                    //    orientation: 'landscape', // set the orientation to landscape
-                                    //   customize: function (win) {
-                                    //        // Add a header to the print view
-                                    //        var headerHtml = '<div style="text-align:center;">' +
-                                    //            '<img width="50" height="50" src="http://localhost:5017/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle">' +
-                                    //            '<h3>تقرير القيود اليومية</h3>' +
-                                    //            '<p>التاريخ: 12/05/2023</p>' +
-                                    //            '</div>';
-                                    //        $(win.document.body).prepend(headerHtml);
-
-                                    //        // Add a footer to the print view
-                                    //        var footerHtml = '<div style="text-align:left;"><p>أسم الموظف:_____________________</p></div>';
-                                    //        $(win.document.body).append(footerHtml);
-
-                                    //        // Adjust the font size
-                                    //        $(win.document.body).css('font-size', '10pt');
-
-                                    //        // Apply styles to the table
-                                    //        $(win.document.body).find('table').addClass('table table-striped table-bordered');
-                                    //        $(win.document.body).find('thead th').css('font-size', '12pt');
-                                    //        $(win.document.body).find('tbody td').css('font-size', '10pt');
-                                    //        $(win.document.body).find('tbody td:last-child, tfoot td:last-child').css('text-align', 'right');
-                                    //        $(win.document.body).find('tfoot th:nth-child(2)').html('Total');
-                                    //        $(win.document.body).find('tfoot th:last-child').css('text-align', 'right');
-
-                                    //        // Loop through each main row and append the detailed table beside it
-                                    //        $(win.document.body).find('tbody tr').each(function () {
-                                    //            var detailedTableHtml = $(this).find('#detailedId-1').html();
-                                    //            $(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
-                                    //        });
-
-                                    //        // Calculate the total sum
-                                    //        var sum = 0;
-                                    //        $(win.document.body).find('tbody tr').each(function () {
-                                    //            var value = parseInt($(this).find('td:nth-child(3)').text());
-                                    //            if (!isNaN(value)) {
-                                    //                sum += value;
-                                    //            }
-                                    //        });
-                                    //        var totalHtml = '<tfoot><tr><th></th><th>الاجمالي</th><th>' + sum + '</th><th></th></tr></tfoot>';
-                                    //        $(win.document.body).find('table').append(totalHtml);
-                                    //    },
-                                    //    exportOptions: {
-                                    //        columns: [4, 3, 2, 1, 0]
-                                    //                }
-
-                                    //},
+                                    
                                     {
                                       extend: 'print',
                                       text: '<i class="bx bx-printer me-1"></i>طباعة ',

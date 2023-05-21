@@ -431,7 +431,14 @@ namespace POS.Controllers
         }
         public IActionResult ViewRep()
         {
-            return View();
+            var JournalEnteryListViewModel = new JournalEnteryViewModel()
+            {
+                MainJournalEnteries = MainJourEnter_Repo.List().Where(x => x.IsStage == 0).ToList(),
+
+
+            };
+            return View(JournalEnteryListViewModel);
+           
         }
         
 

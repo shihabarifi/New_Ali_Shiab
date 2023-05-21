@@ -64,6 +64,14 @@
   <script src="~/accounts/assets/js/config.js"></script>
   <script src="~/assets/vendor/libs/jquery/jquery.js"></script>
 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css">
+    <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+        <!-- Col reorder with resize-->  
+        <script src="colreorderwithresize.js"></script> 
+        <script src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>  
+   
+
 </head>
 
 <body>
@@ -434,8 +442,8 @@
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
                                 <!-- صورة الإشعار -->
-                                <img src="../~/accounts/assets/img/avatars/1.png"  class="w-px-40 h-auto rounded-circle" />
-                              </div>
+@*                                <img src="../~/accounts/assets/img/avatars/1.png"  class="w-px-40 h-auto rounded-circle" />
+*@                              </div>
                             </div>
                             <div class="flex-grow-1">
                               <h6 class="mb-1">اسم الإشعار</h6>
@@ -520,377 +528,209 @@
         <!-- / Navbar -->
 
         <!-- Content wrapper -->
-        <div class="content-wrapper">
+        <div >
           <!-- Content -->
+          @*<button id="btn-show-all-children" type="button">Expand All</button>
+            <button id="btn-hide-all-children" type="button">Collapse All</button>*@
+        <table id="exampleTable" class="display ">
+            <thead>
+                    <tr>
+                        <th>
+                            رقم القيد
+                        </th>
+           
+                        <th>
+                            نوع القيد
+                        </th>
+                        <th>
+                            السنة المالية
+                        </th>
+                        <th>
+                            المبلغ الاجمالي
+                        </th>
+                           
+                        <th>
+                            ملاحظة
+                        </th>
+                           
+                                            
+                        
+                    </tr>
+            </thead>
+            <tbody>
+                    @for (int item1=0; item1 < Model.MainJournalEnteries.Count;item1++) {
+                          <tr>
+                            <td> عرض</td>
+                            <td>
+                                @Model.MainJournalEnteries[item1].MainJouralEntNumber
+                                <input asp-for="@Model.MainJournalEnteries[item1].MainJournalEnteriesId" hidden  type="text" >
+                                <input asp-for="@Model.MainJournalEnteries[item1].MainJouralEntNumber" hidden  type="text" >
 
-          <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+                                
+               
+                            </td>
+                            <td>
+                                @Model.MainJournalEnteries[item1].JournalEnterieTypesNavigation.JournalEnteryName
+                                <input hidden asp-for="@Model.MainJournalEnteries[item1].JournalEnterieTypes"   type="text" >
+                               
+                            </td>
+                            <td>
+                                @Model.MainJournalEnteries[item1].FiscalYearNavigation.FiscalYearName
+                                <input asp-for="@Model.MainJournalEnteries[item1].FiscalYear" hidden  type="text" >
+                               
+                            </td>
+                            <td>
+                                @Model.MainJournalEnteries[item1].MainJournalEnteriesAmount
+                                <input asp-for="@Model.MainJournalEnteries[item1].MainJournalEnteriesAmount" hidden  type="text" >
+                               
+                            </td>
+                                @* <td>
+                                    <input asp-for="@Model.MainJournalEnteries[item1].MainournalEnteriesStatus" placeholder="@JournalEnteryStatus[@Model.MainJournalEnteries[item1].IsStage]" readonly  type="text" >
+                               
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.MainJournalEnteries[item1].MainJournalReferenceNumber" readonly  type="text" >
+                               
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.MainJournalEnteries[item1].MainJournalDateTime" readonly  type="text" >
+                              
+                                </td>*@
+                            <td>
+                                @Model.MainJournalEnteries[item1].MainPaycheckGlobalNote
+                                <input asp-for="@Model.MainJournalEnteries[item1].MainPaycheckGlobalNote" hidden  type="text" >
+                               
+                            </td>
+                            
+                            
+          
+                        </tr>
+                                }
+            </tbody>
+        </table>  
+          <div style="display:none">
+            <table  class="display select " width="100%">
+              <thead>
+                <tr>
+                  <th>First name</th> 
+                  <th>Last name</th>
+                  <th>Position</th>
+                  <th>Office</th>
+                  <th>Age</th>
+                  <th>Start date</th> 
+                  <th>Salary</th>
+                  <th>Extn.</th>
+                  <th>E-mail</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr>
+                  <td>Tiger</td>
+                  <td>Nixon</td>
+                  <td>System Architect</td>
+                  <td>Edinburgh</td>
+                  <td>61</td>
+                  <td>2011/04/25</td>
+                  <td>$320,800</td>
+                  <td>5421</td>
+                  <td>t.nixon@datatables.net</td>
+                </tr>
+                <tr>
+                  <td>Garrett</td>
+                  <td>Winters</td>
+                  <td>Accountant</td>
+                  <td>Tokyo</td>
+                  <td>63</td>
+                  <td>2011/07/25</td>
+                  <td>$170,750</td>
+                  <td>8422</td>
+                  <td>g.winters@datatables.net</td>
+                </tr>
+                </tfoot>  
+            </table>
+           </div>
+             <div style="display:none">
+                <table id="exampleTable_2" class="display select  table-striped table-sm" width="100%" >
+                <thead>
+                    <tr>
+            
+                        <th>
+                            رقم الحساب
+                        </th>
+                        <th>
+                                اسم الحساب
+                        </th>
+                        <th>
+                            نوع العملة
+                        </th>
+                        <th>
+                            البيان
+                        </th>
+                        <th>
+                            مدين محلي
+                        </th>
+                        <th>
+                            دائن محلي
+                        </th>
+                        <th>
+                            مدين أجنبي
+                        </th>
+                        <th>
+                            دائن أجنبي
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(int i=0; i< Model.MainJournalEnteries[1].DetailedJournalEnteries.Count;i++) {
+                            <tr>
+           
+                            <td>
+                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditChildAccountNavigation.AccNumber
+                                 </td>
+                                 <td>
+                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditChildAccountNavigation.ArabicAccName
+                                 </td>
+                                              
+                                                    
+                            <td>
+                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CurrenciesNavigation.CurrenName
+                            </td>
+                            <td>
+                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].DetailedournalDescription
+                                 </td> 
+                                <input asp-for="@Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CurrenciesExchangeRate" readonly   >
 
+                                @*@if(Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CurrenciesExchangeRateNavigation.CurreExchangeRate==null){
+                                                <td>"1"</td>
 
+                                      }
+                                else
+                                {
+                                       <td> @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CurrenciesExchangeRateNavigation.CurreExchangeRate</td>                     
+                                     }*@
 
+                                
+                          
+                            <td>
+                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].DebittAmountRly
+                            </td>
+                            <td>
+                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditAmountRly
+                            </td>
+                            <td>
+                                 @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].DebittAmountUdo
+                            </td>
+                            <td>
+                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditAmountUdo
+                            </td>
+            
+                        </tr>
+                    }
+                    </tbody>    
+                </table>
 
-
-<html>
-    <head>
-
-    </head>
-    <body>
-   <div class="container">
-    <table id="example" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Date</th>
-                <th>TC NAME</th>
-                <th>NS FLOW</th>
-                <th>SN FLOW</th>
-                <th>NS FLOW</th>
-                <th>SN FLOW</th>
-                <th>NS FLOW</th>
-                <th>SN FLOW</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <tr>
-                <td>721</td>
-                <td>3/15/20</td>
-
-                <td>
-                    <table id="example1" class="table table-nostriped">
-                        <tr>
-                            <td>TC1</td>
-                        </tr>
-                        <tr>
-                            <td>TC2</td>
-                        </tr>
-                        <tr>
-                            <td>TC3</td>
-                        </tr>
-                    </table>
-
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                        <tr>
-                            <td>600</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>800</td>
-                        </tr>
-                        <tr>
-                            <td>400</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                    </table>
-                </td>
-
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                    </table>
-                </td>
-
-            </tr>
-
-
-
-
-
-        <tr>
-                <td>722</td>
-                <td>3/16/20</td>
-
-                <td>
-                    <table class="table table-nostriped">
-                        <tr>
-                            <td>TC1</td>
-                        </tr>
-                        <tr>
-                            <td>TC2</td>
-                        </tr>
-                        <tr>
-                            <td>TC3</td>
-                        </tr>
-                    </table>
-
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                        <tr>
-                            <td>600</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>800</td>
-                        </tr>
-                        <tr>
-                            <td>400</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                    </table>
-                </td>
-
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                    </table>
-                </td>
-
-            </tr>
-
-
-
-
-        <tr>
-                <td>633</td>
-                <td>3/17/20</td>
-
-                <td>
-                    <table class="table table-nostriped">
-                        <tr>
-                            <td>TC1</td>
-                        </tr>
-                        <tr>
-                            <td>TC2</td>
-                        </tr>
-                        <tr>
-                            <td>TC3</td>
-                        </tr>
-                    </table>
-
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                        <tr>
-                            <td>600</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>800</td>
-                        </tr>
-                        <tr>
-                            <td>400</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                    </table>
-                </td>
-
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                    </table>
-                </td>
-
-                <td>
-                 <table class="table table-nostriped">
-                        <tr>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                        </tr>
-                    </table>
-                </td>
-
-            </tr>
-
-        </tbody>
-    </table>
-    </div>
-    </body>
-
-</html>
-
-
-
-
-
-
-
+            </div>
        </div>
 </div>
 </div>
@@ -901,72 +741,211 @@
 
 
 
-     <script>
-          $(document).ready(function() {
-              const columns = [
-                  { title: '' },
-                        ]
-            let table = $('#example').DataTable({
-                
-                    order: [[1, 'asc']],
-                    scrollY: 400,
-                    ordering: false,
-
-                    lengthMenu: [5, 10, 25, 50, 100],
-                  createdRow: function(row) {
-                    $(row).find('td table')
-                      .DataTable({
-                        columns: columns,
-                        dom: 'tf'
-                      })
-                  },
-                  dom:
-                    '<"row mx-1"' +
-                    '<"col-sm-12 col-md-1" l>' +
-                    '<"col-sm-12 col-md-11"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-between justify-content-center flex-wrap me-1"<"me-3"f>B>>' +
-                    '>t' +
-                    '<"row mx-2"' +
-                    '<"col-sm-12 col-md-6"i>' +
-                    '<"col-sm-12 col-md-6"p>' +
-                    '>',
-        language: {
-            sLengthMenu: '_MENU_',
-            search: '',
-            searchPlaceholder: 'بحث..',
-            paginate: {
-                first: 'الأول',
-                last: 'الأخير',
-                next: 'التالي',
-                previous: 'السابق'
-            }
-        },
-        buttons: [
-                                    {
-                                  text: '<i class="icon-plus"></i>القيود المرحلة',
-                                  className: 'CreateJu btn btn-primary mb-3 mb-md-0',
-          
-                                    },
+      <script type="text/javascript">
+            var $j = jQuery.noConflict();
             
-                                    {
-                                        extend: 'print',
-                                        text: '<i class="bx bx-printer me-1"></i>طباعة ',
-                                        className: 'btn btn-label-danger mx-1',
-                                        orientation: 'landscape', // set the orientation to landscape
-                                        
 
+                    function fnFormatDetails(table_id, html) {
+
+                          var sOut = "<table id=\"exampleTable_" + table_id + "\">";
+
+                          sOut += html;
+                          sOut += "</table>";
+                          return sOut;
+                    }
+                      var iTableCounter = 1;
+                      var oTable;
+                      var oInnerTable;
+                      var TableHtml;
+
+                      //Run On HTML Build
+                      $j(document).ready(function () {
+
+                          TableHtml = $('#exampleTable_2').html();
+
+                          //Insert a 'details' column to the table
+                          var nCloneTh = document.createElement('th');
+                          var nCloneTd = document.createElement('td');
+
+                          $('#exampleTable thead tr').each(function () {
+                              this.insertBefore(nCloneTh, this.childNodes[0]);
+                          });
+            //              <button id="btn-show-all-children" type="button">Expand All</button>
+            //<button id="btn-hide-all-children" type="button">Collapse All</button>
+                          //Initialse DataTables, with no sorting on the 'details' column
+                          var oTable = $('#exampleTable').dataTable({
+                                  'bJQueryUI': true,
+
+                                  'sPaginationType': 'full_numbers',
+                                  'aoColumnDefs': [{
+                                          'bSortable': false,
+                                          'class': 'details-control',
+                                          'aTargets': [0]
+                                      }
+                                  ],
+                                  'aaSorting': [[1, 'asc']],
+                                  dom:
+                                        '<"row mx-1"' +
+                                        '<"col-sm-12 col-md-1" l>' +
+                                        '<"col-sm-12 col-md-11"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-between justify-content-center flex-wrap me-1"<"me-3"f>B>>' +
+                                        '>t' +
+                                        '<"row mx-2"' +
+                                        '<"col-sm-12 col-md-6"i>' +
+                                        '<"col-sm-12 col-md-6"p>' +
+                                        '>',
+                                    language: {
+                                        sLengthMenu: '_MENU_',
+                                        search: '',
+                                        searchPlaceholder: 'بحث..',
+                                        paginate: {
+                                            first: 'الأول',
+                                            last: 'الأخير',
+                                            next: 'التالي',
+                                            previous: 'السابق'
+                                        }
                                     },
+                                    buttons: [
+                                        {
+                                           
+                                          text: 'اظهار التفاصيل ',
+                                          className: 'btn-show-all-childrens btn-label-dark mx-1',
+                                          
+                                        },
+                                        {
+                                           
+                                          text: 'اخفاء التفاصيل ',
+                                          className: 'btn-hide-all-childrens btn-primary',
+                                         
+                                        },
+                                        {
+                                          extend: 'print',
+                                          text: '<i class="bx bx-printer me-1"></i>طباعة ',
+                                          className: 'btn btn-label-danger mx-1',
+                                          orientation: 'landscape', // set the orientation to landscape
+                                      
+                                        },
+    
                                     
-                                    {
-                                        extend: 'copyHtml5',
-                                        text: 'نسخ الى الحافظة',
-                                        className: 'btn btn-primary',
-                                        filename: 'example'
-                                    }]
+                                        {
+                                            extend: 'copyHtml5',
+                                            text: 'نسخ الى الحافظة',
+                                            className: 'btn btn-primary',
+                                            filename: 'example'
+                                        }]
         
-                            });
-                
-        } );
-</script>
+                              });
+                              //$('button.btn-hide-all-childrens').attr('id', 'button.btn-hide-all-children');
+                              //$('button.btn-show-all-childrens').attr('id', 'button.btn-show-all-children');
+                          //myown custom datatable detailes
+                          //var oTable = $('#exampleTable').DataTable( {
+                          //  'bJQueryUI': true,
+                          //  'sPaginationType': 'full_numbers',
+                          //  'aoColumnDefs': [{
+                          //          'bSortable': false,
+                          //          'class': 'details-control',
+                          //          'aTargets': [0]
+                          //      }
+                          //  ],
+                          //  'aaSorting': [[1, 'asc']],
+
+                           
+                           
+                                
+
+                                    
+                          //         dom:
+                          //              '<"row mx-1"' +
+                          //              '<"col-sm-12 col-md-1" l>' +
+                          //              '<"col-sm-12 col-md-11"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-between justify-content-center flex-wrap me-1"<"me-3"f>B>>' +
+                          //              '>t' +
+                          //              '<"row mx-2"' +
+                          //              '<"col-sm-12 col-md-6"i>' +
+                          //              '<"col-sm-12 col-md-6"p>' +
+                          //              '>',
+                          //          language: {
+                          //              sLengthMenu: '_MENU_',
+                          //              search: '',
+                          //              searchPlaceholder: 'بحث..',
+                          //              paginate: {
+                          //                  first: 'الأول',
+                          //                  last: 'الأخير',
+                          //                  next: 'التالي',
+                          //                  previous: 'السابق'
+                          //              }
+                          //          },
+                          //          buttons: [
+                          //              {
+                          //                extend: 'print',
+                          //                text: '<i class="bx bx-printer me-1"></i>طباعة ',
+                          //                className: 'btn btn-label-danger mx-1',
+                          //                orientation: 'landscape', // set the orientation to landscape
+                                      
+                          //              },
+    
+                                    
+                          //              {
+                          //                  extend: 'copyHtml5',
+                          //                  text: 'نسخ الى الحافظة',
+                          //                  className: 'btn btn-primary',
+                          //                  filename: 'example'
+                          //              }]
+        
+                          //  });
+ 
+                        //oTable.buttons().container().appendTo($('.col-md-2:eq(0)', oTable.table().container()));
+
+                          /* Add event listener for opening and closing details
+                           * Note that the indicator for showing which row is open is not controlled by DataTables,
+                           * rather it is done here
+                           */
+                          $('#exampleTable tbody tr td.details-control').on('click', function () {
+                              var nTr = $(this).closest('tr');
+
+                              if (oTable.fnIsOpen(nTr)) {
+
+                                  oTable.fnClose(nTr);
+                              } else {
+                                  oTable.fnOpen(nTr, fnFormatDetails(iTableCounter, TableHtml), 'details-control');
+                                  oInnerTable = $('#exampleTable_' + iTableCounter).dataTable({
+                                          'bJQueryUI': true,
+                                          'sPaginationType': 'full_numbers'
+                                      });
+                                  iTableCounter = iTableCounter + 1;
+
+                              }
+                          });
+      
+
+                          // Handle click on "Collapse All" button
+                          $('.btn-hide-all-childrens').on('click', function () {
+                              // Enumerate all rows
+                              oTable.$('tr').each(function(index, nTr){              
+                                  // If row has details expanded
+                                  if (oTable.fnIsOpen(nTr)) {
+                                      oTable.fnClose(nTr);
+                                      $(nTr).removeClass('shown');
+                                  }
+                              });
+                          });
+
+                          $('.btn-show-all-childrens').on('click', function () {
+                              // Enumerate all rows              
+                              oTable.$('tr').each(function(index, nTr){
+                                  // If row has details collapsed
+                                  if (!oTable.fnIsOpen(nTr)) {
+                                      /* Open this row */
+                                      oTable.fnOpen(nTr, fnFormatDetails(iTableCounter, TableHtml), 'details-control');
+                                      $(nTr).addClass('shown');
+                                  }
+                              });
+                          }); 
+                      
+
+                        
+                      });
+        
+           
+        </script>
 
   </div>
   <!-- / Layout wrapper -->
@@ -991,10 +970,10 @@
   <script src="~/assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
 
   <!-- Main JS -->
-  @*<script src="~/assets/js/main.js"></script>
+  <script src="~/assets/js/main.js"></script>
 
   <!-- Page JS -->
-  <script src="~/pages1/sys7.js"></script>*@
+  <script src="~/pages1/sys7.js"></script>
 </body>
 
 </html>
