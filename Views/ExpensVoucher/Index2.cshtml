@@ -5,7 +5,7 @@
 
     @{
     ViewData["Title"] = "Index";
-  
+  var counter = 0;
     Layout = null;
 }
 
@@ -573,7 +573,7 @@
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                       
 @foreach (var item in Model) {
-       <tr onclick="shw(this)">
+       <tr id="mainRow-@counter" onclick="shw(this)">
          
             <td>
                 @Html.DisplayFor(modelItem => item.MainExpensVoucherNumber)
@@ -658,58 +658,75 @@
 
         
            
-                    <tr  class="xx" style="display:none" >
+                    <tr  class="xx" id="detailRow-@counter" style="display:none"  >
                    
-                    <th>
+                    <th width="40%" >
                         الحساب اسم  
                     </th>
-                      <th>
-                       البيان
-                    </th> 
                     <th>
+                       
+                    </th>
+                      <th width="40%">
+                       البيان
+                    </th>
+                     <th width="40%">
+                       
+                    </th>
+                    <th width="40%">
                        المبلغ محلي
                     </th>
-                    <th>
+                     <th>
+                       
+                    </th>
+                    <th width="40%">
                            المبلغ اجنبي
+                    </th>
+                     <th>
+                       
                     </th>
                   
                  
                     </tr>
                
-                <tbody>
+               
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                      @for (int i = 0; i < item.DetailedExpensVouchers.Count;i++)
-
+                     
                         {
-                       <tr class="xx" style="display:none">
+                             <tbody style="background-color:#5a8dee3b  !important ">
+                       <tr class="xx" id="detailRow-@counter" style="display:none" >
 
                      
-                         <td>
-                                   <select asp-for="@item.DetailedExpensVouchers[i].DebitChildAccount"  asp-items="ViewBag.AccountList" class="form-control"></select>
-                            
+                         <td width="40%">
+                                  
+                             @Html.DisplayFor(modelItem => @item.DetailedExpensVouchers[i].DebitChildAccountNavigation.ArabicAccName)
                     </td>
+                     <td></td>
 
-                         <td>
-                        <input asp-for="@item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountDescription" class="form-control form-control-plaintext " readonly/>
-                        
+                         <td width="40%">
+                               @Html.DisplayFor(modelItem => @item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountDescription)
                         </td>
-                         <td>
+                          <td></td>
+                         <td width="40%">
                          
                         
-                      <input asp-for="@item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountRly" class="form-control form-control-plaintext " readonly/>
+                       @Html.DisplayFor(modelItem => @item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountRly)
+                      </td>
+                          <td></td>
+                        <td width="40%">
+                        @Html.DisplayFor(modelItem => @item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountUdo)
                         </td>
-                        <td>
-                        <input asp-for="@item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountUdo" class="form-control form-control-plaintext " readonly/>
-                        </td>
+                          <td></td>
 
                        
 
                        
                        </tr>
-                      
+                        </tbody>
                         }
                    
-               </tbody>
-               
+                  counter++;
+             
            
             
 @*/////////////////////////////////////////////////////////////////*@
@@ -747,11 +764,31 @@
   <script type="text/javascript">
 
          function shw(btn){
+            
+             const myArray=btn.id.split("");
+                var rowIndex=myArray[myArray.length-1];
+                console.log("RowIndex is : "+rowIndex);
       $(btn).click(function(){
-          $(".xx").fadeToggle(1500);
+          console.log("RowIndex is : "+rowIndex);
+          // $("#detailRow-"+rowIndex).css("display", "");
+          //$("#detailRows-"+rowIndex).css("display", "");
+          const rows= document.querySelectorAll('#detailRow-'+rowIndex);
+            rows.forEach((singleRow) => {
+                if (singleRow.style.display === "none") {
+                    singleRow.style.display = ""; // Show the row
+                } else {
+                    singleRow.style.display = "none"; // Hide the row
+                }
+            });
+
+
+          //$("#detailRow-"+rowIndex).style.display="";
+          //$("#detailRow-"+rowIndex).prop('display',true);
+          //$("#detailRow-"+rowIndex).fadeToggle(500);
             });
          }
      </script>
+
 
 
 
@@ -778,7 +815,8 @@
   <script src="~/accounts/assets/js/main.js"></script>
 
   <!-- Page JS -->
-  <script src="~/accounts/pages1/sys11.js"></script>
+   <script src="~/pages1/sys7.js"></script>
+
 </body>
 
 </html>
