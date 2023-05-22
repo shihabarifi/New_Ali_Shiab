@@ -660,56 +660,73 @@
            
                     <tr  class="xx" style="display:none" >
                    
-                    <th>
+                    <th width="40%" >
                         الحساب اسم  
                     </th>
-                      <th>
-                       البيان
-                    </th> 
                     <th>
+                       
+                    </th>
+                      <th width="40%">
+                       البيان
+                    </th>
+                     <th width="40%">
+                       
+                    </th>
+                    <th width="40%">
                        المبلغ محلي
                     </th>
-                    <th>
+                     <th>
+                       
+                    </th>
+                    <th width="40%">
                            المبلغ اجنبي
+                    </th>
+                     <th>
+                       
                     </th>
                   
                  
                     </tr>
                
-                <tbody>
+               
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                      @for (int i = 0; i < item.DetailedExpensVouchers.Count;i++)
-
+                     
                         {
+                             <tbody style="background-color:#5a8dee3b  !important ">
                        <tr class="xx" style="display:none">
 
                      
-                         <td>
-                                   <select asp-for="@item.DetailedExpensVouchers[i].DebitChildAccount"  asp-items="ViewBag.AccountList" class="form-control"></select>
-                            
+                         <td width="40%">
+                                  
+                             @Html.DisplayFor(modelItem => @item.DetailedExpensVouchers[i].DebitChildAccountNavigation.ArabicAccName)
                     </td>
+                     <td></td>
 
-                         <td>
-                        <input asp-for="@item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountDescription" class="form-control form-control-plaintext " readonly/>
-                        
+                         <td width="40%">
+                               @Html.DisplayFor(modelItem => @item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountDescription)
                         </td>
-                         <td>
+                          <td></td>
+                         <td width="40%">
                          
                         
-                      <input asp-for="@item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountRly" class="form-control form-control-plaintext " readonly/>
+                       @Html.DisplayFor(modelItem => @item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountRly)
+                      </td>
+                          <td></td>
+                        <td width="40%">
+                        @Html.DisplayFor(modelItem => @item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountUdo)
                         </td>
-                        <td>
-                        <input asp-for="@item.DetailedExpensVouchers[i].DetailedExpensVoucherAmountUdo" class="form-control form-control-plaintext " readonly/>
-                        </td>
+                          <td></td>
 
                        
 
                        
                        </tr>
-                      
+                        </tbody>
                         }
                    
-               </tbody>
-               
+             
+             
            
             
 @*/////////////////////////////////////////////////////////////////*@
@@ -778,7 +795,8 @@
   <script src="~/accounts/assets/js/main.js"></script>
 
   <!-- Page JS -->
-  <script src="~/accounts/pages1/sys11.js"></script>
+   <script src="~/pages1/sys7.js"></script>
+
 </body>
 
 </html>
