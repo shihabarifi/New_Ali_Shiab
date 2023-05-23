@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using POS.ViewModel;
+using POS.Data;
+using POS.Models.DB.Report;
+using Microsoft.EntityFrameworkCore;
 
 namespace POS.Controllers
 {
@@ -24,10 +27,11 @@ namespace POS.Controllers
         private readonly IFiscalYear _fiscalYearRepo;
         private readonly IExchangeRate _exchangeRateRepo;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly posDbContext _context;
 
         public ExpensVoucherController(IExpensVoucher repo, IAccountingManual accountingManualRepo,
             IFund fundRepo, ICurrency currencyRepo, IFiscalYear fiscalYearRepo, 
-            IExchangeRate exchangeRateRepo,UserManager<ApplicationUser> userManager) // here the repository will be passed by the dependency injection.
+            IExchangeRate exchangeRateRepo,UserManager<ApplicationUser> userManager,posDbContext context) // here the repository will be passed by the dependency injection.
         {
             _Repo = repo;
             _AccountingManualRepo = accountingManualRepo;
@@ -36,7 +40,10 @@ namespace POS.Controllers
            _fiscalYearRepo = fiscalYearRepo;
             _exchangeRateRepo = exchangeRateRepo;
            _userManager = userManager;
+            _context = context;
         }
+
+        List<SpGetReport> sqlpp = new List<SpGetReport>();
 
         public IActionResult Index()
         {
@@ -393,6 +400,8 @@ namespace POS.Controllers
 
             return lstfund;
         }
+
+
 
         //private List<SelectListItem> GetExchange()
         //{

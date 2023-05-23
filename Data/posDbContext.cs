@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using POS.Models.DB;
+using POS.Models.DB.Report;
 
 namespace POS.Data
 {
@@ -42,9 +43,23 @@ namespace POS.Data
         public virtual DbSet<MainPayCheck> MainPayChecks { get; set; } = null!;
         public virtual DbSet<TransactionsActivity> TransactionsActivities { get; set; } = null!;
         public DbSet<VwUser> VwUsers { get; set; }
+        public DbSet<SpGetReport> SpGetReport { get; set; }
+        public DbSet<SpGetReport2> SpGetReport2 { get; set; }
+        public DbSet<SpGetReport3> SpGetReport3 { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+
             base.OnModelCreating(builder);
+
+
+
+
+            //base.OnModelCreating(modelBuilder);
+            builder.Entity<SpGetReport>().HasNoKey().ToSqlQuery("SpGetReport");
+            builder.Entity<SpGetReport2>().HasNoKey().ToSqlQuery("SpGetReport2");
+            builder.Entity<SpGetReport3>().HasNoKey().ToSqlQuery("SpGetReport3");
+
             builder.Entity<VwUser>(entity =>
             {
                 entity.HasNoKey();

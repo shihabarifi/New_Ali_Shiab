@@ -156,6 +156,26 @@ namespace POS.Repositories
             return items;
         }
 
+        public IList<MainExpensVoucher> GetItemsRepo()
+        {
+            List<MainExpensVoucher> items;
+
+            items = _context.MainExpensVouchers.Where(n => n.IsDelete != 1).OrderByDescending(n => n.MainExpensVoucherNumber)
+                 .Include(f => f.FundsNavigation)
+                 .Include(c => c.CurrenciesNavigation)
+                  .Include(x => x.CurrenciesExchangeRateNavigation)
+                  .Include(y => y.FiscalYearNavigation)
+                  // .Include(u => u.SystemUsersNavigation)
+                  .Include(d => d.DetailedExpensVouchers)
+                    .ThenInclude(a => a.DebitChildAccountNavigation)
+                .ToList();
+
+
+
+            return items;
+        }
+
+
         public MainExpensVoucher GetItem(string id)
         {
             MainExpensVoucher item = _context.MainExpensVouchers.Where(i => i.MainExpensVoucherNumber == id)
