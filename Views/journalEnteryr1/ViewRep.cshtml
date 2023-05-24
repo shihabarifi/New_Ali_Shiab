@@ -605,7 +605,7 @@
                             
           
                         </tr>
-                        <tr id="exampleTable2" style="display:none">
+                        <tr id="exampleTable-@item1" style="display:none">
                            <th>
                                 رقم الحساب
                             </th>
@@ -631,36 +631,36 @@
                                 دائن أجنبي
                             </th>
                         </tr>
-                        @for(int i=0; i< Model.MainJournalEnteries[1].DetailedJournalEnteries.Count;i++) {
-                                  <tr id="exampleTable3" style="display:none">
+                        @for(int i=0; i< Model.MainJournalEnteries[item1].DetailedJournalEnteries.Count;i++) {
+                                  <tr id="exampleTable-@item1" style="display:none">
            
                                     <td>
-                                    @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditChildAccountNavigation.AccNumber
+                                    @Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CreditChildAccountNavigation.AccNumber
                                     </td>
                                     <td>
-                                        @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditChildAccountNavigation.ArabicAccName
+                                        @Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CreditChildAccountNavigation.ArabicAccName
                                     </td>
                                               
                                                     
                                     <td>
-                                        @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CurrenciesNavigation.CurrenName
+                                        @Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CurrenciesNavigation.CurrenName
                                     </td>
                                     <td>
-                                        @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].DetailedournalDescription
+                                        @Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].DetailedournalDescription
                                       </td> 
                                
-                                    <td>@Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CurrenciesExchangeRate </td>
+                                    <td>@Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CurrenciesExchangeRate </td>
                                     <td>
-                                        @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].DebittAmountRly
+                                        @Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].DebittAmountRly
                                     </td>
                                     <td>
-                                        @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditAmountRly
+                                        @Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CreditAmountRly
                                     </td>
                                     <td>
-                                         @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].DebittAmountUdo
+                                         @Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].DebittAmountUdo
                                     </td>
                                     <td>
-                                        @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditAmountUdo
+                                        @Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CreditAmountUdo
                                     </td>
             
                                      </tr>
