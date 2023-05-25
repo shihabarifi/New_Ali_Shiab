@@ -1,9 +1,16 @@
-﻿@model POS.Models.DB.CheckExpensVoucher
+﻿
+@model  IEnumerable<SpGetReport>
 
-@{
-    ViewData["Title"] = "Details";
-Layout = null;
+@using POS.Models.DB.Report
 
+
+
+<!--------------------------Start Header-------------------------->
+
+    @{
+    ViewData["Title"] = "Index";
+  
+    Layout = null;
 }
 
   @inject UserManager<ApplicationUser> userManager
@@ -18,7 +25,7 @@ Layout = null;
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>صرف شيك</title>
+  <title>الرئيسية</title>
 
   <meta name="description" content="" />
 
@@ -180,7 +187,7 @@ Layout = null;
                 </ul>
               </li>
               <!-- Page -->
-                <li class="menu-item open">
+                <li class="menu-item ">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div>سند صرف </div>
                   </a>
@@ -197,12 +204,12 @@ Layout = null;
                       </a>
                     </li>
                     <!-- Page -->
-                    <li class="menu-item ">
+                    <li class="menu-item">
                       <a asp-controller="ExpensVoucher" asp-action="Index" class="menu-link">
                         <div>استعراض صرف نقداً </div>
                       </a>
                     </li>
-                      <li class="menu-item active">
+                      <li class="menu-item ">
                       <a asp-controller="CheckExpens" asp-action="Index" class="menu-link">
                         <div>استعراض صرف شيك </div>
                       </a>
@@ -276,7 +283,7 @@ Layout = null;
               </li>
             </ul>
             <!-- page list -->
-          <li class="menu-item">
+          <li class="menu-item open">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon icon-file-lines me-1"></i>
               <div>التقارير</div>
@@ -319,7 +326,7 @@ Layout = null;
                 </a>
               </li>
               <!-- Page -->
-              <li class="menu-item">
+              <li class="menu-item active">
                 <a asp-controller="Reports" asp-action="GetReportEx" class="menu-link">
                   <div>سندات الصرف</div>
                 </a>
@@ -418,7 +425,7 @@ Layout = null;
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">البنوك</h3>
+                <h3 class="nav-item pt-3">تقرير صرف نقداً</h3>
 
               </div>
               <!-- nav-->
@@ -517,11 +524,10 @@ Layout = null;
                                                 <li>
 
 
-                                  <form asp-action="Logout" asp-controller="Account" method="post">
+                                  <form asp-action="Logout" asp-controller="Accounts" method="post">
                                       
-                                       <a class="dropdown-item" href="/Account/Login">
+                                       <a class="dropdown-item" href="/Accounts/">
                                        <i class="bx bx-power-off me-2"></i>
-
                                       <span class="align-middle">Log Out</span> </a>
                                   </form>
                                   
@@ -535,370 +541,241 @@ Layout = null;
         </nav>
         <hr class="mt-0">
         <!-- / Navbar -->
-<style>
-        td {
-  text-align: center;
-}
-      th {
-  text-align: center;
-}
-    </style>
+     
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+          <!-- Content -->
+  <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="card">
+              <div class="table-responsive card-datatable" style="overflow: hidden;margin: 50px;">
 
-<div style="padding-right: 69px;padding-left: 67px;padding-top: 68px;width: 1149px;margin-right: 58px;/* padding-bottom: 1000px; */margin-bottom: 2%;" class="card">
-   <div  class="card-header bg-primary text-Uppercase text-white" style="background-color:#2c3532e6  !important " > 
-            <h4 style="color:#fff;">تفاصيل سند صرف شيك</h4>
+<form asp-controller="Reports">
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label class="control-label">From Date</label>
+            <input type="date" name="StartDate" class="form-control" value="@(DateTime.Now.ToString("2022"))-01-01" />
         </div>
-        <hr />
 
-
-
-
-
-        <form id="CodeSbyShihab" asp-action="Details">
-          <div class="row col-12">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group col-2">
-                رقم السند
-            </div>
-             <div class="form-form-group col-3">
-                <input asp-for="CheckExpensVoucherNumber" class="form-control form-control-plaintext" readonly readonly />
-               
-            </div>
-
-            <div class="form-group col-2">
-                 رقم الشيك
-            </div>
-             <div class="form-form-group col-3">
-                <input asp-for="CheckNumber" class="form-control form-control-plaintext" readonly />
-              
-            </div>
-
-            <div class="form-group col-2">
-               </div>
-
-             <div class="form-group col-2">
-                البنوك
-            </div>
-            <div class="form-form-group col-3">
-                <select asp-for="Banks" class ="form-control bank form-control-plaintext" readonly asp-items="ViewBag.BankList"></select>
-            </div>
-
-            
-
-            <div class="form-group col-2">
-                المرجع
-            </div>
-            <div class="form-form-group col-3">
-                <input asp-for="ReferenceNumber" class="form-control form-control-plaintext" readonly />
-              
-            </div>
-
-             <div class="form-group col-2">
-               </div>
-
-            <div class="form-group col-2">
-                  نوع الإستحقاق
-            </div>
-            <div class="form-form-group col-3">
-                <input asp-for="ChequesType" class="form-control form-control-plaintext" readonly />
-               
-            </div>
-
-
-            
-
-
-
-            <div class="form-group col-2">
-              
-               البيان
-             </div>
-             <div class="form-form-group col-3">
-                <input asp-for="CheckDescription" class="form-control form-control-plaintext" readonly/>
-                <span asp-validation-for="CheckDescription" class="text-danger"></span>
-            </div>
-
-
-            <div class="form-group col-2">
-               </div>
-
-           <div class="form-group col-2">
-                 تاريخ السند
-            </div>
-             <div class="form-form-group col-3">
-                <input asp-for="CheckDatetime" class="form-control form-control-plaintext" readonly />
-                <span asp-validation-for="CheckDatetime" class="text-danger"></span>
-            </div>
-
-
-            
-
-
-
-          <div class="form-group col-2">
-                العملات
-              </div>
-              <div class="form-form-group col-3">
-                <select asp-for="Currencies" class ="form-control currency form-control-plaintext" readonly asp-items="ViewBag.CurrencyList"></select>
-              </div>
+        <div class="form-group col-md-4">
+            <label class="control-label">To Date</label>
+            <input type="date" name="EndDate" class="form-control" value="@(DateTime.Now.ToString("yyyy"))-12-30" />
+        </div>
 
         
-            <div class="form-group col-2">
-               </div>
-
-          <div class="form-group col-2">
-              سعر الصرف
-                </div>
-                <div class="form-form-group col-3 ">
-                <select asp-for="CurrenciesExchangeRate" class ="form-control exchange form-control-plaintext" readonly readonly asp-items="ViewBag.ExchangeRatelist"></select>
-                </div>
-
-                <div class="form-group col-2">
-               </div>
-
-
-             
-
-            
-@*///////////////////////////الى حساب////////////////////////////////////*@
-
-<div class="col-12 ml-2">
-            <table class ="table table-borderless table-sm border CodesTable  ">
-                <thead>
-                    <tr>
-                   
-                    <th>
-                       رقم الحساب
-                    </th> 
-                    <th>
-                        الحساب اسم  
-                    </th>
-                      <th>
-                       المبلغ محلي
-                    </th> 
-                    <th>
-                        المبلغ اجنبي
-                    </th>
-                    <th>
-                          تاريخ الإستحقاق
-                    </th>
-   
-                    </tr>
-                </thead>
-                <tbody id="CsDiv">
-                    <tr>
-                        <td>
-                             <input asp-for="DebitChildAccount" class ="form-control form-control-plaintext" readonly />
-                        </td>
-                        <td>
-                             <input asp-for="ArabicAccName" class="form-control form-control-plaintext" readonly />
-                        </td>
-                        <td>
-                            <input asp-for="DebittAmountRly"   class="form-control money form-control-plaintext" readonly />
-                        </td>
-                        <td>
-                            <input asp-for="DebittAmountUdo" class="form-control money1 form-control-plaintext" readonly />
-                        </td>
-                        <td>
-                            <input asp-for="ChequesDate" class="form-control form-control-plaintext" readonly />
-                        </td>
-
-                    </tr>
-
-                </tbody>
-                </table>
-                <br />
-</div>
- @*/////////////////////////////////////////////////////////////////*@
-
-
-@*/////////////////////////////////////////////////////////////////*@
- <div class="form-group btn-group col-12">
-            <div class="col-5"></div>
-           <div class="col-2">
-                 <a class="btn btn-primary btn-block"  asp-action="Edit" asp-route-id="@Model.CheckExpensVoucherNumber">Edit</a>
-            </div>
-
-             <div class="col-1">
-                 <a class="btn btn-secondary btn-block" asp-action="index"
-                   asp-route-pg="@TempData.Peek("CurrentPage")">Back</a>
-            </div>
-             <div class="col-1"></div>
-         </div>
-
-      <div class="form-group btn-group col-1">
-
-
-         <div class="form-group invisible">
-    
-
-             
-            <div class="form-group col-2">
-                <label asp-for="CheckStatus" class="control-label"></label>
-            </div>
-            <div class="form-form-group col-3">
-                <input asp-for="CheckStatus" class="form-control" />
-                <span asp-validation-for="CheckStatus" class="text-danger"></span>
-            </div>
-
-              <div class="form-group col-2">
-                <label asp-for="CheckExpendCheques" class="control-label"></label>
-            </div>
-            <div class="form-form-group col-3">
-                <input asp-for="CheckExpendCheques" class="form-control" />
-                <span asp-validation-for="CheckExpendCheques" class="text-danger"></span>
-            </div>
-
-
-             <div class="form-group col-2">
-                <label asp-for="FiscalYear" class="control-label"></label>
-           </div>
-           <div class="form-form-group col-3">
-                <input asp-for="FiscalYear" class="form-control" />
-                <span asp-validation-for="FiscalYear" class="text-danger"></span>
-            </div>
-
-
-             <div class="form-group col-2">
-                <label asp-for="SystemUsers" class="control-label"></label>
-            </div>
-            <div class="form-form-group col-3">
-                <input asp-for="SystemUsers" class="form-control" />
-                <span asp-validation-for="SystemUsers" class="text-danger"></span>
-            </div>
-
-
-
-             <select id="mySelect" class ="form-control"  size="5"
-             style="visibility: hidden;"
-             asp-items="ViewBag.AccountList">
-             </select>
-
-
-             <input id="txtValue" class="form-control col-2 invisible" />
-            
-
-             <div id="HiddenDiv" style="visibility:hidden;" >
-           
-
-           
-             </div>
+              <div class="form-form-group col-md-4">
+                  <label class="control-label">Funds</label>
+                <select name="FundName" class ="form-control fund" asp-items="ViewBag.FundList">
+                     <option value="">----- Select Funds -----</option>
+                </select>
               </div>
 
+
+              <div class="form-form-group col-md-4">
+                  <label class="control-label">Currency</label>
+                <select name="CurrenName" class ="form-control currency" asp-items="ViewBag.CurrencyList">
+                    <option value="">----- Select Currency -----</option>
+                </select>
+              </div>
+
+        <div class="form-group col-md-4">
+            <label class="control-label">رقم السند</label>
+            <select class="form-control" name="MainExpensVoucherNumber" asp-items="ViewBag.ExList">
+                @*<option value="0">----- Select Employee -----</option>*@
+            </select>
         </div>
+        <div class="form-group col-md-4">
+            <label class="control-label">حالة الترحل</label>
+            <select class="form-control" name="MainExpensVoucherStatus">
+                <option style="visibility:unset" value="5" >----------- الكل ----------</option>
+               
+                <option value="0">غير مرحل</option>
+                <option value="1">مرحل</option>
+            </select>
+        </div>
+        @*<div class="form-group col-md-6">
+            <label class="control-label">حاله السند </label>
+            <select class="form-control" name="IsDelete">
+                <option>----------- حاله السند ----------</option>
+                <option value="1">سند غير محذوف</option>
+                <option value="0">سند محذوف </option>
+            </select>
+        </div>*@
+        <div class="form-group col-md-2 mt-4 mb-5">
+        <input   asp-action="GetReportEx" type="submit" class="btn btn-primary col-md-12" value="عرض" />
+    </div>
+    </div>
 
+    
+    
 
+</form>
+</div>
+</div>
 
+ <div class="card">
+ <div class="table-responsive card-datatable">
+
+@if (Model != null)
+{
+
+     <table class="table datatables-basic">
+        <thead>
+            <tr>
+                 <th>رقم السند</th>
+                    <th>المبلغ</th>
+                 
+                    <th>العملة</th>
+                    
+                    <th>الصندوق</th>
+                    <th> التاريخ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@item.Main_ExpensVoucher_Number</th>
+                    <th>@item.MainExpensVoucherAmount_RLY</th>
+                    
+                    <th>@item.CurrenName</th>
+                   
+                    <th>@item.FundName</th>
+                    <th>@item.MainExpensVoucherDate</th>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+}
+else
+{
+    <h4 class="alert alert-danger">No Data ........................................</h4>
+}
+
+ </div>
 
             </div>
-        </form>
-    
-</div>
-</div>
-</div>
-</div>
+          </div>
+          <!-- / Content -->
 
+        
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
 
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
 
-
-  <!-- Core JS -->
-  <!-- build:js ~/assets/vendor/js/core.js -->
-  <script src="~/assets/vendor/libs/jquery/jquery.js"></script>
-  <script src="~/assets/vendor/libs/popper/popper.js"></script>
-  <script src="~/assets/vendor/js/bootstrap.js"></script>
-  <script src="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-  <script src="~/assets/vendor/libs/hammer/hammer.js"></script>
-  <script src="~/assets/vendor/libs/i18n/i18n.js"></script>
-  <script src="~/assets/vendor/libs/typeahead-js/typeahead.js"></script>
-
-  <script src="~/assets/vendor/js/menu.js"></script>
+    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+    <div class="drag-target"></div>
+  </div>
+  <!-- / Layout wrapper -->
+    <!-- Page JS -->
+ <!-- Core JS -->
+  <!-- build:js ~/accounts/assets/vendor/js/core.js -->
+  <script src="~/accounts/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="~/accounts/assets/vendor/libs/popper/popper.js"></script>
+  <script src="~/accounts/assets/vendor/js/bootstrap.js"></script>
+  <script src="~/accounts/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="~/accounts/assets/vendor/libs/hammer/hammer.js"></script>
+  <script src="~/accounts/assets/vendor/js/menu.js"></script>
   <!-- endbuild -->
 
-  <!-- Main JS -->
-  <script src="~/assets/js/main.js"></script>
-
   <!-- Vendors JS -->
-  <script src="~/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-  <script src="~/assets/vendor/libs/chartjs/chartjs.js"></script>
-  <script src="~/assets/json/locales/en.json"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables/jquery.dataTables.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-responsive/datatables.responsive.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-buttons/buttons.html5.js"></script>
+  <script src="~/accounts/assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
+
+ 
 
   <!-- Page JS -->
-  <script src="~/pages1/sys13.js"></script>
+  <script>
+      
+$(function () {
+  var dataTablePermissions = $('.datatables-basic'),
+    dt_permission;
 
+  // Users List datatable
+  if (dataTablePermissions.length) {
+    dt_permission = dataTablePermissions.DataTable({
+      order: [[1, 'asc']],
+      scrollY: 400,
+      ordering: false,
 
-   
-     <script type="text/javascript">
-  //-----------------------------------------------------------------------------------
-          document.addEventListener('keydown',ShowSearchableList);
+      lengthMenu: [5, 10, 25, 50, 100],
+      dom:
+        '<"row mx-1"' +
+        '<"col-sm-12 col-md-1" l>' +
+        '<"col-sm-12 col-md-11"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-between justify-content-center flex-wrap me-1"<"me-3"f>B>>' +
+        '>t' +
+        '<"row mx-2"' +
 
-         function setSameWidth(srcElement,desElement){
-             desElement.style.setSameWidth = "260px";
-         }
+        '<"col-sm-12 col-md-6"i>' +
+        '<"col-sm-12 col-md-6"p>' +
+        '>',
+      language: {
+        sLengthMenu: '_MENU_',
+        search: '',
+        searchPlaceholder: 'بحث..',
+        paginate: {
+          first: 'الأول',
+          last: 'الأخير',
+          next: 'التالي',
+          previous: 'السابق'
+        }
+      },
+      // Buttons with Dropdown
+      buttons: [
+    
+          
+           {
+          extend: 'print',
+          text: '<i class="bx bx-printer me-2"></i>إصدار تقرير',
+          className: 'btn btn-label-secondary mx-3',
+          exportOptions: { columns: [4,3, 2, 1, 0] },
 
-         function ShowSearchableList(event){
-
-             if(event.target.id.indexOf('DebitChildAccount')<0){
-                 return ;
-             }
-
-            var objDiv = document.getElementById("CsDiv");
-            objDiv.scrollTop=objDiv.scrollHeight;
-
-
-             var tid =event.target.id;
-             var txtDescId =tid.replaceAll('DebitChildAccount' , 'ArabicAccName');
-             var txtValue=document.getElementById('txtValue');
-             var txtText =document.getElementById(txtDescId);
-             var txtSearch =event.target;
-
-             var lstbox= document.getElementById('mySelect');
-
-             $(txtSearch).after($(lstbox).show('slow'));
-
-             if(event.keyCode === 13 || event.keyCode ==9){
-
-                 txtSearch.value=txtValue.value;
-                 lstbox.style.visibility="hidden";
-                 var divlst = document.getElementById("HiddenDiv");
-                 $(divlst).after($(lstbox).show('slow'));
-
-                 if( event.keyCode===13){
-                     event.preventDefault();
-                     txtSearch.focus();
-                     return;
-                 }
-                 else
-                    return;
-             }
-             setSameWidth(txtSearch, lstbox);
-             lstbox.style.visibility = "visible";
-
-             txtValue.value="";
-             txtText.value= "";
-
-             var items =lstbox.options;
-
-             for(var i=items.length - 1 ; i>= 0 ; i-- ){
-                 if(items[i].text.toLowerCase().indexOf(txtSearch.value.toLowerCase()) > -1){
-                     items[i].style.display = 'block';
-                     items[i].selected =true;
-                     txtValue.value=items[i].value;
-                     txtText.value=items[i].text;
-                 }
-                 else {
-                     items[i].style.display = 'none';
-                     items[i].selected= false;
-                 }
-             }
+        },
 
 
 
-         }
-         
+        ],
 
+    });
+  }
 
+  // Delete Record
+  $('.datatables-permissions tbody').on('click', '.delete-record', function () {
+    dt_permission.row($(this).parents('tr')).remove().draw();
+  });
 
-     </script>
-     </body>
+  // Filter form control to default size
+  // ? setTimeout used for multilingual table initialization
+  setTimeout(() => {
+    $('.dataTables_filter .form-control').removeClass('form-control-sm');
+    $('.dataTables_length .form-select').removeClass('form-select-sm');
+
+  }, 300);
+});
+
+var sectionSelectInput = document.getElementById("section-select-input");
+document.getElementById("person").addEventListener('click', ev => {
+  sectionSelectInput.hidden = false;
+});
+document.getElementById("third-party").addEventListener('click', ev => {
+  sectionSelectInput.hidden = true;
+});
+  </script>
+</body>
+
 </html>
+
+

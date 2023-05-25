@@ -12,7 +12,7 @@ namespace POS.Interfaces
     {
         public string GetErrors();
         IList<MainExpensVoucher> GetItems(); //read all
-
+        IList<MainExpensVoucher> GetItemsRepo();
         IList<MainExpensVoucher> GetItemsStage();
         MainExpensVoucher GetItem(string id); // read particular item
 
