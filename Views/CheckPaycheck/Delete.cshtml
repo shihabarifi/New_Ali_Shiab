@@ -1,11 +1,11 @@
-﻿@model POS.Models.DB.CheckExpensVoucher
-
+﻿@model POS.Models.DB.CheckPaycheckVoucher
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = null;
-
+    ViewData["Title"] = "Delete";
 }
+ 
+<!--------------------------Start Header-------------------------->
+
 
   @inject UserManager<ApplicationUser> userManager
 @inject SignInManager<ApplicationUser> signInManager
@@ -19,7 +19,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>صرف شيك</title>
+  <title>قبض شيك</title>
 
   <meta name="description" content="" />
 
@@ -124,7 +124,7 @@
             </ul>
           </li>
           <!-- page list -->
-          <li class="menu-item ">
+          <li class="menu-item">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon icon-file-invoice-dollar me-1"></i>
               <div> المدخلات الاساسية</div>
@@ -148,7 +148,7 @@
                   <div>الصناديق</div>
                 </a>
               </li>
-              <li class="menu-item ">
+              <li class="menu-item">
                 <a asp-controller="Bank" asp-action="Index" class="menu-link">
                   <div>البنك</div>
                 </a>
@@ -181,7 +181,7 @@
                 </ul>
               </li>
               <!-- Page -->
-                <li class="menu-item open">
+                <li class="menu-item ">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div>سند صرف </div>
                   </a>
@@ -192,7 +192,7 @@
                         <div>أضافة صرف نقداً</div>
                       </a>
                     </li>
-                     <li class="menu-item active">
+                     <li class="menu-item">
                       <a asp-controller="CheckExpens" asp-action="Create" class="menu-link">
                         <div>أضافة صرف شيك</div>
                       </a>
@@ -211,7 +211,7 @@
                   </ul>
                 </li>
                 <!-- Page -->
-                <li class="menu-item  ">
+                <li class="menu-item  open">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div>سند قبض</div>
                   </a>
@@ -229,7 +229,7 @@
                     </li>
                     
                     <!-- Page -->
-                    <li class="menu-item ">
+                    <li class="menu-item active">
                       <a asp-controller="PayCheckVoucher" asp-action="Index" class="menu-link">
                         <div>استعراض قبض نقداً</div>
                       </a>
@@ -419,7 +419,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">إضافة صرف شيك</h3>
+                <h3 class="nav-item pt-3">حذف قيض الشيكات</h3>
 
               </div>
               <!-- nav-->
@@ -518,11 +518,10 @@
                                                 <li>
 
 
-                                  <form asp-action="Logout" asp-controller="Account" method="post">
+                                  <form asp-action="Logout" asp-controller="Accounts" method="post">
                                       
-                                       <a class="dropdown-item" href="/Account/Login">
+                                       <a class="dropdown-item" href="/Accounts/">
                                        <i class="bx bx-power-off me-2"></i>
-
                                       <span class="align-middle">Log Out</span> </a>
                                   </form>
                                   
@@ -543,35 +542,35 @@
       th {
   text-align: center;
 }
+
     </style>
 
 <div style="padding-right: 69px;padding-left: 67px;padding-top: 68px;width: 1149px;margin-right: 58px;/* padding-bottom: 1000px; */margin-bottom: 2%;" class="card">
-   <div  class="card-header bg-primary text-Uppercase text-white" style="background-color:#41b38de6 !important " > 
-            <h4 style="color:#fff;">انشاء سند صرف شيك</h4>
+   <div  class="card-header bg-primary text-Uppercase text-white" style="background-color:#e13b3bc2 !important; " > 
+            <h4 style="color:#fff;">حذف سند قبض شيك</h4>
         </div>
         <hr />
 
 
 
-
-        <form id="CodeSbyShihab" asp-action="Create">
+        <form id="CodeSbyShihab" asp-action="Delete">
           <div class="row col-12">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
+
             <div class="form-group col-2">
                 رقم السند
             </div>
              <div class="form-form-group col-3">
-                <input asp-for="CheckExpensVoucherNumber" class="form-control" readonly />
-                <span asp-validation-for="CheckExpensVoucherNumber" class="text-danger"></span>
+                <input asp-for="CheckPaycheckVoucherNumber" class="form-control form-control-plaintext" readonly  />
+               
             </div>
 
             <div class="form-group col-2">
                  رقم الشيك
             </div>
              <div class="form-form-group col-3">
-                <input asp-for="CheckNumber" class="form-control" />
-                <span asp-validation-for="CheckNumber" class="text-danger"></span>
+                <input asp-for="CheckNumber" class="form-control form-control-plaintext" readonly />
+              
             </div>
 
             <div class="form-group col-2">
@@ -581,21 +580,18 @@
                 البنوك
             </div>
             <div class="form-form-group col-3">
-                <select asp-for="Banks" class ="form-control bank" asp-items="ViewBag.BankList"></select>
+                <select asp-for="Banks" class ="form-control bank form-control-plaintext" readonly asp-items="ViewBag.BankList"></select>
             </div>
 
             
 
-                 <div class="form-group col-2">
-                العملات
-              </div>
-              <div class="form-form-group col-3">
-                <select asp-for="Currencies" class ="form-control currency" asp-items="ViewBag.Currencies"></select>
-              </div>
+            <div class="form-group col-2">
+                المرجع
+            </div>
+            <div class="form-form-group col-3">
+                <input asp-for="ReferenceNumber" class="form-control form-control-plaintext" readonly />
               
-
-
-
+            </div>
 
              <div class="form-group col-2">
                </div>
@@ -604,16 +600,21 @@
                   نوع الإستحقاق
             </div>
             <div class="form-form-group col-3">
-                <input asp-for="ChequesType" class="form-control" />
-                <span asp-validation-for="ChequesType" class="text-danger"></span>
+                <input asp-for="ChequesType" class="form-control form-control-plaintext" readonly />
+               
             </div>
+
+
+            
+
+
 
             <div class="form-group col-2">
               
                البيان
              </div>
              <div class="form-form-group col-3">
-                <input asp-for="CheckDescription" class="form-control" />
+                <input asp-for="CheckDescription" class="form-control form-control-plaintext" readonly/>
                 <span asp-validation-for="CheckDescription" class="text-danger"></span>
             </div>
 
@@ -625,38 +626,44 @@
                  تاريخ السند
             </div>
              <div class="form-form-group col-3">
-                <input type="date" asp-for="CheckDatetime" class="form-control" />
+                <input type="date" asp-for="CheckDatetime" class="form-control form-control-plaintext" readonly />
                 <span asp-validation-for="CheckDatetime" class="text-danger"></span>
             </div>
 
-       
+
+            
+
+
+
+          <div class="form-group col-2">
+                العملات
+              </div>
+              <div class="form-form-group col-3">
+                <select asp-for="Currencies" class ="form-control currency form-control-plaintext" readonly asp-items="ViewBag.CurrencyList"></select>
+              </div>
+
+        
+            <div class="form-group col-2">
+               </div>
+
           <div class="form-group col-2">
               سعر الصرف
                 </div>
-                 <div class="form-form-group col-3">
-                <input  class="form-control exchange"readonly />
- 
-                 </div>
+                <div class="form-form-group col-3 ">
+                <select asp-for="CurrenciesExchangeRate" class ="form-control exchange form-control-plaintext" readonly  asp-items="ViewBag.ExchangeRatelist"></select>
+                </div>
 
                 <div class="form-group col-2">
                </div>
 
-               
-         
-            <div class="form-group col-2">
-                المرجع
-            </div>
-            <div class="form-form-group col-3">
-                <input asp-for="ReferenceNumber" class="form-control" />
-                <span asp-validation-for="ReferenceNumber" class="text-danger"></span>
-            </div>
+
              
 
             
 @*///////////////////////////الى حساب////////////////////////////////////*@
 
 <div class="col-12 ml-2">
-            <table id="CodesTable" class ="table table-borderless table-sm  border CodesTable" style="background-color:#8bb5a78c;">
+            <table id="CodesTable" class ="table table-borderless table-sm  border CodesTable" style="background-color:#37434d;color:#fff ">
                 <thead>
                     <tr>
                    
@@ -681,40 +688,38 @@
                 <tbody id="CsDiv">
                     <tr>
                         <td>
-                             <input asp-for="DebitChildAccount" class ="form-control" asp-items="ViewBag.DebitChildAccount"/>
+                             <input asp-for="CreditChildAccount" class ="form-control form-control-plaintext" readonly />
                         </td>
                         <td>
                              <input asp-for="ArabicAccName" class="form-control form-control-plaintext" readonly />
                         </td>
                         <td>
-                            <input asp-for="DebittAmountRly"   class="form-control money" />
+                            <input asp-for="CreditAmountRly"   class="form-control money form-control-plaintext" readonly />
                         </td>
                         <td>
-                            <input asp-for="DebittAmountUdo" class="form-control money1" />
+                            <input asp-for="CreditAmountUdo" class="form-control money1 form-control-plaintext" readonly />
                         </td>
                         <td>
-                            <input type="date" asp-for="ChequesDate" class="form-control" />
+                            <input type="date" asp-for="ChequesDate" class="form-control form-control-plaintext" readonly />
                         </td>
 
                     </tr>
 
                 </tbody>
                 </table>
-                <br />
 
 </div>
  @*/////////////////////////////////////////////////////////////////*@
 
 
 @*/////////////////////////////////////////////////////////////////*@
-
-        <div class="form-group btn-group col-12">
-            <div class="col-5"></div>
-            <div class="col-2">
-                <input type="submit" id="submitbtn" value="Create" class="btn btn-primary btn-block" />
+ <div class="form-group btn-group col-12">
+            <div class="col-1"></div>
+           <div class="col-5">
+                 <input type="submit"  value="Delete" class="btn btn-danger btn-block" />
             </div>
 
-             <div class="col-1">
+             <div class="col-5">
                  <a class="btn btn-secondary btn-block" asp-action="index"
                    asp-route-pg="@TempData.Peek("CurrentPage")">Back</a>
             </div>
@@ -726,23 +731,7 @@
 
          <div class="form-group invisible">
     
-              <div class="form-group col-2">
-               المبلغ محلي
-            </div>
-            <div class="form-form-group col-3">
-                <input asp-for="CreditAmountRly" class="form-control money1" />
-          
-            </div>
 
-
-            <div class="form-group col-2">
-
-                المبلغ اجنبي
-            </div>
-            <div class="form-form-group col-3">
-                <input asp-for="CreditAmountUdo" class="form-control" />
-               
-            </div>
              
             <div class="form-group col-2">
                 <label asp-for="CheckStatus" class="control-label"></label>
@@ -753,11 +742,11 @@
             </div>
 
               <div class="form-group col-2">
-                <label asp-for="CheckExpendCheques" class="control-label"></label>
+                <label asp-for="CheckPayCheckCheques" class="control-label"></label>
             </div>
             <div class="form-form-group col-3">
-                <input asp-for="CheckExpendCheques" class="form-control" />
-                <span asp-validation-for="CheckExpendCheques" class="text-danger"></span>
+                <input asp-for="CheckPayCheckCheques" class="form-control" />
+                <span asp-validation-for="CheckPayCheckCheques" class="text-danger"></span>
             </div>
 
 
@@ -778,7 +767,7 @@
                 <span asp-validation-for="SystemUsers" class="text-danger"></span>
             </div>
 
-             <input  asp-for="CurrenciesExchangeRate"  class="form-control exchange1" />
+
 
              <select id="mySelect" class ="form-control"  size="5"
              style="visibility: hidden;"
@@ -797,28 +786,20 @@
               </div>
 
         </div>
-        
 
 
 
 
             </div>
         </form>
-        </div>
-        </div>
     
 </div>
+</div>
+</div>
+</div>
 
-      </div>
-      
 
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
 
-    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
-    <div class="drag-target"></div>
-
-  <!-- / Layout wrapper -->
 
   <!-- Core JS -->
   <!-- build:js ~/assets/vendor/js/core.js -->
@@ -845,138 +826,8 @@
   <script src="~/pages1/sys13.js"></script>
 
 
-  
-  <script type="text/javascript">
-
-
-
-
-      
-          //------------------------ جلب سعر الصرف على حسب العملة --------------------------  
    
-         
-          $(".currency").change(function () {
 
-          let id = $(".currency option:selected").val();
-          $.ajax({
-                type: "GET",
-                url: "/CheckExpens/GetCurr",
-                 data: { CurrenciesId: id },
-                  success: function (data) {
-                  let items = '';
-                 
-                    $.each(data, function (i, exchange) {
-                         $('.exchange1').val(exchange.value);
-                         $('.exchange').val(exchange.text);
-                     items += '<option value="' + exchange.value + '">' + exchange.text + "</option>";
-                    
-                    });
-                     $(".exchange").html(items);
-                 
-                 }
-
-                      })
-         
-                  });
-
-   //-----------------------------------------------------------------------------------
-
-                 //-------------------------- جلب العملات على حسب البنك ----------------------------  
-          $(".bank").change(function () {
-
-          let id = $(".bank option:selected").val();
-          $.ajax({
-                type: "GET",
-                url: "/CheckExpens/GetAcc",
-                 data: { BankId: id },
-                 success: function (data) {
-                  let items = '';   
-                   items += `<option value="">---توجد  (${data.length}) عملات---</option>`;
-                    $.each(data, function (i, currency) {
-
-                       
-                     items += '<option value="' + currency.value + '">' + currency.text + "</option>";
-                    
-                    });
-                     $(".currency").html(items);
-                 
-                 }
-
-          })
-              
-         });
-         //---------------------------------------------------------------------------------
-
-                  //-----------------------------------------------------------------------------------
-                  document.addEventListener('keydown',ShowSearchableList);
-
-                   function setSameWidth(srcElement,desElement){
-                      desElement.style.setSameWidth = "260px";
-                      }
-                         
-                     function ShowSearchableList(event){
-
-                      if(event.target.id.indexOf('DebitChildAccount')<0){
-                          return ;
-                }
-
-                var objDiv = document.getElementById("CsDiv");
-                     objDiv.scrollTop=objDiv.scrollHeight;
-
-
-                  var tid =event.target.id;
-                  var txtDescId =tid.replaceAll('DebitChildAccount' , 'ArabicAccName');
-                  var txtValue=document.getElementById('txtValue');
-                  var txtText =document.getElementById(txtDescId);
-                  var txtSearch =event.target;
-
-                  var lstbox= document.getElementById('mySelect');
-
-                  $(txtSearch).after($(lstbox).show('slow'));
-
-                  if(event.keyCode === 13 || event.keyCode ==9){
-
-                      txtSearch.value=txtValue.value;
-                      lstbox.style.visibility="hidden";
-                      var divlst = document.getElementById("HiddenDiv");
-                      $(divlst).after($(lstbox).show('slow'));
-
-                      if( event.keyCode===13){
-                          event.preventDefault();
-                          txtSearch.focus();
-                     return;
-                 }
-                 else
-                    return;
-                 }
-                 setSameWidth(txtSearch, lstbox);
-                 lstbox.style.visibility = "visible";
-
-                 txtValue.value="";
-                 txtText.value= "";
-
-                 var items =lstbox.options;
-
-                 for(var i=items.length - 1 ; i>= 0 ; i-- ){
-                     if(items[i].text.toLowerCase().indexOf(txtSearch.value.toLowerCase()) > -1){
-                         items[i].style.display = 'block';
-                         items[i].selected =true;
-                         txtValue.value=items[i].value;
-                         txtText.value=items[i].text;
-                     }
-                     else {
-                         items[i].style.display = 'none';
-                         items[i].selected= false;
-                     }
-                 }
-
-
-
-                     }
- 
-</script>
+   
 </body>
 </html>
-
-  
-

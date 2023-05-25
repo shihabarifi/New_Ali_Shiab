@@ -1,0 +1,351 @@
+﻿@model POS.Models.DB.CheckPaycheckVoucher
+
+@{
+    ViewData["Title"] = "Cheque";
+}
+
+<style>
+        td {
+  text-align: center;
+}
+      th {
+  text-align: center;
+}
+
+    </style>
+
+
+<h1 class="jumbotron d-flex justify-content-center" style="background-color: #d4c1c1  "> قبض شيك</h1>
+
+<div class="card">
+   <div  class="card-header bg-danger text-Uppercase text-white" style="background-color:#549169c7 " > 
+            <h4 style="text-align:right">حذف سند قبض شيك</h4>
+        </div>
+        <hr />
+
+
+
+        <form id="CodeSbyShihab" asp-action="Cheque">
+          <div class="row col-12">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group col-2">
+                رقم السند
+            </div>
+             <div class="form-form-group col-3">
+                <input asp-for="CheckPaycheckVoucherNumber" class="form-control form-control-plaintext" readonly readonly />
+               
+            </div>
+
+            <div class="form-group col-2">
+                 رقم الشيك
+            </div>
+             <div class="form-form-group col-3">
+                <input asp-for="CheckNumber" class="form-control form-control-plaintext" readonly />
+              
+            </div>
+
+            <div class="form-group col-2">
+               </div>
+
+             <div class="form-group col-2">
+                البنوك
+            </div>
+            <div class="form-form-group col-3">
+                <select asp-for="Banks" class ="form-control bank form-control-plaintext" readonly asp-items="ViewBag.BankList"></select>
+            </div>
+
+            
+
+            <div class="form-group col-2">
+                المرجع
+            </div>
+            <div class="form-form-group col-3">
+                <input asp-for="ReferenceNumber" class="form-control form-control-plaintext" readonly />
+              
+            </div>
+
+             <div class="form-group col-2">
+               </div>
+
+            <div class="form-group col-2">
+                  نوع الإستحقاق
+            </div>
+            <div class="form-form-group col-3">
+                <input asp-for="ChequesType" class="form-control form-control-plaintext" readonly />
+               
+            </div>
+
+
+            
+
+
+
+            <div class="form-group col-2">
+              
+               البيان
+             </div>
+             <div class="form-form-group col-3">
+                <input asp-for="CheckDescription" class="form-control form-control-plaintext" readonly/>
+                <span asp-validation-for="CheckDescription" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group col-2">
+               </div>
+
+           <div class="form-group col-2">
+                 تاريخ السند
+            </div>
+             <div class="form-form-group col-3">
+                <input type="date" asp-for="CheckDatetime" class="form-control form-control-plaintext" readonly />
+                <span asp-validation-for="CheckDatetime" class="text-danger"></span>
+            </div>
+
+
+            
+
+
+
+          <div class="form-group col-2">
+                العملات
+              </div>
+              <div class="form-form-group col-3">
+                <select asp-for="Currencies" class ="form-control currency form-control-plaintext" readonly asp-items="ViewBag.CurrencyList"></select>
+              </div>
+
+        
+            <div class="form-group col-2">
+               </div>
+
+          <div class="form-group col-2">
+              سعر الصرف
+                </div>
+                <div class="form-form-group col-3 ">
+                <select asp-for="CurrenciesExchangeRate" class ="form-control exchange form-control-plaintext" readonly readonly asp-items="ViewBag.ExchangeRatelist"></select>
+                </div>
+
+                <div class="form-group col-2">
+               </div>
+
+
+             
+
+            
+@*///////////////////////////الى حساب////////////////////////////////////*@
+
+<div class="col-12 ml-2">
+            <table id="CodesTable" class ="table table-borderless table-sm  border CodesTable" style="background-color:#37434d;color:#fff ">
+                <thead>
+                    <tr>
+                   
+                    <th>
+                       رقم الحساب
+                    </th> 
+                    <th>
+                        الحساب اسم  
+                    </th>
+                      <th>
+                       المبلغ محلي
+                    </th> 
+                    <th>
+                        المبلغ اجنبي
+                    </th>
+                    <th>
+                          تاريخ الإستحقاق
+                    </th>
+   
+                    </tr>
+                </thead>
+                <tbody id="CsDiv">
+                    <tr>
+                        <td>
+                             <input asp-for="CreditChildAccount" class ="form-control form-control-plaintext" readonly />
+                        </td>
+                        <td>
+                             <input asp-for="ArabicAccName" class="form-control form-control-plaintext" readonly />
+                        </td>
+                        <td>
+                            <input asp-for="CreditAmountRly"   class="form-control money form-control-plaintext" readonly />
+                        </td>
+                        <td>
+                            <input asp-for="CreditAmountUdo" class="form-control money1 form-control-plaintext" readonly />
+                        </td>
+                        <td>
+                            <input type="date" asp-for="ChequesDate" class="form-control form-control-plaintext" readonly />
+                        </td>
+
+                    </tr>
+
+                </tbody>
+                </table>
+
+</div>
+ @*/////////////////////////////////////////////////////////////////*@
+
+
+@*/////////////////////////////////////////////////////////////////*@
+ <div class="form-group btn-group col-12">
+            <div class="col-1"></div>
+           <div class="col-5">
+                 <input type="submit"  value="إستحقاق" class="btn btn-danger btn-block" />
+            </div>
+
+             <div class="col-5">
+                 <a class="btn btn-secondary btn-block" asp-action="Chequelist"
+                   asp-route-pg="@TempData.Peek("CurrentPage")">Back</a>
+            </div>
+             <div class="col-1"></div>
+         </div>
+
+      <div class="form-group btn-group col-1">
+
+
+         <div class="form-group invisible">
+    
+
+             
+            <div class="form-group col-2">
+                <label asp-for="CheckStatus" class="control-label"></label>
+            </div>
+            <div class="form-form-group col-3">
+                <input asp-for="CheckStatus" class="form-control" />
+                <span asp-validation-for="CheckStatus" class="text-danger"></span>
+            </div>
+
+              <div class="form-group col-2">
+                <label asp-for="CheckPayCheckCheques" class="control-label"></label>
+            </div>
+            <div class="form-form-group col-3">
+                <input asp-for="CheckPayCheckCheques" class="form-control" />
+                <span asp-validation-for="CheckPayCheckCheques" class="text-danger"></span>
+            </div>
+
+
+             <div class="form-group col-2">
+                <label asp-for="FiscalYear" class="control-label"></label>
+           </div>
+           <div class="form-form-group col-3">
+                <input asp-for="FiscalYear" class="form-control" />
+                <span asp-validation-for="FiscalYear" class="text-danger"></span>
+            </div>
+
+
+             <div class="form-group col-2">
+                <label asp-for="SystemUsers" class="control-label"></label>
+            </div>
+            <div class="form-form-group col-3">
+                <input asp-for="SystemUsers" class="form-control" />
+                <span asp-validation-for="SystemUsers" class="text-danger"></span>
+            </div>
+
+
+
+             <select id="mySelect" class ="form-control"  size="5"
+             style="visibility: hidden;"
+             asp-items="ViewBag.AccountList">
+             </select>
+
+
+             <input id="txtValue" class="form-control col-2 invisible" />
+            
+
+             <div id="HiddenDiv" style="visibility:hidden;" >
+           
+
+           
+             </div>
+              </div>
+
+        </div>
+
+
+
+
+            </div>
+        </form>
+    
+</div>
+
+
+    @section Scripts 
+    {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+     <script type="text/javascript">
+  //-----------------------------------------------------------------------------------
+         
+  
+  
+  
+  
+  document.addEventListener('keydown',ShowSearchableList);
+
+         function setSameWidth(srcElement,desElement){
+             desElement.style.setSameWidth = "260px";
+         }
+
+         function ShowSearchableList(event){
+
+             if(event.target.id.indexOf('CreditChildAccount')<0){
+                 return ;
+             }
+
+            var objDiv = document.getElementById("CsDiv");
+            objDiv.scrollTop=objDiv.scrollHeight;
+
+
+             var tid =event.target.id;
+             var txtDescId =tid.replaceAll('CreditChildAccount' , 'ArabicAccName');
+             var txtValue=document.getElementById('txtValue');
+             var txtText =document.getElementById(txtDescId);
+             var txtSearch =event.target;
+
+             var lstbox= document.getElementById('mySelect');
+
+             $(txtSearch).after($(lstbox).show('slow'));
+
+             if(event.keyCode === 13 || event.keyCode ==9){
+
+                 txtSearch.value=txtValue.value;
+                 lstbox.style.visibility="hidden";
+                 var divlst = document.getElementById("HiddenDiv");
+                 $(divlst).after($(lstbox).show('slow'));
+
+                 if( event.keyCode===13){
+                     event.preventDefault();
+                     txtSearch.focus();
+                     return;
+                 }
+                 else
+                    return;
+             }
+             setSameWidth(txtSearch, lstbox);
+             lstbox.style.visibility = "visible";
+
+             txtValue.value="";
+             txtText.value= "";
+
+             var items =lstbox.options;
+
+             for(var i=items.length - 1 ; i>= 0 ; i-- ){
+                 if(items[i].text.toLowerCase().indexOf(txtSearch.value.toLowerCase()) > -1){
+                     items[i].style.display = 'block';
+                     items[i].selected =true;
+                     txtValue.value=items[i].value;
+                     txtText.value=items[i].text;
+                 }
+                 else {
+                     items[i].style.display = 'none';
+                     items[i].selected= false;
+                 }
+             }
+
+
+
+         }
+         
+
+
+
+     </script>
+}
