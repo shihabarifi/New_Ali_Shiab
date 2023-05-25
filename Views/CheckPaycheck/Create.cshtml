@@ -1,12 +1,13 @@
-﻿@model POS.Models.DB.CheckExpensVoucher
+﻿@model POS.Models.DB.CheckPaycheckVoucher
 
+    
+<!--------------------------Start Header-------------------------->
 
 @{
     ViewData["Title"] = "Create";
     Layout = null;
 
 }
-
   @inject UserManager<ApplicationUser> userManager
 @inject SignInManager<ApplicationUser> signInManager
     <!DOCTYPE html>
@@ -19,7 +20,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>صرف شيك</title>
+  <title>قبض شيك</title>
 
   <meta name="description" content="" />
 
@@ -124,7 +125,7 @@
             </ul>
           </li>
           <!-- page list -->
-          <li class="menu-item ">
+          <li class="menu-item">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon icon-file-invoice-dollar me-1"></i>
               <div> المدخلات الاساسية</div>
@@ -148,7 +149,7 @@
                   <div>الصناديق</div>
                 </a>
               </li>
-              <li class="menu-item ">
+              <li class="menu-item">
                 <a asp-controller="Bank" asp-action="Index" class="menu-link">
                   <div>البنك</div>
                 </a>
@@ -181,7 +182,7 @@
                 </ul>
               </li>
               <!-- Page -->
-                <li class="menu-item open">
+                <li class="menu-item ">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div>سند صرف </div>
                   </a>
@@ -192,7 +193,7 @@
                         <div>أضافة صرف نقداً</div>
                       </a>
                     </li>
-                     <li class="menu-item active">
+                     <li class="menu-item">
                       <a asp-controller="CheckExpens" asp-action="Create" class="menu-link">
                         <div>أضافة صرف شيك</div>
                       </a>
@@ -211,7 +212,7 @@
                   </ul>
                 </li>
                 <!-- Page -->
-                <li class="menu-item  ">
+                <li class="menu-item  open">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div>سند قبض</div>
                   </a>
@@ -222,7 +223,7 @@
                         <div>اضافة قبض نقداً</div>
                       </a>
                     </li> 
-                    <li class="menu-item ">
+                    <li class="menu-item active">
                       <a asp-controller="CheckPaycheck" asp-action="Create" class="menu-link">
                         <div>اضافة قبض شيك</div>
                       </a>
@@ -419,7 +420,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">إضافة صرف شيك</h3>
+                <h3 class="nav-item pt-3">إضافة قيض الشيكات</h3>
 
               </div>
               <!-- nav-->
@@ -518,11 +519,10 @@
                                                 <li>
 
 
-                                  <form asp-action="Logout" asp-controller="Account" method="post">
+                                  <form asp-action="Logout" asp-controller="Accounts" method="post">
                                       
-                                       <a class="dropdown-item" href="/Account/Login">
+                                       <a class="dropdown-item" href="/Accounts/">
                                        <i class="bx bx-power-off me-2"></i>
-
                                       <span class="align-middle">Log Out</span> </a>
                                   </form>
                                   
@@ -545,29 +545,29 @@
 }
     </style>
 
+
+
+
 <div style="padding-right: 69px;padding-left: 67px;padding-top: 68px;width: 1149px;margin-right: 58px;/* padding-bottom: 1000px; */margin-bottom: 2%;" class="card">
    <div  class="card-header bg-primary text-Uppercase text-white" style="background-color:#41b38de6 !important " > 
-            <h4 style="color:#fff;">انشاء سند صرف شيك</h4>
+            <h4 style="color:#fff;">إنشاء سند قبض شيك</h4>
         </div>
         <hr />
-
-
-
 
         <form id="CodeSbyShihab" asp-action="Create">
           <div class="row col-12">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
+
             <div class="form-group col-2">
-                رقم السند
+                 رقم السند
             </div>
              <div class="form-form-group col-3">
-                <input asp-for="CheckExpensVoucherNumber" class="form-control" readonly />
-                <span asp-validation-for="CheckExpensVoucherNumber" class="text-danger"></span>
+                <input asp-for="CheckPaycheckVoucherNumber" class="form-control" readonly />
+                <span asp-validation-for="CheckPaycheckVoucherNumber" class="text-danger"></span>
             </div>
 
             <div class="form-group col-2">
-                 رقم الشيك
+                رقم الشيك
             </div>
              <div class="form-form-group col-3">
                 <input asp-for="CheckNumber" class="form-control" />
@@ -585,9 +585,8 @@
             </div>
 
             
-
-                 <div class="form-group col-2">
-                العملات
+            <div class="form-group col-2">
+               العملات
               </div>
               <div class="form-form-group col-3">
                 <select asp-for="Currencies" class ="form-control currency" asp-items="ViewBag.Currencies"></select>
@@ -595,13 +594,11 @@
               
 
 
-
-
              <div class="form-group col-2">
                </div>
 
             <div class="form-group col-2">
-                  نوع الإستحقاق
+               نوع الإستحقاق
             </div>
             <div class="form-form-group col-3">
                 <input asp-for="ChequesType" class="form-control" />
@@ -622,14 +619,14 @@
                </div>
 
            <div class="form-group col-2">
-                 تاريخ السند
+               تاريخ السند
             </div>
              <div class="form-form-group col-3">
                 <input type="date" asp-for="CheckDatetime" class="form-control" />
                 <span asp-validation-for="CheckDatetime" class="text-danger"></span>
             </div>
 
-       
+
           <div class="form-group col-2">
               سعر الصرف
                 </div>
@@ -638,11 +635,10 @@
  
                  </div>
 
-                <div class="form-group col-2">
+              <div class="form-group col-2">
                </div>
 
-               
-         
+
             <div class="form-group col-2">
                 المرجع
             </div>
@@ -650,13 +646,13 @@
                 <input asp-for="ReferenceNumber" class="form-control" />
                 <span asp-validation-for="ReferenceNumber" class="text-danger"></span>
             </div>
-             
+
 
             
 @*///////////////////////////الى حساب////////////////////////////////////*@
 
 <div class="col-12 ml-2">
-            <table id="CodesTable" class ="table table-borderless table-sm  border CodesTable" style="background-color:#8bb5a78c;">
+            <table id="CodesTable" class ="table table-borderless table-sm  border CodesTable" style="background-color:#37434d;color:#fff ">
                 <thead>
                     <tr>
                    
@@ -681,16 +677,16 @@
                 <tbody id="CsDiv">
                     <tr>
                         <td>
-                             <input asp-for="DebitChildAccount" class ="form-control" asp-items="ViewBag.DebitChildAccount"/>
+                             <input asp-for="CreditChildAccount" class ="form-control" asp-items="ViewBag.CreditChildAccount"/>
                         </td>
                         <td>
                              <input asp-for="ArabicAccName" class="form-control form-control-plaintext" readonly />
                         </td>
                         <td>
-                            <input asp-for="DebittAmountRly"   class="form-control money" />
+                            <input asp-for="CreditAmountRly" class="form-control money" />
                         </td>
                         <td>
-                            <input asp-for="DebittAmountUdo" class="form-control money1" />
+                            <input asp-for="CreditAmountUdo" class="form-control" />
                         </td>
                         <td>
                             <input type="date" asp-for="ChequesDate" class="form-control" />
@@ -700,23 +696,22 @@
 
                 </tbody>
                 </table>
-                <br />
 
 </div>
  @*/////////////////////////////////////////////////////////////////*@
 
-
 @*/////////////////////////////////////////////////////////////////*@
 
         <div class="form-group btn-group col-12">
-            <div class="col-5"></div>
-            <div class="col-2">
+            <div class="col-1"></div>
+            <div class="col-5">
                 <input type="submit" id="submitbtn" value="Create" class="btn btn-primary btn-block" />
             </div>
 
-             <div class="col-1">
+             <div class="col-5">
                  <a class="btn btn-secondary btn-block" asp-action="index"
                    asp-route-pg="@TempData.Peek("CurrentPage")">Back</a>
+
             </div>
              <div class="col-1"></div>
          </div>
@@ -725,13 +720,12 @@
 
 
          <div class="form-group invisible">
-    
-              <div class="form-group col-2">
+                    <div class="form-group col-2">
                المبلغ محلي
             </div>
             <div class="form-form-group col-3">
-                <input asp-for="CreditAmountRly" class="form-control money1" />
-          
+                <input asp-for="DebittAmountRly" class="form-control money1" />
+                <span asp-validation-for="DebittAmountRly" class="text-danger"></span>
             </div>
 
 
@@ -740,9 +734,10 @@
                 المبلغ اجنبي
             </div>
             <div class="form-form-group col-3">
-                <input asp-for="CreditAmountUdo" class="form-control" />
-               
+                <input asp-for="DebittAmountUdo" class="form-control" />
+                <span asp-validation-for="DebittAmountUdo" class="text-danger"></span>
             </div>
+
              
             <div class="form-group col-2">
                 <label asp-for="CheckStatus" class="control-label"></label>
@@ -753,11 +748,11 @@
             </div>
 
               <div class="form-group col-2">
-                <label asp-for="CheckExpendCheques" class="control-label"></label>
+                <label asp-for="CheckPayCheckCheques" class="control-label"></label>
             </div>
             <div class="form-form-group col-3">
-                <input asp-for="CheckExpendCheques" class="form-control" />
-                <span asp-validation-for="CheckExpendCheques" class="text-danger"></span>
+                <input asp-for="CheckPayCheckCheques" class="form-control" />
+                <span asp-validation-for="CheckPayCheckCheques" class="text-danger"></span>
             </div>
 
 
@@ -778,7 +773,7 @@
                 <span asp-validation-for="SystemUsers" class="text-danger"></span>
             </div>
 
-             <input  asp-for="CurrenciesExchangeRate"  class="form-control exchange1" />
+              <input  asp-for="CurrenciesExchangeRate"  class="form-control exchange1" />
 
              <select id="mySelect" class ="form-control"  size="5"
              style="visibility: hidden;"
@@ -797,20 +792,18 @@
               </div>
 
         </div>
-        
 
 
 
 
             </div>
         </form>
-        </div>
-        </div>
     
 </div>
+</div>
+</div>
+</div>
 
-      </div>
-      
 
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
@@ -845,56 +838,20 @@
   <script src="~/pages1/sys13.js"></script>
 
 
-  
-  <script type="text/javascript">
+     <script type="text/javascript">
 
-
-
-
-      
-          //------------------------ جلب سعر الصرف على حسب العملة --------------------------  
-   
-         
-          $(".currency").change(function () {
-
-          let id = $(".currency option:selected").val();
-          $.ajax({
-                type: "GET",
-                url: "/CheckExpens/GetCurr",
-                 data: { CurrenciesId: id },
-                  success: function (data) {
-                  let items = '';
-                 
-                    $.each(data, function (i, exchange) {
-                         $('.exchange1').val(exchange.value);
-                         $('.exchange').val(exchange.text);
-                     items += '<option value="' + exchange.value + '">' + exchange.text + "</option>";
-                    
-                    });
-                     $(".exchange").html(items);
-                 
-                 }
-
-                      })
-         
-                  });
-
-   //-----------------------------------------------------------------------------------
-
-                 //-------------------------- جلب العملات على حسب البنك ----------------------------  
+                //-------------------------- جلب العملات على حسب الصندوق ----------------------------  
           $(".bank").change(function () {
 
           let id = $(".bank option:selected").val();
           $.ajax({
                 type: "GET",
-                url: "/CheckExpens/GetAcc",
+                url: "/CheckPaycheck/GetAcc",
                  data: { BankId: id },
                  success: function (data) {
-                  let items = '';   
-                   items += `<option value="">---توجد  (${data.length}) عملات---</option>`;
+                  let items = '';
+                  items += `<option value="">---توجد  (${data.length}) عملات---</option>`;
                     $.each(data, function (i, currency) {
-
-                       
                      items += '<option value="' + currency.value + '">' + currency.text + "</option>";
                     
                     });
@@ -903,80 +860,113 @@
                  }
 
           })
-              
+         
          });
          //---------------------------------------------------------------------------------
 
-                  //-----------------------------------------------------------------------------------
-                  document.addEventListener('keydown',ShowSearchableList);
 
-                   function setSameWidth(srcElement,desElement){
-                      desElement.style.setSameWidth = "260px";
-                      }
-                         
-                     function ShowSearchableList(event){
+         
+          //------------------------ جلب سعر الصرف على حسب العملة --------------------------  
 
-                      if(event.target.id.indexOf('DebitChildAccount')<0){
-                          return ;
-                }
+         
+          $(".currency").change(function () {
 
-                var objDiv = document.getElementById("CsDiv");
-                     objDiv.scrollTop=objDiv.scrollHeight;
+          let id = $(".currency option:selected").val();
+          $.ajax({
+                type: "GET",
+                url: "/CheckPaycheck/GetCurr",
+                 data: { CurrenciesId: id },
+                 success: function (data) {
+                  let items = '';
+                    $.each(data, function (i, exchange) {
+                          $('.exchange1').val(exchange.value);
+                         $('.exchange').val(exchange.text);
+                     items += '<option value="' + exchange.value + '">' + exchange.text + "</option>";
+                    
+                    });
+                     $(".exchange").html(items);
+                 
+                 }
+
+          })
+         
+         });
+
+   //-----------------------------------------------------------------------------------
+
+   
+         
+ //-----------------------------------------------------------------------------------
+          document.addEventListener('keydown',ShowSearchableList);
+
+         function setSameWidth(srcElement,desElement){
+             desElement.style.setSameWidth = "260px";
+         }
+
+         function ShowSearchableList(event){
+
+             if(event.target.id.indexOf('CreditChildAccount')<0){
+                 return ;
+             }
+
+            var objDiv = document.getElementById("CsDiv");
+            objDiv.scrollTop=objDiv.scrollHeight;
 
 
-                  var tid =event.target.id;
-                  var txtDescId =tid.replaceAll('DebitChildAccount' , 'ArabicAccName');
-                  var txtValue=document.getElementById('txtValue');
-                  var txtText =document.getElementById(txtDescId);
-                  var txtSearch =event.target;
+             var tid =event.target.id;
+             var txtDescId =tid.replaceAll('CreditChildAccount' , 'ArabicAccName');
+             var txtValue=document.getElementById('txtValue');
+             var txtText =document.getElementById(txtDescId);
+             var txtSearch =event.target;
 
-                  var lstbox= document.getElementById('mySelect');
+             var lstbox= document.getElementById('mySelect');
 
-                  $(txtSearch).after($(lstbox).show('slow'));
+             $(txtSearch).after($(lstbox).show('slow'));
 
-                  if(event.keyCode === 13 || event.keyCode ==9){
+             if(event.keyCode === 13 || event.keyCode ==9){
 
-                      txtSearch.value=txtValue.value;
-                      lstbox.style.visibility="hidden";
-                      var divlst = document.getElementById("HiddenDiv");
-                      $(divlst).after($(lstbox).show('slow'));
+                 txtSearch.value=txtValue.value;
+                 lstbox.style.visibility="hidden";
+                 var divlst = document.getElementById("HiddenDiv");
+                 $(divlst).after($(lstbox).show('slow'));
 
-                      if( event.keyCode===13){
-                          event.preventDefault();
-                          txtSearch.focus();
+                 if( event.keyCode===13){
+                     event.preventDefault();
+                     txtSearch.focus();
                      return;
                  }
                  else
                     return;
+             }
+             setSameWidth(txtSearch, lstbox);
+             lstbox.style.visibility = "visible";
+
+             txtValue.value="";
+             txtText.value= "";
+
+             var items =lstbox.options;
+
+             for(var i=items.length - 1 ; i>= 0 ; i-- ){
+                 if(items[i].text.toLowerCase().indexOf(txtSearch.value.toLowerCase()) > -1){
+                     items[i].style.display = 'block';
+                     items[i].selected =true;
+                     txtValue.value=items[i].value;
+                     txtText.value=items[i].text;
                  }
-                 setSameWidth(txtSearch, lstbox);
-                 lstbox.style.visibility = "visible";
-
-                 txtValue.value="";
-                 txtText.value= "";
-
-                 var items =lstbox.options;
-
-                 for(var i=items.length - 1 ; i>= 0 ; i-- ){
-                     if(items[i].text.toLowerCase().indexOf(txtSearch.value.toLowerCase()) > -1){
-                         items[i].style.display = 'block';
-                         items[i].selected =true;
-                         txtValue.value=items[i].value;
-                         txtText.value=items[i].text;
-                     }
-                     else {
-                         items[i].style.display = 'none';
-                         items[i].selected= false;
-                     }
+                 else {
+                     items[i].style.display = 'none';
+                     items[i].selected= false;
                  }
+             }
 
 
 
-                     }
- 
-</script>
+         }
+         
+
+
+
+     </script>
 </body>
 </html>
-
-  
 

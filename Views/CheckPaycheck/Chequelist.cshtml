@@ -1,0 +1,160 @@
+﻿@model IEnumerable<POS.Models.DB.CheckPaycheckVoucher>
+
+<!--------------------------Start Header-------------------------->
+
+    @{
+    ViewData["Title"] = "Chequelist";
+    SortModel sortModel = (SortModel)ViewData["sortModel"];
+    PagerModel pager = ViewBag.Pager;
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+<div class="container-fluid btn-group">
+    
+    
+    <div class="col-2 justify-content-end">
+        <p>
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+        </p>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-12">
+        <partial name="_topBar" model="@pager" />
+    </div>
+</div>
+
+<!--------------------------End Header-------------------------->
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                 <i class="@sortModel.GetColumn("name").SortIcon" arial-hidden="true"></i>
+                <a asp-action="Chequelist" asp-route-sortExpression="@sortModel.GetColumn("name").SortExpression"/>
+                رقم السند
+            </th>
+            <th>
+               رقم الشيك
+            </th>
+           
+            <th>
+               نوع الاستحقاق
+            </th>
+            <th>
+               تاريخ الاستحقاق
+            </th>
+           
+            <th>
+                  <i class="@sortModel.GetColumn("ExDate").SortIcon" arial-hidden="true"></i>
+                <a asp-action="Chequelist" asp-route-sortExpression="@sortModel.GetColumn("ExDate").SortExpression"/>
+               تاريخ السند
+            </th>
+            <th>
+                 المبلغ مدين
+            </th>
+            <th>
+               المبلغ دائن
+            </th>
+        
+            <th>
+               اسم البنك
+            </th>
+            <th>
+               سعر الصرف
+            </th>
+            <th>
+                العملة
+            </th>
+            <th>
+               اسم الحساب
+            </th>
+            <th>
+               السنة
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+       <form  asp-action="Cheque">    
+            <tr>
+                <td>
+                @Html.DisplayFor(modelItem => item.CheckPaycheckVoucherNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckNumber)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.ChequesType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChequesDate)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditAmountRly)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DebittAmountRly)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.BanksNavigation.BankName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrenciesExchangeRateNavigation.CurreExchangeRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrenciesNavigation.CurrenName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditChildAccountNavigation.ArabicAccName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FiscalYearNavigation.FiscalYearName)
+            </td>
+            <td>
+            
+
+               <div class="btn-group">
+                    
+
+                   <a asp-action="Cheque" asp-route-id="@item.CheckPaycheckVoucherNumber">
+                        <span class="btn btn-sm btn-outline-dark">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                 
+                 @*  <div class="col-2 justify-content-end">
+                       <p>
+                          <a asp-action="Cheque"  class="btn btn-success">إستحقاق</a>
+                           <input type="submit" asp-route-id="@item.CheckPaycheckVoucherNumber" value="إستحقاق" class="btn btn-danger btn-block" />
+                    </p>
+                    </div>*@
+                
+                </div>
+            </td>
+        </tr>
+        </form>
+}     
+
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-12">
+        <partial name="_bottomBar" model="@pager" />
+    </div>
+</div>
+
+ @section Scripts 
+    {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+     <script type="text/javascript">
+
+     
+     </script>
+}
