@@ -3,8 +3,7 @@
 
     @{
     ViewData["Title"] = "Chequelist";
-    SortModel sortModel = (SortModel)ViewData["sortModel"];
-    PagerModel pager = ViewBag.Pager;
+ 
 Layout = null;
 }
 
@@ -244,7 +243,7 @@ Layout = null;
                 </li>
                 <!-- Page -->
               <!-- Page -->
-              <li class="menu-item">
+              <li class="menu-item active">
                 <a asp-controller="CheckPaycheck" asp-action="Chequelist" class="menu-link">
                   <div>استحقاق شيك</div>
                 </a>
@@ -252,7 +251,7 @@ Layout = null;
             </ul>
           </li>
           <!-- page list -->
-          <li class="menu-item open">
+          <li class="menu-item ">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon icon-suitcase-rolling me-1"></i>
               <div>التراحيل</div>
@@ -547,12 +546,42 @@ Layout = null;
               <div class="table-responsive card-datatable">
               
                 <table class="table datatables-basic">
+                    <div class="row">
+                    <div class="col-xl-2 col-md-4 col-sm-6"  style="margin-top: 42px;margin-right: 421px;">
+                                    <a asp-action="Chequelist" asp-controller="CheckPaycheck"> 
+
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="badge-circle badge-circle-lg badge-circle-light-primary mx-auto my-1">
+                                        <i class="bx bx-money font-medium-5"></i>
+                                    </div>
+                                    <p class="text-muted mb-0 line-ellipsis"> إستحقاق قبض</p>
+                                    <h2 class="mb-0">72</h2>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                               <div class="col-xl-2 col-md-4 col-sm-6"  style="margin-top: 42px;">
+                                    <a asp-action="Chequelist" asp-controller="CheckExpens"> 
+
+                            <div class="card text-center" style="background-color: #212456;">
+                                <div class="card-body">
+                                    <div class="badge-circle badge-circle-lg badge-circle-light-primary mx-auto my-1">
+                                        <i class="bx bx-money font-medium-5"></i>
+                                    </div>
+                                    <p class="text-muted mb-0 line-ellipsis"> إستحقاق صرف</p>
+                                    <h2 class="mb-0">72</h2>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        </div>
+             
 <!--------------------------End Header-------------------------->
     <thead>
         <tr>
             <th>
-                 <i class="@sortModel.GetColumn("name").SortIcon" arial-hidden="true"></i>
-                <a asp-action="Chequelist" asp-route-sortExpression="@sortModel.GetColumn("name").SortExpression"/>
+                
                 رقم السند
             </th>
             <th>
@@ -567,9 +596,7 @@ Layout = null;
             </th>
            
             <th>
-                  <i class="@sortModel.GetColumn("ExDate").SortIcon" arial-hidden="true"></i>
-                <a asp-action="Chequelist" asp-route-sortExpression="@sortModel.GetColumn("ExDate").SortExpression"/>
-               تاريخ السند
+                    تاريخ السند
             </th>
           
             <th>
@@ -591,6 +618,7 @@ Layout = null;
         </tr>
     </thead>
     <tbody>
+
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -640,13 +668,6 @@ Layout = null;
                            <i class="menu-icon icon-file-invoice-dollar me-1"></i>
                         </span>
                     </a>
-                 
-                 @*  <div class="col-2 justify-content-end">
-                       <p>
-                          <a asp-action="Cheque"  class="btn btn-success">إستحقاق</a>
-                           <input type="submit" asp-route-id="@item.CheckPaycheckVoucherNumber" value="إستحقاق" class="btn btn-danger btn-block" />
-                    </p>
-                    </div>*@
                 
                 </div>
             </td>
@@ -755,7 +776,7 @@ Layout = null;
   <script src="~/assets/js/main.js"></script>
 
   <!-- Page JS -->
-  <script src="~/pages1/sys13.js"></script>
+  <script src="~/pages1/sys133.js"></script>
 </body>
 
 </html>
