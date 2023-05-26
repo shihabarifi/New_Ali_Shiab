@@ -17,7 +17,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>العملات</title>
+  <title>بروفايل الشركة</title>
 
   <meta name="description" content="" />
 
@@ -373,6 +373,12 @@
               <div>النسخة الاحتياطية</div>
             </a>
           </li>
+          <li class="menu-item">
+              <a asp-controller="CompanyProfile" asp-action="Index" class="menu-link">
+                <i class="menu-icon icon-arrows-rotate me-1"></i>
+                 <div>بروفايل الشركة</div>
+              </a>
+            </li>
         </ul>
 
       </aside>
@@ -394,7 +400,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">الصناديق</h3>
+                <h3 class="nav-item pt-3">استعراض بيانات الشركة</h3>
 
               </div>
               <!-- nav-->
@@ -515,8 +521,8 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <div>
+    <div class="col-md-8">
+        <div class="col-md-8">
     <h4>بروفايل الشركة</h4>
     <hr />
     <dl class="row">
@@ -536,9 +542,17 @@
         <dt class = "col-sm-2">
             صورة شعار الشركة
         </dt>
-        <dd class = "col-sm-10">
+        @{
+                                    var imagePath= Model.CompanyIcon.Substring(7);
+                                    <dd class = "col-sm-20">
+                                        <div class="image-box">
+                                            <img src="@imagePath" alt="Company Icon" class="company-icon" style="width: 100px; height: 100px;" />
+                                        </div>
+                                    </dd>
+                                    }
+        @*<dd class = "col-sm-20">
             @Html.DisplayFor(model => model.CompanyIcon)
-        </dd>
+        </dd>*@
         <dt class = "col-sm-2">
            الايميل 
         </dt>
@@ -549,7 +563,7 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "تعديل", new {  id = Model.CompanyProfileId  }) |
+    @Html.ActionLink("تعديل","Edit",  new {  id = Model.CompanyProfileId  }) |
     <a asp-action="Index">العودة للقائمة السابقة</a>
 </div>
 

@@ -16,7 +16,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>البنوك</title>
+  <title>بروفايل الشركة</title>
 
   <meta name="description" content="" />
 
@@ -393,6 +393,12 @@
               <div>النسخة الاحتياطية</div>
             </a>
           </li>
+          <li class="menu-item">
+              <a asp-controller="CompanyProfile" asp-action="Index" class="menu-link">
+                <i class="menu-icon icon-arrows-rotate me-1"></i>
+                 <div>بروفايل الشركة</div>
+              </a>
+            </li>
         </ul>
 
       </aside>
@@ -414,7 +420,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">إضافة بنك</h3>
+                <h3 class="nav-item pt-3">إضافة بروفايل الشركة</h3>
 
               </div>
               <!-- nav-->
@@ -524,7 +530,7 @@
 <hr />
 <div  style="margin-right:100px;margin-left:250px;margin-top:100px;margin-bottom:100px;padding-right:200px;padding-top:100px;padding-bottom:100px;" class="card">
    
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             

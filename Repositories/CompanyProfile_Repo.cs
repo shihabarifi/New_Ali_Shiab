@@ -16,11 +16,18 @@ namespace POS.Repositories
         public void Add(CompanyProfile entity)
         {
            Db.CompanyProfiles.Add(entity);
+            Db.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var singleProfile=Find(id);
+            if (singleProfile != null)
+            {
+                Db.CompanyProfiles.Remove(singleProfile);
+                Db.SaveChanges();
+            }
+
         }
 
         public CompanyProfile Find(int id)
@@ -41,6 +48,7 @@ namespace POS.Repositories
         public void Update(int id, CompanyProfile entity)
         {
             Db.CompanyProfiles.Update(entity);
+            Db.SaveChanges();
         }
     }
 }

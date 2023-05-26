@@ -14,10 +14,23 @@ namespace POS.Controllers
         {
             CompanyProfile_Repo = _CompanyProfile_Repo;
         }
+        public string RemoveWwwRoot(string path)
+        {
+            return path.Replace("wwwroot/", "");
+        }
         // GET: CompanyProfile
         public ActionResult Index()
         {
             var ComapnyList= CompanyProfile_Repo.List().ToList();
+
+            //foreach (var company in ComapnyList)
+            //{
+            //    if (company.CompanyIcon.ToString() != null)
+            //    {
+            //        company.CompanyIcon = RemoveWwwRoot(company.CompanyIcon.ToString());
+
+            //    }
+            //}
             return View(ComapnyList);
         }
 
@@ -38,17 +51,50 @@ namespace POS.Controllers
         // POST: CompanyProfile/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public  IActionResult Create(CompanyProfile companyProfile, IFormFile companyIconFile)
         {
+            
+
             try
             {
+                if (companyIconFile != null)
+                {
+                    
+                    //// Update the CompanyIcon property with the image path
+                    //companyProfile.CompanyIcon = imagePath;
+                    string fileName = $"{companyProfile.CompanyName}_{DateTime.Now.Ticks}{Path.GetExtension(companyIconFile.FileName)}";
+
+                    // Set the directory path where the image will be saved
+                    string directoryPath = Path.Combine("wwwroot", "assets", "images", "companyprofile");
+
+                    // Create the directory if it doesn't exist
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    // Set the file path where the image will be saved
+                    string imagePath = Path.Combine(directoryPath, fileName);
+
+                    // Save the uploaded image to the specified path
+                    using (var fileStream = new FileStream(imagePath, FileMode.Create))
+                    {
+                        companyIconFile.CopyTo(fileStream);
+                    }
+
+                    // Update the CompanyIcon property with the image path
+                    companyProfile.CompanyIcon = imagePath;
+
+                }
+                CompanyProfile_Repo.Add(companyProfile);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(companyProfile);
             }
         }
+
 
         // GET: CompanyProfile/Edit/5
         public ActionResult Edit(int id)
@@ -60,10 +106,40 @@ namespace POS.Controllers
         // POST: CompanyProfile/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(CompanyProfile companyProfile, IFormFile companyIconFile)
         {
             try
             {
+                if (companyIconFile != null)
+                {
+
+                    //// Update the CompanyIcon property with the image path
+                    //companyProfile.CompanyIcon = imagePath;
+                    string fileName = $"{companyProfile.CompanyName}_{DateTime.Now.Ticks}{Path.GetExtension(companyIconFile.FileName)}";
+
+                    // Set the directory path where the image will be saved
+                    string directoryPath = Path.Combine("wwwroot", "assets", "images", "companyprofile");
+
+                    // Create the directory if it doesn't exist
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    // Set the file path where the image will be saved
+                    string imagePath = Path.Combine(directoryPath, fileName);
+
+                    // Save the uploaded image to the specified path
+                    using (var fileStream = new FileStream(imagePath, FileMode.Create))
+                    {
+                        companyIconFile.CopyTo(fileStream);
+                    }
+
+                    // Update the CompanyIcon property with the image path
+                    companyProfile.CompanyIcon = imagePath;
+
+                }
+                CompanyProfile_Repo.Update(companyProfile.CompanyProfileId, companyProfile);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -82,10 +158,11 @@ namespace POS.Controllers
         // POST: CompanyProfile/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, IFormCollection formCol)
         {
             try
             {
+                CompanyProfile_Repo.Delete(id); 
                 return RedirectToAction(nameof(Index));
             }
             catch

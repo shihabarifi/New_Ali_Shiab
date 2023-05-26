@@ -20,7 +20,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>الفترة المالية</title>
+  <title>بروفايل الشركة</title>
 
   <meta name="description" content="" />
 
@@ -398,6 +398,12 @@
               <div>النسخة الاحتياطية</div>
             </a>
           </li>
+          <li class="menu-item">
+              <a asp-controller="CompanyProfile" asp-action="Index" class="menu-link">
+                <i class="menu-icon icon-arrows-rotate me-1"></i>
+                 <div>بروفايل الشركة</div>
+              </a>
+            </li>
         </ul>
 
       </aside>
@@ -419,7 +425,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">الفترة المالية</h3>
+                <h3 class="nav-item pt-3">بروفايل الشركة</h3>
 
               </div>
               <!-- nav-->
@@ -543,72 +549,83 @@
           <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card">
               <div class="table-responsive card-datatable">
-                <table class="table">
-    <thead>
-        <tr>
+                   <table class="table datatables-basic" >
+                    <thead>
+                        <tr>
             
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyIcon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SystemUsers)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
+                            <th>
+                                أسم الشركة
+                            </th>
+                            <th>
+                                رقم الهاتف
+                            </th>
+                            <th>
+                                شعار الشركة
+                            </th>
+                            <th>
+                               الايميل الالكتروني
+                            </th>
+                            
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model) {
+                                <tr>
             
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyIcon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SystemUsers)
-            </td>
-             <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="icon-ellipsis-vertical"></i>
-                          </button>
-                          <!-- إجرائات -->
-                          <div class="dropdown-menu">
-                           
-                            <a class="dropdown-item me-1" asp-action="Edit" asp-route-id="@item.CompanyProfileId">
-                              <i class="icon-pen-to-square"></i>
-                              تعديل
-                            </a>
-                            <a class="dropdown-item me-1"asp-action="Delete" asp-route-id="@item.CompanyProfileId">
-                              <i class="icon-lock"></i>
-                              حذف
-                            </a>
-                          </div>
-                          <!-- / إجرائات -->
-                        </div>
-                    </td>
-        </tr>
-}
-    </tbody>
-</table>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                    </td>
+                                    @*<td>
+                                        @Html.DisplayFor(modelItem => item.CompanyIcon)
+                                    </td>*@
+                                    @{
+                                    var imagePath= item.CompanyIcon.Substring(7);
+                                    <td>
+                                        <div class="image-box">
+                                            <img src="@imagePath" alt="Company Icon" class="company-icon" style="width: 100px; height: 100px;" />
+                                        </div>
+                                    </td>
+                                    }
+                                    
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserEmail)
+                                    </td>
+                                    
+                                     <td>
+                                                <div class="dropdown">
+                                                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                    <i class="icon-ellipsis-vertical"></i>
+                                                  </button>
+                                                  <!-- إجرائات -->
+                                                  <div class="dropdown-menu">
+                                                    <a class="dropdown-item me-1" asp-action="Details" asp-route-id="@item.CompanyProfileId">
+                                                      <i class="icon-pen-to-square"></i>
+                                                      عرض
+                                                    </a>
+                                                    <a class="dropdown-item me-1" asp-action="Edit" asp-route-id="@item.CompanyProfileId">
+                                                      <i class="icon-pen-to-square"></i>
+                                                      تعديل
+                                                    </a>
+                                                    <a class="dropdown-item me-1"asp-action="Delete" asp-route-id="@item.CompanyProfileId">
+                                                      <i class="icon-lock"></i>
+                                                      حذف
+                                                    </a>
+                                                  </div>
+                                                  <!-- / إجرائات -->
+                                                </div>
+                                            </td>
+                                </tr>
+                        }
+                    </tbody>
+                    </table>
               </div>
+
 
             </div>
           </div>
@@ -621,32 +638,32 @@
             <div class="offcanvas-header">
               <h5 id="offcanvasEndLabel" class="offcanvas-title">بروفايل الشركة</h5>
             </div>
-            <form class="browser-default-validation mt-0" asp-action="Create">
+            <form  class="browser-default-validation mt-0" asp-action="Create" method="post" enctype="multipart/form-data">
               <!-- body -->
               <div class="offcanvas-body my-auto mx-0 flex-grow-0">
                 <div class="mb-3">
                   <!-- content -->
                   <div class="col">
-                    <label for="defaultFormControlInput" class="form-label">اسم السنة</label>
+                    <label for="defaultFormControlInput" class="form-label">اسم الشركة</label>
              
                       <input  asp-for="@Model.First().CompanyName" value="" type="text" class="form-control" id="defaultFormControlInput"
                       aria-describedby="defaultFormControlHelp" />
                   </div>
                   <div class="col">
-                    <label for="defaultFormControlInput" class="form-label">اسم السنة</label>
+                    <label for="defaultFormControlInput" class="form-label"> هاتف الشركة</label>
              
                       <input  asp-for="@Model.First().PhoneNumber" value="" type="text" class="form-control" id="defaultFormControlInput"
                       aria-describedby="defaultFormControlHelp" />
                   </div>
                   <div class="col">
-                    <label for="defaultFormControlInput" class="form-label">اسم السنة</label>
+                    <label for="defaultFormControlInput" class="form-label">الايميل الالكتروني</label>
              
                       <input  asp-for="@Model.First().UserEmail" value="" type="text" class="form-control" id="defaultFormControlInput"
                       aria-describedby="defaultFormControlHelp" />
                   </div>
                   <div class="col">
                     <label for="imageInput" class="form-label">الصورة</label>
-                    <input type="file" asp-for="@Model.First().CompanyIcon" accept="image/*" class="form-control" id="imageInput" onchange="handleImageUpload(event)"
+                    <input type="file" asp-for="@Model.First().CompanyIcon" name="companyIconFile" accept="image/*" class="form-control" id="imageInput" onchange="handleImageUpload(event)"
                            aria-describedby="defaultFormControlHelp" />
                   </div>
                   

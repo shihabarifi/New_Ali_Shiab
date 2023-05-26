@@ -17,7 +17,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>العملات</title>
+  <title>بروفايل الشركة</title>
 
   <meta name="description" content="" />
 
@@ -373,6 +373,13 @@
               <div>النسخة الاحتياطية</div>
             </a>
           </li>
+          <li class="menu-item">
+              <a asp-controller="CompanyProfile" asp-action="Index" class="menu-link">
+                <i class="menu-icon icon-arrows-rotate me-1"></i>
+                 <div>بروفايل الشركة</div>
+              </a>
+            </li>
+          </li>
         </ul>
 
       </aside>
@@ -394,7 +401,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">الصناديق</h3>
+                <h3 class="nav-item pt-3">بروفايل الشركة</h3>
 
               </div>
               <!-- nav-->
@@ -512,12 +519,16 @@
         <!-- / Navbar -->
 <hr />
 <div   style="margin-right:100px;margin-left:250px;margin-top:100px;margin-bottom:100px;padding-right:200px;padding-top:100px;padding-bottom:100px;" class="card">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <div class="row">
-    <div class="col-md-4">
-        <form asp-action="تعديل البروفايل">
+    <div class="col-md-8">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+            <div class="form-group">
+                <label  asp-for="CompanyProfileId" class="control-label"> الرقم</label>
+                <input readonly asp-for="CompanyProfileId" class="form-control" />
+                <span asp-validation-for="CompanyProfileId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="CompanyName" class="control-label"> أسم الشركة</label>
                 <input asp-for="CompanyName" class="form-control" />
@@ -528,11 +539,11 @@
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CompanyIcon" class="control-label"> صورة الشعار</label>
-                <input asp-for="CompanyIcon" class="form-control" />
-                <span asp-validation-for="CompanyIcon" class="text-danger"></span>
-            </div>
+            <div class="col">
+                    <label for="imageInput" class="form-label">الصورة</label>
+                    <input type="file" asp-for="CompanyIcon" name="companyIconFile" accept="image/*" class="form-control" id="imageInput" 
+                           aria-describedby="defaultFormControlHelp" />
+                  </div>
             <div class="form-group">
                 <label asp-for="UserEmail" class="control-label">الايميل الالكتروني</label>
                 <input asp-for="UserEmail" class="form-control" />
@@ -540,7 +551,7 @@
             </div>
             
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="حفظ التعديل" class="btn btn-primary" />
             </div>
         </form>
     </div>
