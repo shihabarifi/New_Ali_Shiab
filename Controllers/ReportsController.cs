@@ -50,7 +50,7 @@ namespace POS.Controllers
             var defItem = new SelectListItem()
             {
                 Value = "",
-                Text = "----Select Fund----"
+                Text = "----أختر الصندوق----"
             };
 
             lstfund.Insert(0, defItem);
@@ -74,7 +74,7 @@ namespace POS.Controllers
             var defItem = new SelectListItem()
             {
                 Value = "",
-                Text = "----Select Currency----"
+                Text = "----أختر العملة----"
             };
 
             lstcurrencies.Insert(0, defItem);
@@ -98,7 +98,7 @@ namespace POS.Controllers
             var defItem = new SelectListItem()
             {
                 Value = "",
-                Text = "----Select The Number----"
+                Text = "----أختر رقم السند----"
             };
 
             lstExpens.Insert(0, defItem);

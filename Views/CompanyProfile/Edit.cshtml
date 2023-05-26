@@ -1,16 +1,12 @@
-﻿@model IEnumerable<POS.Models.DB.AccountingManual>
+﻿@model POS.Models.DB.CompanyProfile
 
 
-<!--------------------------Start Header-------------------------->
-
-    @{
-  
- Layout = null;
-
- SortModel sortModel = (SortModel)ViewData["sortModel"];
-    PagerModel pager = ViewBag.Pager;
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
 }
-
+ @inject UserManager<ApplicationUser> userManager
+@inject SignInManager<ApplicationUser> signInManager
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="rtl" data-theme="theme-default"
@@ -138,13 +134,13 @@
                 </a>
               </li>
               <!-- Page -->
-              <li class="menu-item active">
+              <li class="menu-item">
                 <a asp-controller="AccountingManual" asp-action="Index" class="menu-link">
                   <div>الدليل المحاسبي</div>
                 </a>
               </li>
               <!-- Page -->
-              <li class="menu-item ">
+              <li class="menu-item active">
                 <a asp-controller="Fund" asp-action="Index"  class="menu-link">
                   <div>الصناديق</div>
                 </a>
@@ -181,68 +177,47 @@
                   </li>
                 </ul>
               </li>
-           <!-- Page -->
-                <li class="menu-item ">
-                  <a href="javascript:void(0)" class="menu-link menu-toggle">
-                    <div>سند صرف </div>
-                  </a>
-                  <ul class="menu-sub">
-                    <!-- Page -->
-                    <li class="menu-item">
-                      <a asp-controller="ExpensVoucher" asp-action="Create" class="menu-link">
-                        <div>أضافة صرف نقداً</div>
-                      </a>
-                    </li>
-                     <li class="menu-item">
-                      <a asp-controller="CheckExpens" asp-action="Create" class="menu-link">
-                        <div>أضافة صرف شيك</div>
-                      </a>
-                    </li>
-                    <!-- Page -->
-                    <li class="menu-item ">
-                      <a asp-controller="ExpensVoucher" asp-action="Index" class="menu-link">
-                        <div>استعراض صرف نقداً </div>
-                      </a>
-                    </li>
-                      <li class="menu-item ">
-                      <a asp-controller="CheckExpens" asp-action="Index" class="menu-link">
-                        <div>استعراض صرف شيك </div>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <!-- Page -->
-                <li class="menu-item  ">
-                  <a href="javascript:void(0)" class="menu-link menu-toggle">
-                    <div>سند قبض</div>
-                  </a>
-                  <ul class="menu-sub">
-                    <!-- Page -->
-                    <li class="menu-item ">
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <div>سند صرف </div>
+                </a>
+                <ul class="menu-sub">
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a asp-controller="ExpensVoucher" asp-action="Create" class="menu-link">
+                      <div>أضافة سند صرف</div>
+                    </a>
+                  </li>
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a asp-controller="ExpensVoucher" asp-action="Index" class="menu-link">
+                      <div>استعراض سند صرف </div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <div>سند قبض</div>
+                </a>
+                <ul class="menu-sub">
+                  <!-- Page -->
+                 <li class="menu-item ">
                       <a asp-controller="PayCheckVoucher" asp-action="Create" class="menu-link">
-                        <div>اضافة قبض نقداً</div>
-                      </a>
-                    </li> 
-                    <li class="menu-item ">
-                      <a asp-controller="CheckPaycheck" asp-action="Create" class="menu-link">
-                        <div>اضافة قبض شيك</div>
+                        <div>اضافة سند قبض</div>
                       </a>
                     </li>
-                    
                     <!-- Page -->
-                    <li class="menu-item ">
+                    <li class="menu-item active">
                       <a asp-controller="PayCheckVoucher" asp-action="Index" class="menu-link">
-                        <div>استعراض قبض نقداً</div>
+                        <div>استعراض سند قبض</div>
                       </a>
                     </li>
-                     <li class="menu-item ">
-                      <a asp-controller="CheckPaycheck" asp-action="Index" class="menu-link">
-                        <div>استعراض  قبض شيك</div>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <!-- Page -->
+                </ul>
+              </li>
+              <!-- Page -->
               <li class="menu-item">
                 <a asp-controller="CheckPaycheck" asp-action="Chequelist" class="menu-link">
                   <div>استحقاق شيك</div>
@@ -377,15 +352,14 @@
                   <div>الملف الشخصي</div>
                 </a>
               </li>
-             
-               <!-- Page -->
+           <!-- Page -->
               <li class="menu-item">
                  <a href="/Accounts/Roles" class="menu-link">
                   <div>إدارة المستخدمين</div>
                 </a>
               </li>
               <!-- Page -->
-              <li class="menu-item">
+              <li class="menu-item active">
                 <a href="/Accounts/Registers" class="menu-link">
                   <div> المستخدمين</div>
                 </a>
@@ -399,11 +373,6 @@
               <div>النسخة الاحتياطية</div>
             </a>
           </li>
-           <a asp-controller="CompanyProfile" asp-action="Index" class="menu-link">
-              <i class="menu-icon icon-arrows-rotate me-1"></i>
-              <div>بروفايل الشركة</div>
-            </a>
-          </li>
         </ul>
 
       </aside>
@@ -411,7 +380,7 @@
 
       <!-- Layout container -->
       <div class="layout-page">
-          <!-- Navbar -->
+ <!-- Navbar -->
 
         <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
           <div class="container-fluid">
@@ -425,7 +394,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">الدليل المحاسبي</h3>
+                <h3 class="nav-item pt-3">الصناديق</h3>
 
               </div>
               <!-- nav-->
@@ -458,7 +427,7 @@
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
                                 <!-- صورة الإشعار -->
-                                <img src="~/assets/img/avatars/1.png"  class="w-px-40 h-auto rounded-circle" />
+                                <img src="../~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                               </div>
                             </div>
                             <div class="flex-grow-1">
@@ -491,38 +460,47 @@
                   </ul>
                 </li>
                 <!-- Notifications -->
+               
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="~/assets/img/avatars/1.png"  class="rounded-circle" />
+                      <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
                     </div>
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="~/assets/img/avatars/1.png"  class="rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block lh-1">Shihab Al-Arifi</span>
-                            <small>Designer</small>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
-                    </li>
+             <ul class="dropdown-menu dropdown-menu-end">
+                  @if (signInManager.IsSignedIn(User))
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 me-3">
+                                                                <div class="avatar avatar-online">
+                                                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"  class="rounded-circle" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <span class="fw-semibold d-block lh-1">@((await userManager.GetUserAsync(User)).Name)</span>
+                                                                <small>Designer</small>
+                                                            </div>
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <div class="dropdown-divider"></div>
+                                                </li>
+                                                <li>
+
+
+                                  <form asp-action="Logout" asp-controller="Accounts" method="post">
+                                      
+                                       <a class="dropdown-item" href="/Accounts/">
+                                       <i class="bx bx-power-off me-2"></i>
+                                      <span class="align-middle">Log Out</span> </a>
+                                  </form>
+                                  
+                              </li>}
                   </ul>
                 </li>
                 <!--/ User -->
@@ -532,266 +510,48 @@
         </nav>
         <hr class="mt-0">
         <!-- / Navbar -->
-     
-        <!-- Content wrapper -->
-        <div class="content-wrapper">
-          <!-- Content -->
-        
-          <div class="container-xxl flex-grow-1 container-p-y">
-            <div class="card">
-              <div class="table-responsive card-datatable">
-                <table id="tableRole" class="table datatables-basic table-hover">
-                    <div style="padding-right:1010px;padding-top:10px;" class="col-2 justify-content-end">
-       
-         <p style="width:200px">
-            <a asp-action="Create" class="btn btn-primary">إضافة حساب <i class="icon-plus"> </i></a>
-        </p>
-                </div>
-              
-                  <thead>
-                    <tr>
-                      <th>
-                          <i class="@sortModel.GetColumn("number").SortIcon" arial-hidden="true"></i>
-                <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("number").SortExpression"/>
-                    
-               
-                          رقم الحساب
-
-                      </th>
-                      <th>اسم الحساب</th>
-                     
-                      <th> الحساب الرئيسي</th>
-                      <th>طبع الحساب</th>
-                       <th>حالة الحساب</th>
-                       <th>الإجرائات </th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    @foreach (var item in Model) {
-        <tr>
-                  
-            <td  >
-                @Html.DisplayFor(modelItem => item.AccNumber)
-            </td>
+<hr />
+<div   style="margin-right:100px;margin-left:250px;margin-top:100px;margin-bottom:100px;padding-right:200px;padding-top:100px;padding-bottom:100px;" class="card">
+    <div class="col-md-4">
+        <div class="row">
+    <div class="col-md-4">
+        <form asp-action="تعديل البروفايل">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
-             <td>
-                @Html.DisplayFor(modelItem => item.ArabicAccName)
-            </td>
-                            
-          <td >
-                @Html.DisplayFor(modelItem => item.ParentAccNumberNavigation.ArabicAccName)
-            </td>
-           
-          
-            <td>
-                @Html.DisplayFor(modelItem => item.AccKind)
-            </td>
-        
-         
-              <td>
-             
-                    @{
-                        @if((item.AccStatus)!=1.ToString())
-                        {
-                         
-                          <span style="color:#fff;background-color:#fc5a5a" class="badge ">موقف</span>
-                           
-                        }
-                        else
-                        {
-                         
-                          <span style="color:#fff  " class="badge bg-success ">نشط</span>
-                          
-                        }
-                    }
-            </td>         
-    <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="icon-ellipsis-vertical"></i>
-                          </button>
-                          <!-- إجرائات -->
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item me-1" asp-action="Edit"  asp-route-id="@item.AccNumber">
-                              <i class="icon-pen-to-square"></i>
-                              تعديل
-                            </a>
-                            <a class="dropdown-item me-1"asp-action="Delete"  asp-route-id="@item.AccNumber">
-                              <i class="icon-lock"></i>
-                              توقيف
-                            </a>
-                          </div>
-                          <!-- / إجرائات -->
-                        </div>
-                      </td>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"> أسم الشركة</label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"> رقم الهاتف</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyIcon" class="control-label"> صورة الشعار</label>
+                <input asp-for="CompanyIcon" class="form-control" />
+                <span asp-validation-for="CompanyIcon" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserEmail" class="control-label">الايميل الالكتروني</label>
+                <input asp-for="UserEmail" class="form-control" />
+                <span asp-validation-for="UserEmail" class="text-danger"></span>
+            </div>
             
-        </tr>
-}
-
-                  </tbody>
-                </table>
-              </div>
-
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-          </div>
-          <!-- / Content -->
-  <!-- offcanvas -->
-          <div style="width:500px" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasEndLabel">
-            <!-- Header -->
-            <div class="offcanvas-header">
-              <h5 id="offcanvasEndLabel" class="offcanvas-title">استعراض سند قبض</h5>
-            </div>
-            <form class="browser-default-validation mt-0">
-              <!-- body -->
-              <div class="offcanvas-body my-auto mx-0 flex-grow-0">
-                <div class="mb-3">
-                  <!-- content -->
-
-                  <div class="row">
-                   <div class="col-5">
-                      <label for="exampleFormControlSelect1" class="form-label"> حساب الاب</label>
-                      <select class="form-select Accp" id="Accp"  asp-for="@Model.First().ParentAccNumber"  
-                      asp-items="ViewBag.AccHeadeerlist" id="exampleFormControlSelect1" aria-label="Default select example">
-                     
-                      </select>
-                    </div>
-                    <div class="col-4">
-                      <label for="defaultFormControlInput" class="form-label">رقم الحساب</label>
-                      <input id="Acc" asp-for="@Model.First().AccNumber" value="" name="AccNumber" id="AccNumber" type="text" class="form-control" id="defaultFormControlInput"
-                        aria-describedby="defaultFormControlHelp" placeholder="رقم الحساب" />
-                    </div>
-                   <div class="col-3">
-                      <label for="defaultFormControlInput" class="form-label">رتبة الحساب</label>
-                      <input id="lv" asp-for="@Model.First().AccLevel" value="" type="text" class="form-control" id="defaultFormControlInput"
-                        aria-describedby="defaultFormControlHelp" placeholder="رتبة الحساب" />
-                    </div>
-                  </div>
-                  <div class="col">
-                    <label for="defaultFormControlInput" class="form-label">اسم الحساب بالعربي</label>
-                    <input asp-for="@Model.First().ArabicAccName" value="" type="text" class="form-control" id="defaultFormControlInput"
-                      aria-describedby="defaultFormControlHelp" placeholder=" اسم الحساب بالعربي" />
-                  </div>
-                  <div class="col">
-                    <label for="defaultFormControlInput" class="form-label">اسم الحساب باالانجليزي</label>
-                    <input asp-for="@Model.First().EnglishAccName" value="" type="text" class="form-control" id="defaultFormControlInput"
-                      aria-describedby="defaultFormControlHelp" placeholder=" اسم الحساب باالانجليزي" />
-                  </div>
-                  <div class="row">
-
-                    
-                    <div class="col-6">
-                      <label for="exampleFormControlSelect1" class="form-label">نوع الحساب</label>
-                      <select asp-for="@Model.First().AccType" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                      
-                        <option value="فرعي">فرعي</option>
-                        <option value="رئيسي">رئيسي</option>
-                      </select>
-                    </div>
-                   
-                    <div class="col-6">
-                      <label for="exampleFormControlSelect1" class="form-label">طبيعة الحساب</label>
-                      <select asp-for="@Model.First().AccKind" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                       
-                        <option value="مدين">مدين</option>
-                        <option value="دائن">دائن</option>
-                      </select>
-                    </div>
-                  
-                    <div class="col-6">
-                      <label for="exampleFormControlSelect1" class="form-label">نوع الحساب الختامي</label>
-                      <select class="form-select" asp-for="@Model.First().FinalAccountType"
-                      asp-items="ViewBag.GetFinAccTypelist" id="exampleFormControlSelect1" aria-label="Default select example">
-                      
-                      </select>
-                    </div>
-                     <div class="col-6">
-                      <label for="defaultFormControlInput" class="form-label">سقف الحساب</label>
-                      <input value="" asp-for="@Model.First().AccMaxBalane" type="text" class="form-control" id="defaultFormControlInput"
-                        aria-describedby="defaultFormControlHelp" placeholder="سقف الحساب" />
-                    </div>
-                  </div>
-                    
-                      <div class="row">
-                      
-                           <div class="col-6">
-                      <label for="exampleFormControlSelect1" class="form-label">حالة الحساب</label>
-                      <select asp-for="@Model.First().AccStatus" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                       
-                        <option value="1">نشط</option>
-                        <option value="0">موقف</option>
-                      </select>
-                    </div>
-                        
-                      </div> 
-                 
-                      <br /><br />
-                     
-            @*/////////////////////////// العملات////////////////////////////////////   *@
-
-       
-         <table id="CodesTable" class ="table table-borderless table-sm  border CodesTable" >
-                <thead>
-                    <tr>
-                   
-                    <th>
-                        العملات
-                    </th> 
-                    
-                   
-                     <th>
-                           <button  style="border-radius:100%;" onclick="AddItem(this)" type="button" id="btnAddDetailRow" class="btn btn-sm btn-success visible">
-                           <h4>+</h4>
-                            </button>
-                     </th>
-                    </tr>
-                </thead>
-                <tbody id="CsDiv">
-                     @for (int i = 0; i < @Model.Last().AccountsCurrencies.Count;i++)
-
-                        {
-                       <tr>
-
-                        <td>
-                          
-                             <select asp-for="@Model.First().AccountsCurrencies[i].Currencies" asp-items="ViewBag.AccCurrlist" class="form-control" ></select>
-                        </td>
-        
-
-                        <td style="width:60px;">
-                           
-                           <button  onclick="DeleteItem(this)" type="button" id="btnremove-@i" class="btn btn-sm btn-danger  visible">
-                            حذف 
-                           </button>
-                       </td>
+        </form>
+    </div>
+</div>
 
 
-                       </tr>
-                        }
-                   
-                </tbody>
-            </table>
 
-         
-          
-@*/////////////////////////////////////////////////////////////////*@
-                 
+    </div>
+</div>
 
-               
-                    
-                        
-                    
-                
-                  <!-- / content -->
-          </div>
-               
-                <button type="submit" class="btn btn-primary mb-1 d-grid w-100">تم</button>
-                <button type="button" class="btn btn-label-secondary d-grid w-100"
-                  data-bs-dismiss="offcanvas">إلغاء</button>
-          </div>
-             
-            </form>
-          </div>
-          <!-- / offcanvas -->
+
           <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
@@ -804,7 +564,7 @@
 
     <!-- Drag Target Area To SlideIn Menu On Small Screens -->
     <div class="drag-target"></div>
-  </div>
+ 
   <!-- / Layout wrapper -->
 
   <!-- Core JS -->
@@ -830,123 +590,19 @@
   <script src="~/assets/js/main.js"></script>
 
   <!-- Page JS -->
-  <script src="~/pages1/sys5.js"></script>
-  <script src="~/Modules/Reg.js"></script>
-     <script type="text/javascript">
+  <script src="~/pages1/sys6.js"></script>
 
-           //-------------------------- جلب  رقم  حساب جديد  ----------------------------  
-          $(".Accp").change(function () {
-
-          let id = $(".Accp option:selected").val();
-          $.ajax({
-                type: "GET",
-                url: "/AccountingManual/GetAcc",
-                 data: { AccParentid: id },
-                 success: function (data) {
-           
-                    if(data.status=="ok")
-                    {
-                       // alert("tis :"+data.result);
-                        let items = '';
-                      
-                        items=data.result;
-                     
-                   console.log(items);
-                     
-                        $("#Acc").val(items);
-                    }
-             
-                 }
-
-          })
-         
-         });
-          $("#Accp").change(function () {
-
-          let id = $("#Accp option:selected").val();
-          $.ajax({
-                type: "GET",
-                url: "/AccountingManual/GetAcclv",
-                 data: { AccParentidlv: id },
-                 success: function (data) {
-           
-                    if(data.status=="ok")
-                    {
-                       // alert("tis :"+data.result);
-                        let items = '';
-                      
-                        items=data.result;
-                     
-                   //console.log(items);
-                        $("#lv").val(items);
-                    
-                    }
-             
-                 }
-
-          })
-         
-         });
-
-           function AddItem(btn) {
-
-			var table = document.getElementById('CodesTable');
-			var rows = table.getElementsByTagName('tr');
-
-			var rowOuterHtml = rows[rows.length - 1].outerHTML;
-
-			var lastrowIdx = rows.length - 2;
-
-
-			var nextrowIdx = eval(lastrowIdx) + 1;
-
-			
-
-			rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
-			rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
-			rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
-
-
-			var newRow = table.insertRow();
-			newRow.innerHTML = rowOuterHtml;
-
-
-            var x =document.getElementsByTagName("INPUT");
-
-            for(var cnt =0 ; cnt < x.length; cnt++){
-                if(x[cnt].type=="text" && x[cnt].id.indexOf('_'+ nextrowIdx + '_')>0)
-                {
-                    
-
-                    x[cnt].value='';
-                }
-                else if (x[cnt].type=="number" && x[cnt].id.indexOf('_'+ nextrowIdx+ '_')>0)
-                x[cnt].value=0;
-            }
-
-            rebindvalidators();
-             
-         }
-
-   /////////////////////////////////////////////////////////////////////
-
-             function DeleteItem(btn) {
-               var table = document.getElementById('CodesTable');
-			var rows = table.getElementsByTagName('tr');
-
-            if(rows.length==2){ alert("This Row Cannot Be Deleted"); 
-            return;}
-
-            
-           // var btnIdx=btn.id.replaceAll('btnremove-', '');
-           // var idOfIsDeleted=btnIdx + "__IsDeleted";
-           // var hidIsDelId=document.querySelector("[id$='"+ idOfIsDeleted + "']");
-           //document.getElementById(hidIsDelId).value="true";
-
-			$(btn).closest('tr').remove();
-			
-           }
-     </script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

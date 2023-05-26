@@ -42,7 +42,7 @@ builder.Services.AddScoped<pay_recie_finRepository<FinalAccountType>, FinalAccou
 builder.Services.AddScoped<pay_recie_finRepository<CurrenciesExchangeRate>, CurrenciExchangeRateDb_Repository>();
 builder.Services.AddScoped<ICurrenciesExchangeRate, CurrenciesExchangeRateRepo>();
 builder.Services.AddScoped<pay_recie_finRepository<BackUpsDb>, BackUpDb_Repo>();
-
+builder.Services.AddScoped<pay_recie_finRepository<CompanyProfile>, CompanyProfile_Repo>();
 builder.Services.AddScoped<pay_recie_finRepository<MainJournalEntery>, MainJournalEnteryDb_Repository>();
 builder.Services.AddDbContext<posDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
