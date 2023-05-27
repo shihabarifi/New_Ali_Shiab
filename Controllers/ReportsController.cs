@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using POS.Data;
 using POS.Interfaces;
+using POS.Models;
 using POS.Models.DB;
 using POS.Models.DB.Report;
 using POS.Tools;
@@ -25,10 +26,14 @@ namespace POS.Controllers
         private readonly IExchangeRate _exchangeRateRepo;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly posDbContext _context;
-        public ReportsController( posDbContext context)
+        private readonly IAccountingManual Accounts_repo;
+
+        public ReportsController(ICurrency currencyRepo, posDbContext context, IAccountingManual _Accounts_repo)
         {
          
             _context = context;
+            this.Accounts_repo = _Accounts_repo;
+            _CurrencyRepo=currencyRepo;
         }
 
         List<SpGetReport> sqlpp = new List<SpGetReport>();
@@ -204,6 +209,106 @@ namespace POS.Controllers
 
             return View("ViewReportPy", SpGetData);
 
+
+        }
+
+        public IActionResult AccountingReport(string sortExpression = "", string SearchText = "0", int pg = 1, int pageSize = 50)
+        {
+            SortModel sortModel = new SortModel();
+            sortModel.AddColumn("name");
+            sortModel.AddColumn("number");
+            sortModel.ApplySort(sortExpression);
+            ViewData["sortModel"] = sortModel;
+
+            ViewBag.SearchText = SearchText;
+
+            PaginatedList<AccountingManual> items = Accounts_repo.GetItems(sortModel.SortedProperty, sortModel.SortedOrder, SearchText, pg, pageSize);
+
+
+            var pager = new PagerModel(items.TotalRecords, pg, pageSize);
+            pager.SortExpression = sortExpression;
+            this.ViewBag.Pager = pager;
+
+
+            TempData["CurrentPage"] = pg;
+            AccountingManual item = new AccountingManual();
+            item.AccountsCurrencies.Add(new AccountsCurrency() { AccountsCurrenciesId = 1 });
+            ViewBag.AccHeadeerlist = GetAccounts();
+            ViewBag.AccCurrlist = GetCurrency();
+            ViewBag.GetFinAccTypelist = GetFinAccType();
+
+            return View(items);
+        }
+        private List<SelectListItem> GetAccounts()
+        {
+            List<SelectListItem> lstAccount = _context.AccountingManuals.Where(n => n.AccType == "رئيسي").OrderBy(n => n.AccNumber).Select(n =>
+                new SelectListItem()
+                {
+                    Value = n.AccNumber.ToString(),
+                    Text = n.ArabicAccName
+                }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "----Select Account----"
+            };
+
+
+            lstAccount.Insert(0, defItem);
+
+            var defIt = new SelectListItem()
+            {
+                Value = "0",
+                Text = "#اب نفسة#"
+            };
+
+
+            lstAccount.Insert(1, defIt);
+            return lstAccount;
+        }
+
+        private List<SelectListItem> GetCurrency()
+        {
+
+            List<SelectListItem> lstAccount = _context.Currencies.Where(a => a.CurrStatus == 0).OrderBy(n => n.CrreChangeName).Select(n =>
+                 new SelectListItem()
+                 {
+                     Value = n.CurrenciesId.ToString(),
+                     Text = n.CurrenName
+                 }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "Select Currency"
+            };
+
+            lstAccount.Insert(0, defItem);
+
+            return lstAccount;
+
+        }
+
+        private List<SelectListItem> GetFinAccType()
+        {
+
+            List<SelectListItem> lstAccount = _context.FinalAccountTypes.OrderBy(n => n.FinalAccountTypeId).Select(n =>
+             new SelectListItem()
+             {
+                 Value = n.FinalAccountTypeId.ToString(),
+                 Text = n.FinAccType
+             }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "Select FinAccType"
+            };
+
+            lstAccount.Insert(0, defItem);
+
+            return lstAccount;
 
         }
 
