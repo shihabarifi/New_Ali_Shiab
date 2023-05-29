@@ -21,6 +21,7 @@ namespace POS.Controllers
         private readonly IExpensVoucher _Repo;
         private readonly IAccountingManual _AccountingManualRepo;
         private readonly IFund _FundRepo;
+        private readonly pay_recie_finRepository<MainJournalEntery> mainJourEnter_Repo;
         private readonly ICurrency _CurrencyRepo;
         private readonly IFiscalYear _fiscalYearRepo;
         private readonly IExchangeRate _exchangeRateRepo;
@@ -28,12 +29,13 @@ namespace POS.Controllers
         private readonly posDbContext _context;
         private readonly IAccountingManual Accounts_repo;
 
-        public ReportsController(ICurrency currencyRepo, posDbContext context, IAccountingManual _Accounts_repo)
+        public ReportsController(pay_recie_finRepository<MainJournalEntery> MainJourEnter_Repo, ICurrency currencyRepo, posDbContext context, IAccountingManual _Accounts_repo)
         {
          
             _context = context;
             this.Accounts_repo = _Accounts_repo;
-            _CurrencyRepo=currencyRepo;
+            mainJourEnter_Repo = MainJourEnter_Repo;
+            _CurrencyRepo =currencyRepo;
         }
 
         List<SpGetReport> sqlpp = new List<SpGetReport>();
@@ -310,6 +312,44 @@ namespace POS.Controllers
 
             return lstAccount;
 
+        }
+        public ActionResult JournalEntReport()
+        {
+            var _MainjournalEntery = mainJourEnter_Repo.List();
+
+            return View(_MainjournalEntery);
+        }
+        public ActionResult DailyJournalReport()
+        {
+            DateTime currentDate = DateTime.Now.Date; // Get the current date without the time
+
+            var _MainjournalEntery = mainJourEnter_Repo.List()
+            .Where(element => element.MainJournalDateTime.HasValue &&
+                      element.MainJournalDateTime.Value.Date == currentDate)
+                        .ToList();
+            return View(_MainjournalEntery);
+        }
+        public ActionResult LosesProfits()
+        {
+            IEnumerable<FiscalYear> cachedData = DataCache.GetCachedData();
+             bool FiscalYearIsOn = cachedData.Any(item => item.FiscalYearStatus == 1);
+            if (FiscalYearIsOn)
+            {
+                ViewBag.FiscalYearStatus = false;
+                ViewBag.Message = " لايمكن اجراء اي عملية اضافية  أو استعراض التقارير الختامية،السنة المالية يجب اغلاقها مسبقاً";
+            }
+            return View();
+        }
+        public ActionResult BalanceSheet()
+        {
+            IEnumerable<FiscalYear> cachedData = DataCache.GetCachedData();
+            bool FiscalYearIsOn = cachedData.Any(item => item.FiscalYearStatus == 1);
+            if (!FiscalYearIsOn)
+            {
+                ViewBag.FiscalYearStatus = false;
+                ViewBag.Message = " لايمكن اجراء اي عملية اضافية  أو استعراض التقارير الختامية،السنة المالية يجب اغلاقها مسبقاً";
+            }
+            return View();
         }
 
 

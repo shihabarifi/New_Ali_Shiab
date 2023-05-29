@@ -95,7 +95,7 @@ namespace POS.Controllers
         public ActionResult Create()
         {
             IEnumerable<FiscalYear> cachedData = DataCache.GetCachedData();
-            Console.WriteLine("the cached data is : " + cachedData);
+           // Console.WriteLine("the cached data is : " + cachedData);
             //string journalEnteryNumber = GetJournalEnteryAutoNumber();
             // var CurrRateList=CurrenciesExchangeRate_Repo.List().ToList();
             bool FiscalYearIsOn = cachedData.Any(item => item.FiscalYearStatus == 1);
