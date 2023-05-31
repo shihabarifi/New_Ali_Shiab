@@ -7,6 +7,7 @@
                "لم يرحل","مرحل "
             };
     Layout = null;
+    var  counter= 0;
 
 }
 
@@ -572,6 +573,14 @@
                             </select>
                           </div><!---->
                           <div class="col-md-3 mb-3">
+                            <label for="reportTypeDrop" class="form-label">النوع:</label>
+                            <select id="reportTypeDrop" class="form-select">
+                              <option value="">-- نوع التقرير --</option>
+                              <option value="إجمالي">إجمالي</option>
+                              <option value="تفصيلي">تفصيلي</option>
+                            </select>
+                          </div>
+                          <div class="col-md-3 mb-3">
                             <label for="dateValue" class="form-label">تاريخ القيد:</label>
                             <input type="text" id="dateValue" class="form-control" placeholder="  القيدتاريخ ">
                           </div>
@@ -616,6 +625,9 @@
             <th>
                 ملاحظة
             </th>
+            <th>
+                رقم المرجع
+            </th>
             
         </tr>
     </thead>
@@ -623,7 +635,7 @@
            
                     
 @foreach (var items in Model) {
-    <tr>
+    <tr id="mainT">
                 
                 <td>
                     @Html.DisplayFor(modelItem => items.MainJouralEntNumber)
@@ -657,9 +669,81 @@
                 <td>
                     @Html.DisplayFor(modelItem => items.MainPaycheckGlobalNote)
                 </td>
-           
+                <td>
+                    @Html.DisplayFor(modelItem => items.MainJournalReferenceNumber)
+                </td>
+                
+
                
-               @* <td>
+              
+
+            </tr>
+             <tr id="detailed-@counter" style="display:none">
+            
+                        <th >
+                            رقم الحساب
+                        </th>
+                        <th >
+                                اسم الحساب
+                        </th>
+                        <th >
+                            نوع العملة
+                        </th>
+                        <th>
+                            البيان
+                        </th>
+                        <th>
+                            مدين محلي
+                        </th>
+                        <th>
+                            دائن محلي
+                        </th>
+                        <th>
+                            مدين أجنبي
+                        </th>
+                        <th>
+                            دائن أجنبي
+                        </th>
+                        <th></th>
+                                        </tr>
+             
+                @foreach(var j in items.DetailedJournalEnteries) {
+                        <tr id="detailed-@counter" style="display:none">
+                        
+                            <td >
+                                @Html.DisplayFor(modelItem => j.CreditChildAccountNavigation.AccNumber)
+                                       
+                            </td>
+                            <td >
+                                @Html.DisplayFor(modelItem => j.CreditChildAccountNavigation.ArabicAccName)
+                                       
+                            </td >
+                                               
+                                                    
+                            <td>
+                                    @Html.DisplayFor(modelItem => j.Currencies)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => j.CurrenciesExchangeRate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => j.DebittAmountRly)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => j.CreditAmountRly)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => j.DebittAmountUdo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => j.CreditAmountUdo)
+                            </td>
+            
+                        </tr>
+                }
+                counter++;
+
+             @* <tr>
                      <table id="detailedId"  class="table datatables-basic" hidden >
                                     <thead>
                                         <tr>
@@ -731,9 +815,7 @@
 
                     
             
-                </td>*@
-
-            </tr>
+                </tr>*@
 
           
     
@@ -788,144 +870,8 @@
             const columns = [
                   { title: '' },
                 ]
-            function processDoc(doc) {
-
-                pdfMake.fonts = {
-                Amiri: {
-                   normal: 'Amiri-Italic.ttf',
-                    bold: 'Amiri-Italic.ttf',
-                    italics: 'Amiri-Italic.ttf',
-                }
-
-                };
-                
-                   doc.defaultStyle.direction = 'rtl';
-
-                    // add the autoArabic and alignment options to the default style
-                    doc.defaultStyle.autoArabic = true;
-                    doc.defaultStyle.alignment = 'right';
-                    doc.defaultStyle.font = "Amiri";
-                //var i = 1;
-                  // Define the columns for the report
-                  var columns = [
-                    { title: 'تاريخ القيد', dataKey: 'entry_date' },
-                    { title: 'رقم القيد', dataKey: 'entry_number' },
-                    { title: 'الحساب المدين', dataKey: 'debit_account' },
-                    { title: 'الحساب الدائن', dataKey: 'credit_account' },
-                    { title: 'المبلغ', dataKey: 'amount' },
-                  ];
-
-                  // Define the data for the report
-                  var data = table.rows().data().toArray();
-                  console.log(data);
-                  // Create the PDF content
-                  var docDefinition = {
-                    content: [
-                      { text: 'تقرير القيود المحاسبية', style: 'header' },
-                      { text: ' ', style: 'subheader' },
-                      {
-                        style: 'tableExample',
-                        table: {
-                          headerRows: 1,
-                          widths: ['auto', 'auto', 'auto', 'auto', 'auto'],
-                          body: [
-                            columns.map((c) => ({ text: c.title, style: 'tableHeader' })),
-                            ...data.map((d) => [
-                              { text: d.entry_date, style: 'tableCell' },
-                              { text: d.entry_number, style: 'tableCell' },
-                              { text: d.debit_account, style: 'tableCell' },
-                              { text: d.credit_account, style: 'tableCell' },
-                              { text: d.amount, style: 'tableCell' },
-                            ]),
-                          ],
-                        },
-                      },
-                    ],
-                    styles: {
-                      header: {
-                        fontSize: 22,
-                        bold: false,
-                        alignment: 'center',
-                        margin: [0, 0, 0, 20],
-                        font: 'Amiri'
-                      },
-                      subheader: {
-                        fontSize: 16,
-                        bold: false,
-                        alignment: 'center',
-                        margin: [0, 0, 0, 20],
-                        font: 'Amiri'
-                      },
-                      tableHeader: {
-                        bold: false,
-                        fontSize: 13,
-                        color: 'black',
-                        alignment: 'center',
-                        font: 'Amiri'
-                      },
-                      tableCell: {
-                        fontSize: 13,
-                        color: 'black',
-                        alignment: 'center',
-                        font: 'Amiri'
-                      },
-                    },
-                    pageMargins: [40, 60, 40, 60],
-                    pageOrientation: 'landscape',
-                    alignment: 'right-to-left',
-                  };
-
-                  // Set the direction of the document to RTL
-                  doc.content[0].alignment = 'right-to-left';
-
-                  pdfMake.createPdf(docDefinition).open();
-                    }
-
-             
-                function processDoc1(doc) {
-
-                //
-                // https://pdfmake.github.io/docs/fonts/custom-fonts-client-side/
-                //
-                // Update pdfmake's global font list, using the fonts available in
-                // the customized vfs_fonts.js file (do NOT remove the Roboto default):
-                pdfMake.fonts = {
-                  //Roboto: {
-                  //  normal: 'Roboto-Regular.ttf',
-                  //  bold: 'Roboto-Medium.ttf',
-                  //  italics: 'Roboto-Italic.ttf',
-                  //  bolditalics: 'Roboto-MediumItalic.ttf'
-                  //},
-                //  Amiri: {
-                //  normal: path.join(__dirname, 'assets', 'vendor', 'Amiri-Regular.ttf'),
-                //  bold: path.join(__dirname, 'assets', 'vendor', 'Amiri-Bold.ttf'),
-                //  italics: path.join(__dirname, 'assets', 'vendor', 'Amiri-Italic.ttf'),
-                //  bolditalics: path.join(__dirname, 'assets', 'vendor', 'Amiri-BoldItalic.ttf')
-                //}
-                Amiri: {
-                   normal: 'Amiri-Italic.ttf',
-                    bold: 'Amiri-Italic.ttf',
-                    italics: 'Amiri-Italic.ttf',
-                   // bolditalics: 'Amiri-Italic.ttf'
-                }
-
-                };
-                doc.styles.arabic = {
-                        font: 'Amiri'
-                    };
-                  // set the direction to be right-to-left
-   doc.defaultStyle.direction = 'rtl';
-
-    // add the autoArabic and alignment options to the default style
-    doc.defaultStyle.autoArabic = true;
-    doc.defaultStyle.alignment = 'right';
-    doc.defaultStyle.font = "Amiri";
-                var i = 1;
-    
-                
-              }
-
-             
+            
+     
 
     var table = $('#jounaltable').DataTable( {
         createdRow: function(row) {
@@ -995,19 +941,74 @@
                     $(win.document.body).find('tbody td:last-child, tfoot td:last-child').css('text-align', 'right');
                     $(win.document.body).find('tfoot th:nth-child(2)').html('Total');
                     $(win.document.body).find('tfoot th:last-child').css('text-align', 'right');
+                    var counter=0;
+                     // var reportType = $('#reportTypeDrop').val();
+                      if($('#reportTypeDrop').val() ==="تفصيلي"){
+                          // Loop through each main row and append the detailed table beside it
+                            $(win.document.body).find('tbody tr[id="mainT"]').each(function () {
+                                //var detailedTableHtml = '<table class="table table-striped table-bordered">' +
+                                //    '<thead><tr><th>دائن أجنبي</th><th>مدين أجنبي</th><th>دائن محلي</th><th>مدين محلي</th><th>البيان</th><th>نوع العملة</th><th>اسم الحساب</th><th>رقم الحساب</th></tr></thead>' +
+                                //    '<tbody>' +
+                                //    '<tr><td>Detailed Data 1</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td></tr>' +
+                                //    '<tr><td>Detailed Data 3</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td></tr>' +
+                                //    '</tbody>' +
+                                //    '</table>';
 
-                    // Loop through each main row and append the detailed table beside it
-                    $(win.document.body).find('tbody tr').each(function () {
-                        var detailedTableHtml = '<table class="table table-striped table-bordered">' +
-                            '<thead><tr><th>دائن أجنبي</th><th>مدين أجنبي</th><th>دائن محلي</th><th>مدين محلي</th><th>البيان</th><th>نوع العملة</th><th>اسم الحساب</th><th>رقم الحساب</th></tr></thead>' +
-                            '<tbody>' +
-                            '<tr><td>Detailed Data 1</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td></tr>' +
-                            '<tr><td>Detailed Data 3</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td></tr>' +
-                            '</tbody>' +
-                            '</table>';
+                                //$(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
 
-                        $(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
-                    });
+                                    //var detailedTableHtml = '<table class="table table-striped table-bordered">' +
+                                    //'<thead><tr><th>دائن أجنبي</th><th>مدين أجنبي</th><th>دائن محلي</th><th>مدين محلي</th><th>البيان</th><th>نوع العملة</th><th>اسم الحساب</th><th>رقم الحساب</th></tr></thead>' +
+                                    //'<tbody>';
+
+                                    //var hiddenRowsHtml = [];
+
+                                    //// Iterate over hidden rows and store their HTMLs in the correct order
+                                    ////$('tr[style="display:none"]').each(function () {
+                                    ////    var rowHtml = $(this).html();
+                                    ////    hiddenRowsHtml.push(rowHtml);
+                                    ////});
+                                    // $('tr[id="detailed-1"]').each(function () {
+                                    //    var rowHtml = $(this).html();
+                                    //    hiddenRowsHtml.push(rowHtml);
+                                    //});
+
+                                    //// Append the hidden rows HTMLs to the detailed table in the correct order
+                                    //for (var i = 0; i < hiddenRowsHtml.length; i++) {
+                                    //    detailedTableHtml += '<tr>' + hiddenRowsHtml[i] + '</tr>';
+                                    //}
+
+                                    //detailedTableHtml += '</tbody></table>';
+
+                                    //// Append the dynamically generated detailed table
+                                    //$(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
+
+                                               var detailedTableHtml = '<table ">' +
+                                                '<thead><tr><th>دائن أجنبي</th><th>مدين أجنبي</th><th>دائن محلي</th><th>مدين محلي</th><th>البيان</th><th>نوع العملة</th><th>اسم الحساب</th><th>رقم الحساب</th></tr></thead>' +
+                                                '<tbody>';
+
+                                                var detailedRows = $('tr[id="detailed-'+counter+'"]');
+                                                if (detailedRows.length > 0) {
+                                                    detailedRows.each(function () {
+                                                        var rowHtml = $(this).html();
+                                                        detailedTableHtml += '<tr style="';
+                                                        detailedTableHtml += 'background-color: #f2f2f2;';
+                                                        detailedTableHtml += 'font-weight: bold;';
+                                                        detailedTableHtml += '"> ' + rowHtml + ' </tr>';
+                                                       // detailedTableHtml += '<tr style="background-color: #f2f2f2; font-weight: bold;">' + rowHtml + '</tr>';
+                                                    });
+                                                }
+                                            //$('tr').each(function () {
+                                        //    //var mainRowId = $(this).attr('id');
+                                    
+                                        //});
+
+                                        detailedTableHtml += '</tbody></table>';
+
+                                        $(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
+                                        counter++;
+                            });
+                      }
+                    
 
                     // Calculate the total sum
                     var sum = 0;
@@ -1021,97 +1022,97 @@
                     $(win.document.body).find('table').append(totalHtml);
                 },
             exportOptions: {
-                columns: [4, 3, 2, 1, 0]
+                columns: [7,6,5,4, 3, 2, 1, 0]
             }
             },
-//customize: function (win) {
-//    // Add a header to the print view
-//    var headerHtml = '<div style="text-align:center;">' +
-//        '<img width="50" height="50" src="http://localhost:5017/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle">' +
-//        '<h3>تقرير القيود اليومية</h3>' +
-//        '<p>التاريخ: 12/05/2023</p>' +
-//        '</div>';
-//    $(win.document.body).prepend(headerHtml);
+                    //customize: function (win) {
+                    //    // Add a header to the print view
+                    //    var headerHtml = '<div style="text-align:center;">' +
+                    //        '<img width="50" height="50" src="http://localhost:5017/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle">' +
+                    //        '<h3>تقرير القيود اليومية</h3>' +
+                    //        '<p>التاريخ: 12/05/2023</p>' +
+                    //        '</div>';
+                    //    $(win.document.body).prepend(headerHtml);
 
-//    // Add a footer to the print view
-//    var footerHtml = '<div style="text-align:left;"><p>أسم الموظف:_____________________</p></div>';
-//    $(win.document.body).append(footerHtml);
+                    //    // Add a footer to the print view
+                    //    var footerHtml = '<div style="text-align:left;"><p>أسم الموظف:_____________________</p></div>';
+                    //    $(win.document.body).append(footerHtml);
 
-//    // Adjust the font size
-//    $(win.document.body).css('font-size', '10pt');
+                    //    // Adjust the font size
+                    //    $(win.document.body).css('font-size', '10pt');
 
-//    // Apply styles to the table
-//    $(win.document.body).find('table').addClass('table table-striped table-bordered');
-//    $(win.document.body).find('thead th').css('font-size', '12pt');
-//    $(win.document.body).find('tbody td').css('font-size', '10pt');
-//    $(win.document.body).find('tbody td:last-child, tfoot td:last-child').css('text-align', 'right');
-//    $(win.document.body).find('tfoot th:nth-child(2)').html('Total');
-//    $(win.document.body).find('tfoot th:last-child').css('text-align', 'right');
+                    //    // Apply styles to the table
+                    //    $(win.document.body).find('table').addClass('table table-striped table-bordered');
+                    //    $(win.document.body).find('thead th').css('font-size', '12pt');
+                    //    $(win.document.body).find('tbody td').css('font-size', '10pt');
+                    //    $(win.document.body).find('tbody td:last-child, tfoot td:last-child').css('text-align', 'right');
+                    //    $(win.document.body).find('tfoot th:nth-child(2)').html('Total');
+                    //    $(win.document.body).find('tfoot th:last-child').css('text-align', 'right');
 
-//    // Loop through each main row and append the detailed table beside it
-//    $(win.document.body).find('tbody tr').each(function () {
-//        var detailedTableHtml = $(this).find('#detailedId').html();
-//        $(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
-//    });
+                    //    // Loop through each main row and append the detailed table beside it
+                    //    $(win.document.body).find('tbody tr').each(function () {
+                    //        var detailedTableHtml = $(this).find('#detailedId').html();
+                    //        $(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
+                    //    });
 
-//    // Calculate the total sum
-//    var sum = 0;
-//    $(win.document.body).find('tbody tr').each(function () {
-//        var value = parseInt($(this).find('td:nth-child(3)').text());
-//        if (!isNaN(value)) {
-//            sum += value;
-//        }
-//    });
-//    var totalHtml = '<tfoot><tr><th></th><th>الاجمالي</th><th>' + sum + '</th><th></th></tr></tfoot>';
-//    $(win.document.body).find('table').append(totalHtml);
-//},
-//        exportOptions: {
-//            columns: [4, 3, 2, 1, 0]
-//                    }
+                    //    // Calculate the total sum
+                    //    var sum = 0;
+                    //    $(win.document.body).find('tbody tr').each(function () {
+                    //        var value = parseInt($(this).find('td:nth-child(3)').text());
+                    //        if (!isNaN(value)) {
+                    //            sum += value;
+                    //        }
+                    //    });
+                    //    var totalHtml = '<tfoot><tr><th></th><th>الاجمالي</th><th>' + sum + '</th><th></th></tr></tfoot>';
+                    //    $(win.document.body).find('table').append(totalHtml);
+                    //},
+                    //        exportOptions: {
+                    //            columns: [4, 3, 2, 1, 0]
+                    //                    }
 
 
-//                    },
-                //customize: function (win) {
-                //    // Add a header to the print view
+                    //                    },
+                                    //customize: function (win) {
+                                    //    // Add a header to the print view
                     
-                //    var headerHtml = '<div style="text-align:center;">'
-                //                + '<img width="50" height="50" src="http://localhost:5017/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle">'
-                //                + '<h3>تقرير القيود اليومية</h3>'
-                //                + '<p>التاريخ : 12/05/2023</p>'
-                //                + '<p>اسم الموظف: _________________</p>'
-                //                + '</div>';
-                //            $(win.document.body).prepend(headerHtml);
+                                    //    var headerHtml = '<div style="text-align:center;">'
+                                    //                + '<img width="50" height="50" src="http://localhost:5017/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle">'
+                                    //                + '<h3>تقرير القيود اليومية</h3>'
+                                    //                + '<p>التاريخ : 12/05/2023</p>'
+                                    //                + '<p>اسم الموظف: _________________</p>'
+                                    //                + '</div>';
+                                    //            $(win.document.body).prepend(headerHtml);
 
 
-                //    // Add a footer to the print view
-                //    var footerHtml = '<div style="text-align:left;"><p>أسم الموظف:_____________________</p></div>';
-                //    $(win.document.body).append(footerHtml);
+                                    //    // Add a footer to the print view
+                                    //    var footerHtml = '<div style="text-align:left;"><p>أسم الموظف:_____________________</p></div>';
+                                    //    $(win.document.body).append(footerHtml);
 
-                //    // Add a sum field to the table
-                //    var sum = 0;
-                //    $(win.document.body).find('tbody tr').each(function(){
-                //        var value = parseInt($(this).find('td:nth-child(3)').text());
-                //        if(!isNaN(value)){
-                //            sum += value;
-                //        }
-                //    });
-                //    var totalHtml = '<tfoot><tr><th></th><th>الاجمالي</th><th>'+sum+'</th><th></th></tr></tfoot>';
-                //    $(win.document.body).find('table').append(totalHtml);
+                                    //    // Add a sum field to the table
+                                    //    var sum = 0;
+                                    //    $(win.document.body).find('tbody tr').each(function(){
+                                    //        var value = parseInt($(this).find('td:nth-child(3)').text());
+                                    //        if(!isNaN(value)){
+                                    //            sum += value;
+                                    //        }
+                                    //    });
+                                    //    var totalHtml = '<tfoot><tr><th></th><th>الاجمالي</th><th>'+sum+'</th><th></th></tr></tfoot>';
+                                    //    $(win.document.body).find('table').append(totalHtml);
 
-                //    // Adjust the font size
-                //    $(win.document.body).css('font-size', '10pt');
+                                    //    // Adjust the font size
+                                    //    $(win.document.body).css('font-size', '10pt');
 
-                //    // Apply styles to the table
-                //    $(win.document.body).find('table').addClass('table table-striped table-bordered');
-                //    $(win.document.body).find('thead th').css('font-size', '12pt');
-                //    $(win.document.body).find('tbody td').css('font-size', '10pt');
-                //    $(win.document.body).find('tbody td:last-child, tfoot td:last-child').css('text-align', 'right');
-                //    $(win.document.body).find('tfoot th:nth-child(2)').html('Total');
-                //    $(win.document.body).find('tfoot th:last-child').css('text-align', 'right');
-                //        },
-                //    exportOptions: { columns: [4,3, 2, 1, 0] }
+                                    //    // Apply styles to the table
+                                    //    $(win.document.body).find('table').addClass('table table-striped table-bordered');
+                                    //    $(win.document.body).find('thead th').css('font-size', '12pt');
+                                    //    $(win.document.body).find('tbody td').css('font-size', '10pt');
+                                    //    $(win.document.body).find('tbody td:last-child, tfoot td:last-child').css('text-align', 'right');
+                                    //    $(win.document.body).find('tfoot th:nth-child(2)').html('Total');
+                                    //    $(win.document.body).find('tfoot th:last-child').css('text-align', 'right');
+                                    //        },
+                                    //    exportOptions: { columns: [4,3, 2, 1, 0] }
 
-                //            },
+                                    //            },
 
             
             
