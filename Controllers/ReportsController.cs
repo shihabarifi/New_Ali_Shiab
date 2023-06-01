@@ -132,6 +132,20 @@ namespace POS.Controllers
             return FundsList;
         }
 
+        public ActionResult GeneralLedgerReport()
+        {
+            List<GeneralLedger> GeneralLedgerList = _context.GeneralLedgers
+                                            .Include(f => f.CurrenciesNavigation)
+                                            .Include(f => f.AccountingManualNavigation).ToList();
+                                            
+
+
+            return View( GeneralLedgerList);
+        }
+
+
+
+
         private List<SelectListItem> GetCurrencyRrport()
         {
             var lstcurrencies = new List<SelectListItem>();
@@ -490,6 +504,7 @@ namespace POS.Controllers
 
 
         }
+       
 
     }
 }
