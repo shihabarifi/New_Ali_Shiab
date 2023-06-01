@@ -64,6 +64,73 @@ namespace POS.Controllers
 
             return lstfund;
         }
+        private List<SelectListItem> GetBanksRrport()
+        {
+            var lstfund = new List<SelectListItem>();
+
+
+            List<Bank> bank = _context.Banks.Where(f => f.BankStatus == 0).ToList();
+            lstfund = bank.Select(sp => new SelectListItem()
+            {
+
+                Value = sp.BankId.ToString(),
+                Text = sp.BankName
+            }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "----أختر البنك----"
+            };
+
+            lstfund.Insert(0, defItem);
+
+            return lstfund;
+        }
+        private List<Bank> BankTransactionsReport(DateTime StartDate, DateTime EndDate
+           , string CurrenName, string bankId, int IsStage)
+        {
+            int Carr = int.Parse(CurrenName);
+            int BankID = int.Parse(bankId);
+            List<Bank> BandsList = _context.Banks.Include(f => f.CheckExpensVouchers)
+
+                                            .ThenInclude(t => t.GeneralLedgers)
+                                            .Include(f => f.CheckExpensVouchers)
+                                            .ThenInclude(t => t.CurrenciesNavigation)
+                                            .Include(f => f.CheckPaycheckVouchers)
+                                            .ThenInclude(t => t.GeneralLedgers)
+                                            .Include(f => f.CheckPaycheckVouchers)
+                                            .ThenInclude(t => t.CurrenciesNavigation)
+                                            .Where(f => f.BankId == BankID
+                                            && f.CheckExpensVouchers.Any(n => n.ChequesDate <= EndDate && n.ChequesDate >= StartDate && n.Currencies == Carr || n.CheckStatus == IsStage)
+                                            && f.CheckPaycheckVouchers.Any(n => n.ChequesDate <= EndDate && n.ChequesDate >= StartDate && n.Currencies == Carr || n.CheckStatus == IsStage)).ToList();
+
+
+
+            return BandsList;
+        }
+        private List<Fund> FundTransactionsReport(DateTime StartDate, DateTime EndDate
+            , string CurrenName, string FundName, int IsStage)
+        {
+            int Carr= int.Parse(CurrenName);
+            int fundID = int.Parse(FundName);
+            List<Fund> FundsList = _context.Funds.Include(f=>f.MainExpensVouchers)
+                                             
+                                            .ThenInclude(t=>t.GeneralLedgers)
+                                            .Include(f => f.MainExpensVouchers)
+                                            .ThenInclude(t => t.CurrenciesNavigation)
+                                            .Include(f=>f.MainPayChecks)
+                                            .ThenInclude(t=>t.GeneralLedgers)
+                                            .Include(f => f.MainPayChecks)
+                                            .ThenInclude(t => t.CurrenciesNavigation)
+                                            .Where(f => f.FundsId == fundID 
+                                            && f.MainExpensVouchers.Any(n=>n.MainExpensVoucherDate<= EndDate &&n.MainExpensVoucherDate>=StartDate&&n.Currencies== Carr || n.MainExpensVoucherStatus==IsStage)
+                                            && f.MainPayChecks.Any(n => n.MainPaycheckDate <= EndDate && n.MainPaycheckDate >= StartDate && n.Currencies == Carr || n.MainPaycheckStatus == IsStage)).ToList();
+
+            
+
+            return FundsList;
+        }
 
         private List<SelectListItem> GetCurrencyRrport()
         {
@@ -352,7 +419,77 @@ namespace POS.Controllers
             return View();
         }
 
+        public IActionResult FundsTransReport(DateTime StartDate, DateTime EndDate
+            , string CurrenName, string FundName, int MainExpensVoucherStatus/*, int IsDelete*/)
+        {
+            if (StartDate == null)
+            {
+                IEnumerable<FiscalYear> cachedData = DataCache.GetCachedData();
+                var FiscalYearIsOn = cachedData.Where(item => item.FiscalYearStatus == 1);
+                if (FiscalYearIsOn != null)
+                {
 
+                    var singleFiscalYear = FiscalYearIsOn.FirstOrDefault(i=>i.FiscalYearStatus==1);
+                    if (singleFiscalYear != null)
+                    {
+                        StartDate = singleFiscalYear.StartDate;
+                    }
+                    
+                }
+            }
+            var FundLists = new List<Fund>();
+            if (StartDate!=null && EndDate != null && CurrenName != null && FundName != null)
+            {
+                 FundLists = FundTransactionsReport(StartDate, EndDate, CurrenName, FundName, MainExpensVoucherStatus);
+
+            }
+            //var SpGetData = _context.SpGetReport
+            //           .FromSqlRaw("SpGetReport {0},{1},{2},{3},{4},{5}", StartDate, EndDate, CurrenName, FundName, MainExpensVoucherStatus /* IsDelete*/).ToList();
+            ViewBag.FundList = GetFundsRrport();
+            ViewBag.CurrencyList = GetCurrencyRrport();
+            ViewBag.ExList = GetExNumber();
+
+            //return View("ViewReportEx", SpGetData);
+            return View("FundsTransReport", FundLists);
+
+
+        }
+
+        public IActionResult BanksTransReport(DateTime StartDate, DateTime EndDate
+            , string CurrenName, string FundName, int isStage/*, int IsDelete*/)
+        {
+            if (StartDate == null)
+            {
+                IEnumerable<FiscalYear> cachedData = DataCache.GetCachedData();
+                var FiscalYearIsOn = cachedData.Where(item => item.FiscalYearStatus == 1);
+                if (FiscalYearIsOn != null)
+                {
+
+                    var singleFiscalYear = FiscalYearIsOn.FirstOrDefault(i => i.FiscalYearStatus == 1);
+                    if (singleFiscalYear != null)
+                    {
+                        StartDate = singleFiscalYear.StartDate;
+                    }
+
+                }
+            }
+            var BankLists = new List<Bank>();
+            if (StartDate != null && EndDate != null && CurrenName != null && FundName != null)
+            {
+                BankLists = BankTransactionsReport(StartDate, EndDate, CurrenName, FundName, isStage);
+
+            }
+            //var SpGetData = _context.SpGetReport
+            //           .FromSqlRaw("SpGetReport {0},{1},{2},{3},{4},{5}", StartDate, EndDate, CurrenName, FundName, MainExpensVoucherStatus /* IsDelete*/).ToList();
+            ViewBag.BankList = GetBanksRrport();
+            ViewBag.CurrencyList = GetCurrencyRrport();
+            ViewBag.ExList = GetExNumber();
+
+            //return View("ViewReportEx", SpGetData);
+            return View("BanksTransReport", BankLists);
+
+
+        }
 
     }
 }
