@@ -21,7 +21,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>تقارير كشف حساب</title>
+  <title>تقارير  كشوفات الحسابات</title>
 
   <meta name="description" content="" />
 
@@ -571,78 +571,79 @@
                             </select>
                           </div>
                         </div>
-                    <div style="padding-right:1010px;padding-top:10px;" class="col-2 justify-content-end">
-       
+                   
               
-
-
-         @*<p style="width:200px">
-            <a asp-action="Create" class="btn btn-primary">إضافة حساب <i class="icon-plus"> </i></a>
-        </p>*@
-                </div>
-              
-                  <thead>
-                    <tr>
-                      <th>
+                          <thead>
+                            <tr>
+                              <th>
                  
-                          رقم الحساب
+                                  رقم الحساب
 
-                      </th>
-                      <th>اسم الحساب</th>
+                              </th>
+                              <th>اسم الحساب</th>
                      
-                      <th> نوع المستند </th>
-                     <th> العملة</th>
+                              <th> نوع المستند </th>
+                             <th> العملة</th>
 
-                      <th>دائن محلي</th>
-                      <th>مدين محلي</th>
-                      <th>دائن اجنبي</th>
-                      <th>دائن اجنبي</th>
+                              <th>دائن محلي</th>
+                              <th>مدين محلي</th>
+                              <th>دائن اجنبي</th>
+                              <th>دائن اجنبي</th>
 
-                       <th>التاريخ</th>
+                               <th>التاريخ</th>
                        
-                      </tr>
-                  </thead>
-                  <tbody>
-                    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccountingManualNavigation.AccNumber)
-            </td>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            @foreach (var item in Model) {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AccountingManualNavigation.AccNumber)
+                                    </td>
                   
-            <td>
-                @Html.DisplayFor(modelItem => item.AccountingManualNavigation.ArabicAccName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TransactionName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrenciesNavigation.CurrenName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreditAmountRly)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DebittAmountRly)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreditAmountWithTransCurre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DebitAmountWithTransCurre)
-            </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AccountingManualNavigation.ArabicAccName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TransactionName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CurrenciesNavigation.CurrenName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreditAmountRly)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DebittAmountRly)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreditAmountWithTransCurre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DebitAmountWithTransCurre)
+                                    </td>
             
             
-        </tr>
-}
+                                 </tr>
+                                }
 
-                  </tbody>
+                          </tbody>
                 </table>
+
               </div>
 
             </div>
           </div>
           <!-- / Content -->
- 
+  <!-- offcanvas -->
+          <div style="width:500px" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasEndLabel">
+            <!-- Header -->
+            <div class="offcanvas-header">
+              <h5 id="offcanvasEndLabel" class="offcanvas-title">استعراض سند قبض</h5>
+            </div>
+          
+          </div>
+          <!-- / offcanvas -->
           <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
@@ -679,7 +680,7 @@
   <script src="~/assets/js/main.js"></script>
 
   <!-- Page JS -->
-  <script src="~/pages1/sys355.js"></script>
+  <script src="~/pages1/sys35.js"></script>
   <script src="~/Modules/Reg.js"></script>
    <script type="text/javascript">
      
@@ -694,7 +695,6 @@
                 $(row).find('td table')
                   .DataTable({
                     columns: columns,
-                   
                     dom: 'tf'
                   })
               },
