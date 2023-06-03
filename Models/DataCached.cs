@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using POS.Data;
 using POS.Models.DB;
-
+//using POS.Models.DbContextDir;
 
 namespace POS.Models
 {
@@ -31,12 +31,12 @@ namespace POS.Models
 
         private static IEnumerable<FiscalYear> FetchDataFromDatabase()
         {
-            // Fetch the data from the database and return it
-            // Example:
-            //using (var dbContext = new FinContext())
-            //{
-            //    return dbContext.FiscalYears.ToList();
-            //}
+            //Fetch the data from the database and return it
+            //as// Example:
+            using (var dbContext = new FinContext())
+            {
+                return dbContext.FiscalYears.ToList();
+            }
             return null;
         }
     }

@@ -6,8 +6,9 @@
             {
                "غير مرحل","مرحل "
             };
-              Layout = null;
-    
+    Layout = null;
+    var counter = 0;
+
 }
 
 @inject UserManager<ApplicationUser> userManager
@@ -530,11 +531,16 @@
         <!-- Content wrapper -->
         <div >
           <!-- Content -->
+          <label for="startDate">Start Date:</label>
+            <input type="text" id="startDate" placeholder="Enter start date">
+
+            <label for="endDate">End Date:</label>
+            <input type="text" id="endDate" placeholder="Enter end date">
           @*<button id="btn-show-all-children" type="button">Expand All</button>
             <button id="btn-hide-all-children" type="button">Collapse All</button>*@
         <table id="exampleTable" class="display ">
             <thead>
-                    <tr>
+                    <tr  >
                         <th>
                             رقم القيد
                         </th>
@@ -559,7 +565,7 @@
             </thead>
             <tbody>
                     @for (int item1=0; item1 < Model.MainJournalEnteries.Count;item1++) {
-                          <tr>
+                          <tr id="MainRow-@counter" onclick="shw(this)">
                             <td> عرض</td>
                             <td>
                                 @Model.MainJournalEnteries[item1].MainJouralEntNumber
@@ -605,7 +611,7 @@
                             
           
                         </tr>
-                        <tr id="exampleTable-@item1" style="display:none">
+                        <tr id="detailRow-@counter" style="display:none" >
                            <th>
                                 رقم الحساب
                             </th>
@@ -632,7 +638,7 @@
                             </th>
                         </tr>
                         @for(int i=0; i< Model.MainJournalEnteries[item1].DetailedJournalEnteries.Count;i++) {
-                                  <tr id="exampleTable-@item1" style="display:none">
+                                  <tr id="detailRow-@counter"  style="display:none">
            
                                     <td>
                                     @Model.MainJournalEnteries[item1].DetailedJournalEnteries[i].CreditChildAccountNavigation.AccNumber
@@ -665,123 +671,12 @@
             
                                      </tr>
                                 }
-              
-                                }
+                                counter++;
+                            }
             </tbody>
         </table>  
-          <div style="display:none">
-            <table  class="display select " width="100%">
-              <thead>
-                <tr>
-                  <th>First name</th> 
-                  <th>Last name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th> 
-                  <th>Salary</th>
-                  <th>Extn.</th>
-                  <th>E-mail</th>
-                </tr>
-              </thead>
-              <tbody >
-                <tr>
-                  <td>Tiger</td>
-                  <td>Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>5421</td>
-                  <td>t.nixon@datatables.net</td>
-                </tr>
-                <tr>
-                  <td>Garrett</td>
-                  <td>Winters</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>63</td>
-                  <td>2011/07/25</td>
-                  <td>$170,750</td>
-                  <td>8422</td>
-                  <td>g.winters@datatables.net</td>
-                </tr>
-                </tfoot>  
-            </table>
-           </div>
-             <div style="display:none">
-                <table id="exampleTable_2" class="display select  table-striped table-sm" width="100%" >
-                    <thead>
-                        <tr>
-            
-                            <th>
-                                رقم الحساب
-                            </th>
-                            <th>
-                                    اسم الحساب
-                            </th>
-                            <th>
-                                نوع العملة
-                            </th>
-                            <th>
-                                البيان
-                            </th>
-                            <th>
-                                مدين محلي
-                            </th>
-                            <th>
-                                دائن محلي
-                            </th>
-                            <th>
-                                مدين أجنبي
-                            </th>
-                            <th>
-                                دائن أجنبي
-                            </th>
-                            <th></th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                    @for(int i=0; i< Model.MainJournalEnteries[1].DetailedJournalEnteries.Count;i++) {
-                            <tr>
-           
-                            <td>
-                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditChildAccountNavigation.AccNumber
-                                 </td>
-                                 <td>
-                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditChildAccountNavigation.ArabicAccName
-                                 </td>
-                                              
-                                                    
-                            <td>
-                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CurrenciesNavigation.CurrenName
-                            </td>
-                            <td>
-                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].DetailedournalDescription
-                              </td> 
-                               
-                            <td>@Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CurrenciesExchangeRate </td>
-                            <td>
-                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].DebittAmountRly
-                            </td>
-                            <td>
-                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditAmountRly
-                            </td>
-                            <td>
-                                 @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].DebittAmountUdo
-                            </td>
-                            <td>
-                                @Model.MainJournalEnteries[1].DetailedJournalEnteries[i].CreditAmountUdo
-                            </td>
-            
-                        </tr>
-                    }
-                    </tbody>    
-                </table>
-
-            </div>
+          
+             
        </div>
 </div>
 </div>
@@ -796,19 +691,38 @@
             var $j = jQuery.noConflict();
             
 
-                    function fnFormatDetails(table_id, html) {
+                    //function fnFormatDetails(table_id, html) {
 
-                          var sOut = "<table id=\"exampleTable_" + table_id + "\">";
+                    //      var sOut = "<table id=\"exampleTable_" + table_id + "\">";
 
-                          sOut += html;
-                          sOut += "</table>";
-                          return sOut;
-                    }
-                      var iTableCounter = 1;
-                      var oTable;
-                      var oInnerTable;
-                      var TableHtml;
-
+                    //      sOut += html;
+                    //      sOut += "</table>";
+                    //      return sOut;
+                    //}
+                    //  var iTableCounter = 1;
+                    //  var oTable;
+                    //  var oInnerTable;
+                    //  var TableHtml;
+                      /////////////////
+                       function shw(btn){
+            
+                             const myArray=btn.id.split("");
+                                var rowIndex=myArray[myArray.length-1];
+                                console.log("RowIndex is : "+rowIndex);
+                                $(btn).click(function(){
+                          console.log("RowIndex is : "+rowIndex);
+                          // $("#detailRow-"+rowIndex).css("display", "");
+                          //$("#detailRows-"+rowIndex).css("display", "");
+                          const rows= document.querySelectorAll('#detailRow-'+rowIndex);
+                            rows.forEach((singleRow) => {
+                                if (singleRow.style.display === "none") {
+                                    singleRow.style.display = ""; // Show the row
+                                } else {
+                                    singleRow.style.display = "none"; // Hide the row
+                                }
+                             });
+                             });
+                             }
                       //Run On HTML Build
                       $j(document).ready(function () {
 
@@ -828,10 +742,8 @@
                           var nCloneTd = document.createElement('td');
 
                           $('#exampleTable thead tr').each(function () {
-                              this.insertBefore(nCloneTh, this.childNodes[0]);
+                              this.insertBefore(nCloneTh, this.childNodes[1]);
                           });
-            //              <button id="btn-show-all-children" type="button">Expand All</button>
-            //<button id="btn-hide-all-children" type="button">Collapse All</button>
                           //Initialse DataTables, with no sorting on the 'details' column
                           var oTable = $('#exampleTable').dataTable({
                                   'bJQueryUI': true,
@@ -895,34 +807,34 @@
         
                               });
                                
-                          $('#exampleTable tbody tr td.details-control').on('click', function () {
-                                const rows = $("#exampleTable2"); // Assuming you're using jQuery to select elements by ID
-                                //const rows= document.querySelectorAll('#exampleTable2');
-                            rows.each(function() {
-                                const singleRow = $(this);
-                                 TableHtml = singleRow.html();
-                                // Perform further operations with the tableHtml if needed
+                          //$('#exampleTable1 tbody tr td.details-control').on('click', function () {
+                          //      const rows = $("#exampleTable2"); // Assuming you're using jQuery to select elements by ID
+                          //      //const rows= document.querySelectorAll('#exampleTable2');
+                          //      rows.each(function() {
+                          //          const singleRow = $(this);
+                          //           TableHtml = singleRow.html();
+                          //          // Perform further operations with the tableHtml if needed
                                
-                            });
+                          //      });
                               
-                        var nTr = $(this).closest('tr');
+                          //        var nTr = $(this).closest('tr');
 
-                                if (oTable.fnIsOpen(nTr)) {
+                          //      if (oTable.fnIsOpen(nTr)) {
 
-                                    oTable.fnClose(nTr);
-                                } else {
-                                    oTable.fnOpen(nTr, fnFormatDetails(iTableCounter, TableHtml), 'details-control');
-                                    oInnerTable = $('#exampleTable_' + iTableCounter).dataTable({
-                                            'bJQueryUI': true,
-                                            'sPaginationType': 'full_numbers'
-                                        });
-                                    iTableCounter = iTableCounter + 1;
+                          //          oTable.fnClose(nTr);
+                          //      } else {
+                          //          oTable.fnOpen(nTr, fnFormatDetails(iTableCounter, TableHtml), 'details-control');
+                          //          oInnerTable = $('#exampleTable_' + iTableCounter).dataTable({
+                          //                  'bJQueryUI': true,
+                          //                  'sPaginationType': 'full_numbers'
+                          //              });
+                          //          iTableCounter = iTableCounter + 1;
 
-                                }
-                              $("#exampleTable2").css("display", "");
+                          //      }
+                          //    $("#exampleTable2").css("display", "");
 
-                                $("#exampleTable3").css("display", "");
-                            });
+                          //      $("#exampleTable3").css("display", "");
+                          //  });
       
 
                           // Handle click on "Collapse All" button
@@ -936,6 +848,20 @@
                                   }
                               });
                           });
+                          //$('#dateSearch').on('keyup', function() {
+                          //      oTable.fnFilter(this.value, 3); // 0 is the column index for the date column in your DataTable
+                          //    });
+                          $('#startDate, #endDate').on('keyup', function() {
+                                var startDate = $('#startDate').val();
+                                var endDate = $('#endDate').val();
+
+                                oTable.fnFilter(function(data, rowIdx, rowData) {
+                                  var currentDate = rowData[3]; // Assuming date column is at index 0
+                                  return (currentDate >= startDate && currentDate <= endDate);
+                                }, 3, true); // 0 is the column index for the date column in your DataTable, true performs a smart search
+
+                                oTable.fnDraw(); // Redraw the table with filtered data
+                              });
 
                           $('.btn-show-all-childrens').on('click', function () {
                               // Enumerate all rows              

@@ -38,12 +38,12 @@ $(function () {
       },
       // Buttons with Dropdown
       buttons: [
-        // {
-        //   extend: 'print',
-        //   text: '<i class="bx bx-printer me-2"></i>إصدار تقرير',
-        //   className: 'btn btn-label-secondary mx-3',
-        //   exportOptions: { columns: [3, 2, 1, 0] }
-        // },
+         {
+           extend: 'print',
+           text: '<i class="bx bx-printer me-2"></i>إصدار تقرير',
+           className: 'btn btn-label-secondary mx-3',
+           exportOptions: { columns: [3, 2, 1, 0] }
+         },
         {
           text: '<i class="icon-plus"></i>إضافة عملية',
           className: 'add-new btn btn-primary mb-3 mb-md-0',
