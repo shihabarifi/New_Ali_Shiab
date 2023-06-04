@@ -71,7 +71,7 @@ $(function () {
                             .addClass('compact')
                             .css('font-size', 'inherit');
                     },
-                    exportOptions: { columns: [3, 2, 1, 0] }
+                    exportOptions: { columns: [8,7,6,5,4,3, 2, 1, 0] }
 
                 }
                 ]
@@ -82,20 +82,28 @@ $(function () {
             ],
         });
 
-        //$('#roleDropdown, #statusDropdown, #typeDropdown').on('change', function () {
-        //    var role = $('#roleDropdown').val();
-        //    var status = $('#statusDropdown').val();
-        //    var type = $('#typeDropdown').val();
-        //    //console.log(role + status + type);
-        //    // Perform column-specific searches
-        //    //dt_permission.fnFilter(role, 3);
-        //    //dt_permission.fnFilter(status, 5);
-        //    //dt_permission.fnFilter(type, 4);
-        //    dt_permission.columns(3).search(role).draw(); // Replace '1' with the index of the column for role
-        //    dt_permission.columns(5).search(status).draw(); // Replace '2' with the index of the column for status
-        //    dt_permission.columns(4).search(type).draw(); // Replace '3' with the index of the column for type
-        //    dt_permission.draw();
-        //});
+        $('#docDropdown, #currDropdown, #reportTypeDrop,#dateValue,#DeamountInput,#CeamountInput,#AccName').on('change', function () {
+            var docTyp = $('#docDropdown').val();
+            var Curr = $('#currDropdown').val();
+            var Reptype = $('#reportTypeDrop').val();
+            var DateVal = $('#dateValue').val();
+            var DebAmmount = $('#DeamountInput').val();
+            var CreAmmount = $('#CeamountInput').val();
+            var AccNames = $('#AccName').val();
+            //console.log(role + status + type);
+            // Perform column-specific searches
+            //dt_permission.fnFilter(role, 3);
+            //dt_permission.fnFilter(status, 5);
+            //dt_permission.fnFilter(type, 4);
+            dt_permission.columns(2).search(docTyp).draw(); // Replace '1' with the index of the column for role
+            dt_permission.columns(3).search(Curr).draw(); // Replace '2' with the index of the column for status
+           
+            dt_permission.columns(8).search(DateVal).draw(); // Replace '1' with the index of the column for role
+            dt_permission.columns(5).search(DebAmmount).draw(); // Replace '2' with the index of the column for status
+            dt_permission.columns(4).search(CreAmmount).draw();
+            dt_permission.columns(1).search(AccNames).draw();// Replace '3' with the index of the column for type
+            dt_permission.draw();
+        });
 
     }
 

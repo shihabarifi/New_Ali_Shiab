@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using POS.Data;
 using POS.Models.DB;
+using POS.Models.DbContextDir;
 //using POS.Models.DbContextDir;
 
 namespace POS.Models

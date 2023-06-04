@@ -113,7 +113,7 @@ namespace POS.Controllers
             , string CurrenName, string FundName, int IsStage)
         {
             int Carr= int.Parse(CurrenName);
-            int fundID = int.Parse(FundName);
+            int fundID =FundName==""?-1: int.Parse(FundName);
             List<Fund> FundsList = _context.Funds.Include(f=>f.MainExpensVouchers)
                                              
                                             .ThenInclude(t=>t.GeneralLedgers)
@@ -123,9 +123,9 @@ namespace POS.Controllers
                                             .ThenInclude(t=>t.GeneralLedgers)
                                             .Include(f => f.MainPayChecks)
                                             .ThenInclude(t => t.CurrenciesNavigation)
-                                            .Where(f => f.FundsId == fundID 
-                                            && f.MainExpensVouchers.Any(n=>n.MainExpensVoucherDate<= EndDate &&n.MainExpensVoucherDate>=StartDate&&n.Currencies== Carr || n.MainExpensVoucherStatus==IsStage)
-                                            && f.MainPayChecks.Any(n => n.MainPaycheckDate <= EndDate && n.MainPaycheckDate >= StartDate && n.Currencies == Carr || n.MainPaycheckStatus == IsStage)).ToList();
+                                            .Where(f =>fundID!=-1? f.FundsId == fundID: f.FundsId >0
+                                            || f.MainExpensVouchers.Any(n=>n.MainExpensVoucherDate<= EndDate &&n.MainExpensVoucherDate>=StartDate&&n.Currencies== Carr || n.MainExpensVoucherStatus==IsStage)
+                                            || f.MainPayChecks.Any(n => n.MainPaycheckDate <= EndDate && n.MainPaycheckDate >= StartDate && n.Currencies == Carr || n.MainPaycheckStatus == IsStage)).ToList();
 
             
 
@@ -136,11 +136,23 @@ namespace POS.Controllers
         {
             List<GeneralLedger> GeneralLedgerList = _context.GeneralLedgers
                                             .Include(f => f.CurrenciesNavigation)
-                                            .Include(f => f.AccountingManualNavigation).ToList();
+                                            .Include(f => f.AccountingManualNavigation)
+                                            .Where(f => f.AccountingManualNavigation.AccType == "فرعي").ToList();
                                             
 
 
             return View( GeneralLedgerList);
+        }
+        public ActionResult MainGeneralLedgerReport()
+        {
+            List<GeneralLedger> GeneralLedgerList = _context.GeneralLedgers
+                                            .Include(f => f.CurrenciesNavigation)
+                                            .Include(f => f.AccountingManualNavigation)
+                                            .Where(f=>f.AccountingManualNavigation.AccType== "رئيسي").ToList();
+
+
+
+            return View(GeneralLedgerList);
         }
 
 
