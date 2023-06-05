@@ -132,6 +132,16 @@ namespace POS.Controllers
             return FundsList;
         }
 
+        public ActionResult AccOpeninBalReport()
+        {
+            List<AccountsCurrency> AccountCurrenciesList = _context.AccountsCurrencies.Include(f => f.CurrenciesNavigation)
+                                                        .Include(f => f.AccountingManualNavigation)
+                                                        .ToList();
+
+
+
+            return View(AccountCurrenciesList);
+        }
         public ActionResult GeneralLedgerReport()
         {
             List<GeneralLedger> GeneralLedgerList = _context.GeneralLedgers

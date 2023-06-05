@@ -189,94 +189,94 @@
                 </li>
               </ul>
               <!-- page list -->
-            <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon icon-file-lines me-1"></i>
-                <div>التقارير</div>
-              </a>
-              <ul class="menu-sub">
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="sys18.html" class="menu-link">
-                    <div>دليل الحسابات</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="sys19.html" class="menu-link">
-                    <div>الأرصدةالافتتاحية</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="sys20.html" class="menu-link">
-                    <div>حركة الصناديق</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="sys21.html" class="menu-link">
-                    <div>حركة البنوك</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="sys22.html" class="menu-link">
-                    <div>الميزانية العمومية</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="sys23.html" class="menu-link">
-                    <div>قائمة الارباح والخسائر</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a asp-controller="Reports" asp-action="GetReportEx" class="menu-link">
-                    <div>سندات الصرف</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a asp-controller="Reports" asp-action="GetReportPy" class="menu-link">
-                    <div>سندات القبض</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="sys26.html" class="menu-link">
-                    <div>القيوداليومية</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="sys27.html" class="menu-link">
-                    <div>دفتر اليومية</div>
-                  </a>
-                </li>
-                <!-- Page -->
-                <li class="menu-item">
-                  <a href="javascript:void(0)" class="menu-link menu-toggle">
-                    <div>كشوفات الحسابات</div>
-                  </a>
-                  <ul class="menu-sub">
-                    <!-- Page -->
-                    <li class="menu-item">
-                      <a href="sys28.html" class="menu-link">
-                        <div>الحسابات الرئيسية</div>
-                      </a>
-                    </li>
-                    <!-- Page -->
-                    <li class="menu-item">
-                      <a href="sys29.html" class="menu-link">
-                        <div>الحسابات الفرعية</div>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-              <!-- page list -->
+           <li class="menu-item">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+              <i class="menu-icon icon-file-lines me-1"></i>
+              <div>التقارير</div>
+            </a>
+            <ul class="menu-sub">
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="AccountingReport" class="menu-link">
+                  <div>دليل الحسابات</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="AccOpeninBalReport" class="menu-link">
+                  <div>الأرصدةالافتتاحية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="FundsTransReport" class="menu-link">
+                  <div>حركة الصناديق</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="BanksTransReport" class="menu-link">
+                  <div>حركة البنوك</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="BalanceSheet" class="menu-link">
+                  <div>الميزانية العمومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="LosesProfits" class="menu-link">
+                  <div>قائمة الارباح والخسائر</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="GetReportEx" class="menu-link">
+                  <div>سندات الصرف</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="GetReportPy" class="menu-link">
+                  <div>سندات القبض</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="JournalEntReport" class="menu-link">
+                  <div>القيوداليومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a asp-controller="Reports" asp-action="DailyJournalReport"class="menu-link">
+                  <div>دفتر اليومية</div>
+                </a>
+              </li>
+              <!-- Page -->
+              <li class="menu-item">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <div>كشوفات الحسابات</div>
+                </a>
+                <ul class="menu-sub">
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a asp-controller="Reports" asp-action="GeneralLedgerReport" class="menu-link">
+                      <div>الحسابات الرئيسية</div>
+                    </a>
+                  </li>
+                  <!-- Page -->
+                  <li class="menu-item">
+                    <a asp-controller="Reports" asp-action="MainGeneralLedgerReport" class="menu-link">
+                      <div>الحسابات الفرعية</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <!-- page list -->
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon icon-user-gear me-2"></i>
