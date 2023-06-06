@@ -1,10 +1,12 @@
 ﻿
-@model POS.Models.DB.MainJournalEntery
+@model IEnumerable<POS.Models.DB.GeneralLedger>
 
 @{
     ViewData["Title"] = "Create";
     var currRateList = ViewBag.CurrenciesExchangeRateList;
-     Layout = null;
+    Layout = null;
+    double incomesTotal= 0.0;
+    double expensesTotal= 0.0;
 }
 
 
@@ -547,7 +549,7 @@
         <div style="padding-right: 69px;padding-left: 67px;padding-top: 68px;width: 1149px;margin-right: 58px;/* padding-bottom: 1000px; */margin-bottom: 2%;" class="card">
 
    <div  class="card-header bg-primary text-Uppercase text-white" style="background-color:#41b38de6 !important " > 
-            <h4 style="color:#fff;">انشاء تقرير </h4>
+            <h4 style="color:#fff;">أستعراض تقرير </h4>
         </div>
         <hr />
           <div class="container-xxl flex-grow-1 container-p-y">
@@ -566,9 +568,116 @@
                     }
 
                     else{
-                       <div class="alert " role="alert">
-                           التقرير العام المتعلق بالارباح والخسائر
-                        </div>
+            <table id="tableRole" class="table datatables-basic table-hover">
+                     
+                <div style="padding-right:1010px;padding-top:10px;" class="col-2 justify-content-end">
+       
+              
+
+
+                     @*<p style="width:200px">
+                        <a asp-action="Create" class="btn btn-primary">إضافة حساب <i class="icon-plus"> </i></a>
+                    </p>*@
+                            </div>
+              
+                              <thead>
+                                <tr>
+                      
+                                    <th>المصروفات</th>
+                     
+                                    <th> المبلغ </th>
+                                    <th>الإيرادات</th>
+                     
+                                    <th> المبلغ </th>
+                        
+
+                       
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                               @foreach (var item in Model) {
+                                            <tr>
+                                                @if (!string.IsNullOrEmpty(item.AccountingManualNavigation?.AccNumber) && item.AccountingManualNavigation.AccNumber.Length > 0 && item.AccountingManualNavigation.AccNumber[0] == '4')
+                                                    {
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.AccountingManualNavigation.ArabicAccName)
+                                                        </td>
+                                                       
+                                                            if (item.CreditAmountRly.HasValue && item.CreditAmountRly != 0.0)
+                                                            {
+                                                                expensesTotal += item.CreditAmountRly.Value;
+        
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.CreditAmountRly)
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                expensesTotal += item.DebittAmountRly.Value;
+        
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.DebittAmountRly)
+                                                                </td>
+                                                            }
+                                                        
+
+                                                       
+                                                        <td>
+                                                         </td>
+                                                         <td>
+                                                         </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                 <td>
+                                                                 </td>
+                                                                 <td>
+                                                                 </td>
+                                                                <td>
+                                                                        @Html.DisplayFor(modelItem => item.AccountingManualNavigation.ArabicAccName)
+                                                                    </td>
+                                                                     if (item.CreditAmountRly.HasValue && item.CreditAmountRly != 0.0)
+                                                            {
+                                                                incomesTotal += item.CreditAmountRly.Value;
+        
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.CreditAmountRly)
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                incomesTotal += item.DebittAmountRly.Value;
+        
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.DebittAmountRly)
+                                                                </td>
+                                                            }
+                                                        
+                                                            }
+
+
+                                    
+                  
+                                    
+            
+            
+                                             </tr>
+                                            }
+                                        <tr>
+                                             <td> إجمالي المصروفات
+                                               </td>
+                                            <td>@expensesTotal
+                                            </td>
+                                            <td> إجمالي الايرادات
+                                               </td>
+                                            <td>
+                                                @incomesTotal
+                                            </td>
+                                        </tr>
+
+
+                              </tbody>
+                </table>
                     }
 
         

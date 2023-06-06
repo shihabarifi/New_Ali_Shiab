@@ -164,6 +164,14 @@ namespace POS.Controllers
 
             return View(GeneralLedgerList);
         }
+        public ActionResult BalanceSheetReport()
+        {
+            List<GeneralLedger> GeneralLedgerList = _context.GeneralLedgers
+                                            .Include(f => f.AccountingManualNavigation)
+                                            .Where(f => f.AccountingManualNavigation.AccType == "فرعي").OrderBy(o=>o.AccountingManual).ToList();
+
+            return View(GeneralLedgerList);
+        }
 
 
 
@@ -438,10 +446,14 @@ namespace POS.Controllers
              bool FiscalYearIsOn = cachedData.Any(item => item.FiscalYearStatus == 1);
             if (FiscalYearIsOn)
             {
-                ViewBag.FiscalYearStatus = false;
+                ViewBag.FiscalYearStatus = true;
                 ViewBag.Message = " لايمكن اجراء اي عملية اضافية  أو استعراض التقارير الختامية،السنة المالية يجب اغلاقها مسبقاً";
             }
-            return View();
+            List<GeneralLedger> GeneralLedgerList = _context.GeneralLedgers
+                                             .Include(f => f.AccountingManualNavigation)
+                                             .Where(f => f.AccountingManualNavigation.FinalAccountType == 2).OrderBy(o => o.AccountingManual).ToList();
+
+            return View(GeneralLedgerList);
         }
         public ActionResult BalanceSheet()
         {
@@ -449,10 +461,14 @@ namespace POS.Controllers
             bool FiscalYearIsOn = cachedData.Any(item => item.FiscalYearStatus == 1);
             if (!FiscalYearIsOn)
             {
-                ViewBag.FiscalYearStatus = false;
+                ViewBag.FiscalYearStatus = true;
                 ViewBag.Message = " لايمكن اجراء اي عملية اضافية  أو استعراض التقارير الختامية،السنة المالية يجب اغلاقها مسبقاً";
             }
-            return View();
+            List<GeneralLedger> GeneralLedgerList = _context.GeneralLedgers
+                                            .Include(f => f.AccountingManualNavigation)
+                                            .Where(f => f.AccountingManualNavigation.FinalAccountType==1).OrderBy(o => o.AccountingManual).ToList();
+
+            return View(GeneralLedgerList);
         }
 
         public IActionResult FundsTransReport(DateTime StartDate, DateTime EndDate

@@ -1,10 +1,12 @@
 ﻿
-@model POS.Models.DB.MainJournalEntery
+@model IEnumerable<POS.Models.DB.GeneralLedger>
 
 @{
     ViewData["Title"] = "Create";
     var currRateList = ViewBag.CurrenciesExchangeRateList;
      Layout = null;
+      double assetsTotal= 0.0;
+    double othersTotal= 0.0;
 }
 
 
@@ -20,7 +22,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>تقرير الميزانية</title>
+  <title> تقرير الميزانية العمومية   </title>
 
   <meta name="description" content="" />
 
@@ -352,13 +354,13 @@
                 <ul class="menu-sub">
                   <!-- Page -->
                   <li class="menu-item">
-                    <a asp-controller="Reports" asp-action="GeneralLedgerReport" class="menu-link">
+                    <a asp-controller="Reports" asp-action="MainGeneralLedgerReport" class="menu-link">
                       <div>الحسابات الرئيسية</div>
                     </a>
                   </li>
                   <!-- Page -->
                   <li class="menu-item">
-                    <a asp-controller="Reports" asp-action="MainGeneralLedgerReport" class="menu-link">
+                    <a asp-controller="Reports" asp-action="GeneralLedgerReport" class="menu-link">
                       <div>الحسابات الفرعية</div>
                     </a>
                   </li>
@@ -426,7 +428,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- nav-->
               <div class="navbar-nav align-items-center">
-                <h3 class="nav-item pt-3">تقرير الميزانية</h3>
+                <h3 class="nav-item pt-3">تقرير الميزانية العمومية</h3>
 
               </div>
               <!-- nav-->
@@ -566,9 +568,111 @@
                     }
 
                     else{
-                       <div class="alert " role="alert">
-                           التقرير العام المتعلق بالارباح والخسائر
-                        </div>
+                    <table id="tableRole" class="table datatables-basic table-hover">
+                     
+                    <div style="padding-right:1010px;padding-top:10px;" class="col-2 justify-content-end">
+       
+              
+
+
+         @*<p style="width:200px">
+            <a asp-action="Create" class="btn btn-primary">إضافة حساب <i class="icon-plus"> </i></a>
+        </p>*@
+                </div>
+              
+                  <thead>
+                    <tr>
+                      
+                        <th>الأصول</th>
+                     
+                        <th> المبلغ </th>
+                        <th>حقوق الملكية+ الخصوم</th>
+                     
+                        <th> المبلغ </th>
+                        
+
+                       
+                      </tr>
+                  </thead>
+                  <tbody>
+                                   @foreach (var item in Model) {
+                                <tr>
+                                    @if (!string.IsNullOrEmpty(item.AccountingManualNavigation?.AccNumber) && item.AccountingManualNavigation.AccNumber.Length > 0 && item.AccountingManualNavigation.AccNumber[0] == '1')
+                                        {
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AccountingManualNavigation.ArabicAccName)
+                                            </td>
+                                            if (item.CreditAmountRly.HasValue && item.CreditAmountRly != 0.0)
+                                                            {
+                                                                assetsTotal += item.CreditAmountRly.Value;
+        
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.CreditAmountRly)
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                othersTotal += item.DebittAmountRly.Value;
+        
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.DebittAmountRly)
+                                                                </td>
+                                                            }
+                                            <td>
+                                             </td>
+                                             <td>
+                                             </td>
+                                                }
+                                                else
+                                                {
+                                                     <td>
+                                                     </td>
+                                                     <td>
+                                                     </td>
+                                                    <td>
+                                                            @Html.DisplayFor(modelItem => item.AccountingManualNavigation.ArabicAccName)
+                                                        </td>
+                                                        if (item.CreditAmountRly.HasValue && item.CreditAmountRly != 0.0)
+                                                            {
+                                                                assetsTotal += item.CreditAmountRly.Value;
+        
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.CreditAmountRly)
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                othersTotal += item.DebittAmountRly.Value;
+        
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.DebittAmountRly)
+                                                                </td>
+                                                            }
+                                                }
+
+
+                                    
+                  
+                                    
+            
+            
+                                 </tr>
+                                }
+                    <tr>
+                    <td> إجمالي الاصول
+                    </td>
+                    <td>@assetsTotal
+                    </td>
+                    <td> إجمالي حقوق الملكية والخصوم
+                        </td>
+                    <td>
+                        @othersTotal
+                    </td>
+                </tr>
+
+                  </tbody>
+                </table>
+
                     }
 
         
