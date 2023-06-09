@@ -151,23 +151,23 @@ namespace POS.Controllers
                 if (ModelState.IsValid)
                 {
                     
-                    mainJournalEntery.FiscalYear = 7;
+                    mainJournalEntery.FiscalYear = 11;
                     mainJournalEntery.SystemUsers = "6f94621c-3508-435c-98fe-c51cc63d076f";
                     mainJournalEntery.IsDeleted = 0;
                     mainJournalEntery.IsStage= 0;
                     //mainJournalEntery.SystemUsers = mainJournalEntery.SystemUsers != 0 ? mainJournalEntery.SystemUsers : 1;
                     mainJournalEntery.MainournalEnteriesStatus = 0;
-                    foreach(var i in mainJournalEntery.DetailedJournalEnteries)
-                    {
-                        if(i.CreditAmountRly>0|| i.CreditAmountUdo>0||i.DebittAmountRly > 0 || i.DebittAmountUdo > 0)
-                        {
-                          ///nothing to write  
-                        }
-                        else
-                        {
-                         mainJournalEntery.DetailedJournalEnteries.Remove(i);
-                        }
-                    }
+                    //foreach(var i in mainJournalEntery.DetailedJournalEnteries)
+                    //{
+                    //    if(i.CreditAmountRly>0|| i.CreditAmountUdo>0||i.DebittAmountRly > 0 || i.DebittAmountUdo > 0)
+                    //    {
+                    //      ///nothing to write  
+                    //    }
+                    //    else
+                    //    {
+                    //     mainJournalEntery.DetailedJournalEnteries.Remove(i);
+                    //    }
+                    //}
                     MainJourEnter_Repo.Add(mainJournalEntery);
                     return RedirectToAction(nameof(Index));
                 }

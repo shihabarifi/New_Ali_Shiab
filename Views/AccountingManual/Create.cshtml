@@ -183,7 +183,7 @@
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a asp-controller="CheckPaycheck" asp-action="Stagelist" class="menu-link">
+                <a asp-controller="CheckPaycheck" asp-action="Chequelist" class="menu-link">
                   <div>ترحيل السندات البنكية</div>
                 </a>
               </li>
@@ -622,12 +622,12 @@
    <div class="form-group btn-group col-12">
             <div class="col-1"></div>
             <div class="col-5">
-                <input type="submit" value="Create" id="submitbtn" class="btn btn-primary btn-block" />
+                <input type="submit" value="اضافة" id="submitbtn" class="btn btn-primary btn-block" />
             </div>
 
              <div class="col-5">
                  <a class="btn btn-secondary btn-block" asp-action="index"
-                   asp-route-pg="@TempData.Peek("CurrentPage")">Back</a>
+                   asp-route-pg="@TempData.Peek("CurrentPage")">العودة</a>
             </div>
              <div class="col-1"></div>
          </div>

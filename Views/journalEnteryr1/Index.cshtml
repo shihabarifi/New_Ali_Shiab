@@ -275,7 +275,7 @@
               </li>
               <!-- Page -->
               <li class="menu-item">
-                <a asp-controller="CheckPaycheck" asp-action="Stagelist" class="menu-link">
+                <a asp-controller="CheckPaycheck" asp-action="Chequelist" class="menu-link">
                   <div>ترحيل السندات البنكية</div>
                 </a>
               </li>
@@ -979,7 +979,7 @@
                     customize: function (win) {
                     // Add a header to the print view
                     var headerHtml = '<div style="text-align:center;">' +
-                        '<img width="50" height="50" src="http://localhost:5017/Images/Users/61505fd4-c198-4093-9eae-636eec267c33.JPG" class="rounded-circle">' +
+                        '<img width="50" height="50" src="http://localhost:5017/Images/Users/084fa8a8-cfed-4ad2-ade6-8a733d55e276.JPG" class="rounded-circle">' +
                         '<h3>تقرير القيود اليومية</h3>' +
                         '<p>التاريخ: 12/05/2023</p>' +
                                 
@@ -1002,17 +1002,17 @@
                     $(win.document.body).find('tfoot th:last-child').css('text-align', 'right');
 
                     // Loop through each main row and append the detailed table beside it
-                    $(win.document.body).find('tbody tr').each(function () {
-                        var detailedTableHtml = '<table class="table table-striped table-bordered">' +
-                            '<thead><tr><th>دائن أجنبي</th><th>مدين أجنبي</th><th>دائن محلي</th><th>مدين محلي</th><th>البيان</th><th>نوع العملة</th><th>اسم الحساب</th><th>رقم الحساب</th></tr></thead>' +
-                            '<tbody>' +
-                            '<tr><td>Detailed Data 1</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td></tr>' +
-                            '<tr><td>Detailed Data 3</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td></tr>' +
-                            '</tbody>' +
-                            '</table>';
+                    //$(win.document.body).find('tbody tr').each(function () {
+                    //    var detailedTableHtml = '<table class="table table-striped table-bordered">' +
+                    //        '<thead><tr><th>دائن أجنبي</th><th>مدين أجنبي</th><th>دائن محلي</th><th>مدين محلي</th><th>البيان</th><th>نوع العملة</th><th>اسم الحساب</th><th>رقم الحساب</th></tr></thead>' +
+                    //        '<tbody>' +
+                    //        '<tr><td>Detailed Data 1</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td></tr>' +
+                    //        '<tr><td>Detailed Data 3</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td><td>Detailed Data 2</td></tr>' +
+                    //        '</tbody>' +
+                    //        '</table>';
 
-                        $(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
-                    });
+                    //    $(this).after('<tr><td colspan="5">' + detailedTableHtml + '</td></tr>');
+                    //});
 
                     // Calculate the total sum
                     var sum = 0;
@@ -1182,7 +1182,7 @@ $(document).on('click', '.CreateJu.btn-primary', function () {
   <script src="~/assets/js/main.js"></script>
 
   <!-- Page JS -->
-  <script src="~/pages1/sys11.js"></script>
+  @*<script src="~/pages1/sys11.js"></script>*@
 </body>
 
 </html>

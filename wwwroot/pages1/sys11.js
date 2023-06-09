@@ -64,9 +64,9 @@ $(function () {
 
 
   // Delete Record
-  $('.datatables-permissions tbody').on('click', '.delete-record', function () {
-    dt_permission.row($(this).parents('tr')).remove().draw();
-  });
+  //$('.datatables-permissions tbody').on('click', '.delete-record', function () {
+  //  dt_permission.row($(this).parents('tr')).remove().draw();
+  //});
 
   // Filter form control to default size
   // ? setTimeout used for multilingual table initialization
