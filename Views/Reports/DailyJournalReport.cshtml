@@ -829,17 +829,23 @@
                     columns: 'visible'
                     },
                     customize: function (win) {
-                    // Add a header to the print view
-                    var headerHtml = '<div style="text-align:center;">' +
-                        '<img width="50" height="50" src="http://localhost:5017/Images/Users/084fa8a8-cfed-4ad2-ade6-8a733d55e276.JPG" class="rounded-circle">' +
-                        '<h3>تقرير القيود اليومية</h3>' +
-                        '<p>التاريخ: 12/05/2023</p>' +
-                                
-                        '</div>';
+                     var headerHtml = '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                      '<div style="text-align: left;">التاريخ: 12/05/2023</div>' +
+                      '<div style="text-align: center;"><h3>تقرير القيود اليومية</h3></div>' +
+                      '<div style="text-align: right;"><img width="60" height="60" src="http://localhost:5017/Images/Users/084fa8a8-cfed-4ad2-ade6-8a733d55e276.JPG" class="rounded-circle"></div>' +
+                      '</div>';
+
                     $(win.document.body).prepend(headerHtml);
 
+
+
                     // Add a footer to the print view
-                    var footerHtml = '<div style="text-align:left;"><p>أسم الموظف:_____________________</p></div>';
+                    var footerHtml = '<div style="display: flex; justify-content: space-between;">' +
+                      '<div style="text-align: left;"><p>توقيع الموظف:_____________________</p></div>' +
+                      '<div></div>' +
+                      '<div style="text-align: right;"><p>توقيع المدير:_____________________</p></div>' +
+                      '</div>';
+
                     $(win.document.body).append(footerHtml);
 
                     // Adjust the font size

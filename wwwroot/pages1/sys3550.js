@@ -63,7 +63,7 @@ $(function () {
                     customize: function (win) {
                         var headerHtml = '<div style="display: flex; justify-content: space-between; align-items: center;">' +
                             '<div style="text-align: left;">التاريخ: 12/05/2023</div>' +
-                            '<div style="text-align: center;"><h3>تقرير الارصدة الافتتاحية</h3></div>' +
+                            '<div style="text-align: center;"><h3>تقرير كشوفات الحسابات </h3></div>' +
                             '<div style="text-align: right;"><img width="60" height="60" src="http://localhost:5017/Images/Users/084fa8a8-cfed-4ad2-ade6-8a733d55e276.JPG" class="rounded-circle"></div>' +
                             '</div>';
 

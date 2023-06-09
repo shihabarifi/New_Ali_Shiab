@@ -56,24 +56,42 @@ $(function () {
                 
                 
                 
-                {
-                    extend: 'print',
-                    text: '<i class="bx bx-printer me-1"></i>طباعة ',
-                    className: 'btn btn-label-danger mx-1',
-                    customize: function (win) {
-                        $(win.document.body)
-                            .css('font-size', '10pt')
-                            .prepend(
-                                '<div><img src="/Images/Users/‏‫‏‏لقطة شاشة‬ (2).png" ></div>'
-                            );
+                    {
+                        extend: 'print',
+                        text: '<i class="bx bx-printer me-1"></i>طباعة ',
+                        className: 'btn btn-label-danger mx-1',
+                        customize: function (win) {
+                            var headerHtml = '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                                '<div style="text-align: left;">التاريخ: 12/05/2023</div>' +
+                                '<div style="text-align: center;"><h3>تقرير دليل الحسابات </h3></div>' +
+                                '<div style="text-align: right;"><img width="60" height="60" src="http://localhost:5017/Images/Users/084fa8a8-cfed-4ad2-ade6-8a733d55e276.JPG" class="rounded-circle"></div>' +
+                                '</div>';
 
-                        $(win.document.body).find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit');
-                    },
-                    exportOptions: { columns: [3, 2, 1, 0] }
+                            $(win.document.body).prepend(headerHtml);
 
-                }
+
+
+                            // Add a footer to the print view
+                            var footerHtml = '<div style="display: flex; justify-content: space-between;">' +
+                                '<div style="text-align: left;"><p>توقيع الموظف:_____________________</p></div>' +
+                                '<div></div>' +
+                                '<div style="text-align: right;"><p>توقيع المدير:_____________________</p></div>' +
+                                '</div>';
+
+                            $(win.document.body).append(footerHtml);
+                            $(win.document.body)
+                                .css('font-size', '10pt')
+                                .prepend(
+                                    '<div><img src="/Images/Users/‏‫‏‏لقطة شاشة‬ (2).png" ></div>'
+                                );
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        },
+                        exportOptions: { columns: [4, 3, 2, 1, 0] }
+
+                    }
                 ]
             },
 
